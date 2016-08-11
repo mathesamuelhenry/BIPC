@@ -22,6 +22,7 @@ CREATE TABLE contribution
    amount              decimal(11, 2) NOT NULL,
    check_number        varchar(50) DEFAULT NULL,
    transaction_date    datetime default NULL,
+   note                text default NULL,
    status              tinyint(4) DEFAULT 1,
    date_added          datetime,
    date_changed        datetime,

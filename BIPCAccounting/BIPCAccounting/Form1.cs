@@ -96,6 +96,7 @@ namespace BIPCAccounting
        cn.amount AS Amount,
        cn.check_number AS 'Check #',
        cn.transaction_date AS 'Transaction DT',
+       cn.note as 'Note',
        cn.date_added AS 'Date Added'
   FROM contribution cn
        LEFT JOIN contributor cr ON cr.contributor_id = cn.contributor_id
@@ -133,26 +134,7 @@ namespace BIPCAccounting
         private void button1_Click(object sender, EventArgs e)
         {
             MySqlConnection mySqlConn = null;
-
-            string transactionType = string.Empty;
-            bool isChecked = radioButton1.Checked;
-            if (isChecked)
-                transactionType = radioButton1.Text;
-            else
-                transactionType = radioButton2.Text;
-
-            string transactionMode = string.Empty;
-            bool isTMChecked = radioButton3.Checked;
-            if (isTMChecked)
-                transactionMode = radioButton3.Text;
-            else
-                transactionMode = radioButton3.Text;
-
-            Console.WriteLine(transactionType);
-
-            string Category = CategoryCombo.SelectedValue.ToString();
-
-            DateTime TransactionDate = TransactionDateTimePicker.Value;
+            bool valid = true;
 
             try
             {
@@ -160,12 +142,55 @@ namespace BIPCAccounting
                 mySqlConn = new MySqlConnection(connString);
                 mySqlConn.Open();
 
-                count = this.Insert(NameTextBox.Text, CategoryCombo.SelectedValue.ToString(), transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate);
-                
-                if (count > 0)
-                    MessageBox.Show("Record added");
+                string transactionType = string.Empty;
+                bool isChecked = radioButton1.Checked;
+                if (isChecked)
+                    transactionType = radioButton1.Text;
                 else
-                    MessageBox.Show("Record not added");
+                    transactionType = radioButton2.Text;
+
+                string transactionMode = string.Empty;
+                bool isTMChecked = radioButton3.Checked;
+                if (isTMChecked)
+                    transactionMode = radioButton3.Text;
+                else
+                    transactionMode = radioButton3.Text;
+                
+                string Category = CategoryCombo.SelectedValue.ToString();
+
+                DateTime TransactionDate = TransactionDateTimePicker.Value;
+                //NAme
+                if (string.IsNullOrEmpty(NameTextBox.Text))
+                {
+                    MessageBox.Show("Name cannot be empty");
+                    valid = false;
+                }
+                // Amount
+                string amount = AmountTextBox.Text;
+                if (string.IsNullOrEmpty(amount))
+                {
+                    MessageBox.Show("Amount cannot be empty.");
+                    valid = false;
+                }
+                else
+                {
+                    int amt;
+                    if (!int.TryParse(amount, out amt))
+                    {
+                        MessageBox.Show("Amount must be a valid integer");
+                        valid = false;
+                    }
+                }
+
+                if (valid)
+                {
+                    count = this.Insert(NameTextBox.Text, CategoryCombo.SelectedValue.ToString(), transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+
+                    if (count > 0)
+                        MessageBox.Show("Record added");
+                    else
+                        MessageBox.Show("Record not added");
+                }
 
                 this.LoadTable();
             }
@@ -176,7 +201,7 @@ namespace BIPCAccounting
             }
         }
 
-        private int Insert(string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date)
+        private int Insert(string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
         {
             int count = 0;
             MySqlConnection mySqlConn = null;
@@ -194,6 +219,7 @@ namespace BIPCAccounting
   ,amount
   ,check_number
   ,transaction_date
+  ,note
   ,status
   ,date_added
 ) VALUES (
@@ -205,6 +231,7 @@ namespace BIPCAccounting
   ,{5} -- amount - IN decimal(11,2)
   ,'{6}'  -- check_number - IN varchar(50)
   ,'{7}'  -- transaction_date - IN datetime
+  ,'{8}'  -- note 
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
 )", "NULL"
@@ -214,7 +241,8 @@ namespace BIPCAccounting
   , trans_mode
   , amount
   , checque_number
-  , transaction_date.ToString("yyyy-MM-dd"));
+  , transaction_date.ToString("yyyy-MM-dd")
+  , note);
 
                 MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
                 count = cmd.ExecuteNonQuery();
