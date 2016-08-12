@@ -14,6 +14,7 @@ namespace BIPCAccounting
     public partial class Form1 : Form
     {
         string connString = string.Empty;
+        CVD cvd = null;
 
         public Form1()
         {
@@ -24,7 +25,99 @@ namespace BIPCAccounting
             this.LoadDropDown();
             this.LoadContributorIdComboBox();
             this.LoadTable();
+            this.LoadCVD();
+            this.LoadSearchTabDropDowns();
+        }
 
+        private void LoadSearchTabDropDowns()
+        {
+            this.LoadSearchTransModeDropDown();
+            this.LoadSearchTransTypeDropDown();
+            this.LoadSearchCategoryDropDown();
+            this.LoadSearchNameDropDown();
+        }
+
+        private void LoadSearchTransTypeDropDown()
+        {
+            List<CVD> TransTypeCVDList = this.cvd.GetCVD("contribution", "transaction_type");
+
+            SearchTransTypeComboBox.Items.Add(new Item("", ""));
+            foreach (CVD cvd in TransTypeCVDList)
+            {
+                SearchTransTypeComboBox.Items.Add(new Item(cvd.Description, cvd.Value));
+            }
+
+            SearchTransTypeComboBox.ValueMember = "Id";
+            SearchTransTypeComboBox.DisplayMember = "Name";
+        }
+
+        private void LoadSearchTransModeDropDown()
+        {
+            List<CVD> TransModeCVDList = this.cvd.GetCVD("contribution", "transaction_mode");
+
+            SearchTransModeComboBox.Items.Add(new Item("", ""));
+            foreach (CVD cvd in TransModeCVDList)
+            {
+                SearchTransModeComboBox.Items.Add(new Item(cvd.Description, cvd.Value));
+            }
+
+            SearchTransModeComboBox.ValueMember = "Id";
+            SearchTransModeComboBox.DisplayMember = "Name";
+        }
+
+        private void LoadSearchCategoryDropDown()
+        {
+            List<CVD> CategoryCVDList = this.cvd.GetCVD("contribution", "category");
+
+            SearchCategoryComboBox.Items.Add(new Item("", ""));
+            foreach (CVD cvd in CategoryCVDList)
+            {
+                SearchCategoryComboBox.Items.Add(new Item(cvd.Description, cvd.Value));
+            }
+
+            SearchCategoryComboBox.ValueMember = "Id";
+            SearchCategoryComboBox.DisplayMember = "Name";
+        }
+
+        private void LoadSearchNameDropDown()
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            try
+            {
+                dt = this.LoadContributorId();
+
+                SearchNameComboBox.Items.Add(new Item("", ""));
+                foreach (DataRow dRow in dt.Rows)
+                {
+                    SearchNameComboBox.Items.Add(new Item(dRow["contributor_name"].ToString(), dRow["contributor_id"].ToString()));
+                }
+
+                SearchNameComboBox.ValueMember = "Id";
+                SearchNameComboBox.DisplayMember = "Name";
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void LoadCVD()
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                cvd = new CVD(mySqlConn);
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
         }
 
         private void LoadDropDown()
@@ -75,9 +168,10 @@ namespace BIPCAccounting
 
         }
 
-        private void LoadContributorIdComboBox()
+        private DataTable LoadContributorId()
         {
             MySqlConnection mySqlConn = null;
+            System.Data.DataTable dt = new System.Data.DataTable();
 
             try
             {
@@ -92,11 +186,25 @@ namespace BIPCAccounting
 
                 MySqlDataAdapter sda = new MySqlDataAdapter();
                 sda.SelectCommand = cmdDataBase;
-                System.Data.DataTable dt = new System.Data.DataTable();
                 sda.Fill(dt);
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
 
-                //ContributorIdComboBox.DataSource = dt;
-                
+            return dt;
+        }
+
+        private void LoadContributorIdComboBox()
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            try
+            {
+                dt = this.LoadContributorId();
+
                 ContributorIdComboBox.Items.Add(new Item("", ""));
                 foreach (DataRow dRow in dt.Rows)
                 {
@@ -106,11 +214,9 @@ namespace BIPCAccounting
                 ContributorIdComboBox.ValueMember = "Id";
                 ContributorIdComboBox.DisplayMember = "Name";
                 ContributorIdComboBox.SelectedValue = "";
-            }
-            finally
+            }catch(Exception)
             {
-                if (mySqlConn != null)
-                    mySqlConn.Close();
+
             }
         }
 
@@ -139,15 +245,22 @@ namespace BIPCAccounting
             //string connString = "DataSource=dbdprsql-bct.risk.regn.net;Port=3306;UID=mbs_ws;PWD=mbs_ws123;Database=sales_assignment;";
 
             MySqlConnection mySqlConn = new MySqlConnection(connString);
-            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT                           -- Concat(cr.last_name, ', ', cr.first_name),
-      cn.contribution_name AS 'Contributor Name',
+            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT                           
+      CASE
+          WHEN IFNULL(cn.contribution_name, '') = ''
+          THEN
+             CONCAT(cr.last_name, ', ', cr.first_name)
+          ELSE
+             cn.contribution_name
+       END
+          AS 'Contributor Name',
        cvd.description AS Category,
-       cn.transaction_type AS Type,
-       cn.transaction_mode AS Mode,
+       cvd_transtype.description AS Type,
+       cvd_transmode.description AS Mode,
        cn.amount AS Amount,
        cn.check_number AS 'Check #',
-       cn.transaction_date AS 'Transaction DT',
-       cn.note as 'Note',
+       cn.transaction_date AS 'Trans DT',
+       cn.note AS 'Note',
        cn.date_added AS 'Date Added'
   FROM contribution cn
        LEFT JOIN contributor cr ON cr.contributor_id = cn.contributor_id
@@ -159,6 +272,22 @@ namespace BIPCAccounting
           ON     cvd.table_column_id = tc.table_column_id
              AND cvd.value = cn.category
              AND cvd.status = 1
+       LEFT JOIN table_column tc_transtype
+          ON     tc_transtype.table_name = 'contribution'
+             AND tc_transtype.column_name = 'transaction_type'
+             AND tc_transtype.status = 1
+       LEFT JOIN column_value_desc cvd_transtype
+          ON     cvd_transtype.table_column_id = tc_transtype.table_column_id
+             AND cvd_transtype.value = cn.transaction_type
+             AND cvd_transtype.status = 1
+       LEFT JOIN table_column tc_transmode
+          ON     tc_transmode.table_name = 'contribution'
+             AND tc_transmode.column_name = 'transaction_mode'
+             AND tc_transmode.status = 1
+       LEFT JOIN column_value_desc cvd_transmode
+          ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
+             AND cvd_transmode.value = cn.transaction_mode
+             AND cvd_transmode.status = 1 
  WHERE cn.status = 1;", mySqlConn);
 
             try
@@ -211,25 +340,31 @@ namespace BIPCAccounting
                     transactionMode = radioButton3.Text;
 
                 if (!string.IsNullOrEmpty(CategoryCombo.Text))
-                    Category = CategoryCombo.SelectedValue.ToString();
+                {
+                    Item SelectedCategory = (Item)CategoryCombo.SelectedItem;
+                    Category = SelectedCategory.Id;
+                }
 
                 string newCategory = CategoryTextBox.Text;
 
                 if (!string.IsNullOrEmpty(ContributorIdComboBox.Text))
-                    ContributorId = ContributorIdComboBox.SelectedValue.ToString();
+                {
+                    Item SelectedContributor = (Item)ContributorIdComboBox.SelectedItem;
+                    ContributorId = SelectedContributor.Id;
+                }
 
                 if (!string.IsNullOrEmpty(newCategory))
                     this.AddNewCategory(newCategory, out Category);
 
                 DateTime TransactionDate = TransactionDateTimePicker.Value;
                 //NAme
-                if (string.IsNullOrEmpty(NameTextBox.Text) && string.IsNullOrEmpty(ContributorIdComboBox.SelectedText))
+                if (string.IsNullOrEmpty(NameTextBox.Text) && string.IsNullOrEmpty(ContributorIdComboBox.Text))
                 {
                     MessageBox.Show("Name cannot be empty");
                     valid = false;
                 }
 
-                if (string.IsNullOrEmpty(CategoryTextBox.Text) && string.IsNullOrEmpty(CategoryCombo.SelectedText))
+                if (string.IsNullOrEmpty(CategoryTextBox.Text) && string.IsNullOrEmpty(CategoryCombo.Text))
                 {
                     MessageBox.Show("Category cannot be empty");
                     valid = false;
@@ -255,15 +390,17 @@ namespace BIPCAccounting
 
                 if (valid)
                 {
-                    //count = this.Insert(ContributorId, NameTextBox.Text, CategoryCombo.SelectedValue.ToString(), transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+                    count = this.Insert(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
 
                     if (count > 0)
                         MessageBox.Show("Record added");
                     else
                         MessageBox.Show("Record not added");
                 }
-
-                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Failure");
             }
             finally
             {
@@ -326,14 +463,10 @@ namespace BIPCAccounting
                     MySqlCommand insertCmd = new MySqlCommand(insertSql, mySqlConn);
                     int count = insertCmd.ExecuteNonQuery();
 
-                    if (count > 0)
+                    if (count < 1)
                     {
-                        MessageBox.Show("New Category Added", "Success");
-                        status = true;
+                        throw new Exception("New Category Add Failed");
                     }
-                    else
-                        MessageBox.Show("New Category Add Failed", "Failure");
-
 
                     string GetCategoryValueSql = string.Format(@"SELECT cvd.value
   FROM table_column tc
@@ -358,6 +491,7 @@ namespace BIPCAccounting
             }
             catch(Exception ex)
             {
+                throw ex;
             }
 
             return status;
@@ -396,7 +530,7 @@ namespace BIPCAccounting
   ,'{8}'  -- note 
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
-)", "NULL"
+)", contributor_id
   , name
   , category
   , trans_type
@@ -543,6 +677,17 @@ namespace BIPCAccounting
                 CategoryCombo.Enabled = true;
             }
         }
-        
+
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Utils.ResetAllControls(this.SearchCategoryComboBox);
+        }
+
     }
 }

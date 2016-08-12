@@ -58,7 +58,18 @@
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.SearchTransModeComboBox = new System.Windows.Forms.ComboBox();
+            this.SearchTransTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.SearchNameComboBox = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.SearchCategoryComboBox = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.SearchNameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -69,6 +80,12 @@
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.FamilyNameTextBox = new System.Windows.Forms.TextBox();
             this.AddContributorButton = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label20 = new System.Windows.Forms.Label();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.label21 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -88,7 +105,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1285, 596);
+            this.tabControl1.Size = new System.Drawing.Size(1102, 596);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -118,7 +135,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1277, 570);
+            this.tabPage1.Size = new System.Drawing.Size(1094, 570);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Contributions";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -164,11 +181,13 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(422, 46);
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.dataGridView1.Location = new System.Drawing.Point(366, 46);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(835, 434);
+            this.dataGridView1.Size = new System.Drawing.Size(706, 453);
             this.dataGridView1.TabIndex = 24;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -374,7 +393,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1277, 570);
+            this.tabPage2.Size = new System.Drawing.Size(1094, 570);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Tag = "";
             this.tabPage2.Text = "tabPage2";
@@ -382,21 +401,135 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.dateTimePicker2);
+            this.groupBox3.Controls.Add(this.label21);
+            this.groupBox3.Controls.Add(this.dateTimePicker1);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.textBox1);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(49, 31);
+            this.groupBox3.Controls.Add(this.SearchTransModeComboBox);
+            this.groupBox3.Controls.Add(this.SearchTransTypeComboBox);
+            this.groupBox3.Controls.Add(this.label18);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.SearchNameComboBox);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.SearchCategoryComboBox);
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.SearchNameTextBox);
+            this.groupBox3.Location = new System.Drawing.Point(17, 19);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(797, 182);
+            this.groupBox3.Size = new System.Drawing.Size(1044, 158);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(448, 104);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(121, 20);
+            this.textBox1.TabIndex = 43;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(16, 28);
+            this.label9.Location = new System.Drawing.Point(328, 104);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "label9";
+            this.label9.Size = new System.Drawing.Size(78, 13);
+            this.label9.TabIndex = 42;
+            this.label9.Text = "Check Number";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // SearchTransModeComboBox
+            // 
+            this.SearchTransModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SearchTransModeComboBox.FormattingEnabled = true;
+            this.SearchTransModeComboBox.Location = new System.Drawing.Point(448, 65);
+            this.SearchTransModeComboBox.Name = "SearchTransModeComboBox";
+            this.SearchTransModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchTransModeComboBox.TabIndex = 41;
+            // 
+            // SearchTransTypeComboBox
+            // 
+            this.SearchTransTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SearchTransTypeComboBox.FormattingEnabled = true;
+            this.SearchTransTypeComboBox.Location = new System.Drawing.Point(448, 28);
+            this.SearchTransTypeComboBox.Name = "SearchTransTypeComboBox";
+            this.SearchTransTypeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchTransTypeComboBox.TabIndex = 40;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(326, 68);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(93, 13);
+            this.label18.TabIndex = 39;
+            this.label18.Text = "Transaction Mode";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(329, 31);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(90, 13);
+            this.label19.TabIndex = 38;
+            this.label19.Text = "Transaction Type";
+            // 
+            // SearchNameComboBox
+            // 
+            this.SearchNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SearchNameComboBox.FormattingEnabled = true;
+            this.SearchNameComboBox.Location = new System.Drawing.Point(122, 65);
+            this.SearchNameComboBox.Name = "SearchNameComboBox";
+            this.SearchNameComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchNameComboBox.TabIndex = 35;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(162, 51);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(25, 12);
+            this.label14.TabIndex = 34;
+            this.label14.Text = "(OR)";
+            // 
+            // SearchCategoryComboBox
+            // 
+            this.SearchCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SearchCategoryComboBox.FormattingEnabled = true;
+            this.SearchCategoryComboBox.Location = new System.Drawing.Point(122, 103);
+            this.SearchCategoryComboBox.Name = "SearchCategoryComboBox";
+            this.SearchCategoryComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchCategoryComboBox.TabIndex = 33;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(23, 103);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(49, 13);
+            this.label16.TabIndex = 32;
+            this.label16.Text = "Category";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(23, 28);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(35, 13);
+            this.label17.TabIndex = 31;
+            this.label17.Text = "Name";
+            // 
+            // SearchNameTextBox
+            // 
+            this.SearchNameTextBox.Location = new System.Drawing.Point(122, 28);
+            this.SearchNameTextBox.Name = "SearchNameTextBox";
+            this.SearchNameTextBox.Size = new System.Drawing.Size(121, 20);
+            this.SearchNameTextBox.TabIndex = 30;
             // 
             // tabPage3
             // 
@@ -405,7 +538,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1277, 570);
+            this.tabPage3.Size = new System.Drawing.Size(1094, 570);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Add  Contributors";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -501,11 +634,62 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(787, 28);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 45;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(659, 31);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(121, 13);
+            this.label20.TabIndex = 44;
+            this.label20.Text = "Transaction Date (From)";
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(787, 68);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker2.TabIndex = 47;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(659, 71);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(111, 13);
+            this.label21.TabIndex = 46;
+            this.label21.Text = "Transaction Date (To)";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(662, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(151, 23);
+            this.button2.TabIndex = 48;
+            this.button2.Text = "Search";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(836, 103);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(151, 23);
+            this.button3.TabIndex = 49;
+            this.button3.Text = "Reset";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1309, 702);
+            this.ClientSize = new System.Drawing.Size(1133, 702);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -557,7 +741,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label FirstNameLabel;
@@ -572,6 +755,24 @@
         private System.Windows.Forms.TextBox FamilyNameTextBox;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button AddContributorButton;
+        private System.Windows.Forms.ComboBox SearchNameComboBox;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox SearchCategoryComboBox;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox SearchNameTextBox;
+        private System.Windows.Forms.ComboBox SearchTransModeComboBox;
+        private System.Windows.Forms.ComboBox SearchTransTypeComboBox;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label20;
     }
 }
 
