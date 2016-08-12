@@ -194,6 +194,9 @@ namespace BIPCAccounting
                 mySqlConn.Open();
 
                 string transactionType = string.Empty;
+                string Category = string.Empty;
+                string ContributorId = string.Empty;
+
                 bool isChecked = radioButton1.Checked;
                 if (isChecked)
                     transactionType = radioButton1.Text;
@@ -206,21 +209,32 @@ namespace BIPCAccounting
                     transactionMode = radioButton3.Text;
                 else
                     transactionMode = radioButton3.Text;
-                
-                string Category = CategoryCombo.SelectedValue.ToString();
+
+                if (!string.IsNullOrEmpty(CategoryCombo.Text))
+                    Category = CategoryCombo.SelectedValue.ToString();
+
                 string newCategory = CategoryTextBox.Text;
 
-                
+                if (!string.IsNullOrEmpty(ContributorIdComboBox.Text))
+                    ContributorId = ContributorIdComboBox.SelectedValue.ToString();
 
-                string ContributorId = ContributorIdComboBox.SelectedValue.ToString();
+                if (!string.IsNullOrEmpty(newCategory))
+                    this.AddNewCategory(newCategory, out Category);
 
                 DateTime TransactionDate = TransactionDateTimePicker.Value;
                 //NAme
-                if (string.IsNullOrEmpty(NameTextBox.Text))
+                if (string.IsNullOrEmpty(NameTextBox.Text) && string.IsNullOrEmpty(ContributorIdComboBox.SelectedText))
                 {
                     MessageBox.Show("Name cannot be empty");
                     valid = false;
                 }
+
+                if (string.IsNullOrEmpty(CategoryTextBox.Text) && string.IsNullOrEmpty(CategoryCombo.SelectedText))
+                {
+                    MessageBox.Show("Category cannot be empty");
+                    valid = false;
+                }
+
                 // Amount
                 string amount = AmountTextBox.Text;
                 if (string.IsNullOrEmpty(amount))
@@ -241,7 +255,7 @@ namespace BIPCAccounting
 
                 if (valid)
                 {
-                    count = this.Insert(ContributorId, NameTextBox.Text, CategoryCombo.SelectedValue.ToString(), transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+                    //count = this.Insert(ContributorId, NameTextBox.Text, CategoryCombo.SelectedValue.ToString(), transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
 
                     if (count > 0)
                         MessageBox.Show("Record added");
@@ -261,32 +275,92 @@ namespace BIPCAccounting
             }
         }
 
-        private void AddNewCategory(string Category)
+        private bool AddNewCategory(string Category, out string categoryValue)
         {
-            string validSql = string.Format(@"SELECT 1
+            MySqlConnection mySqlConn = null;
+            bool status = false;
+            categoryValue = string.Empty;
+
+            try
+            {
+                string valid = "0";
+
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                string validSql = @"SELECT count(*)
   FROM table_column tc
        JOIN column_value_desc cvd
           ON     tc.table_column_id = cvd.table_column_id
              AND tc.table_name = 'contribution'
              AND tc.column_name = 'category'
-             AND description = '{0}'", Category);
+             AND cvd.description = @description";
 
-            string sql = string.Format(@"INSERT INTO column_value_desc(table_column_id,
+                MySqlCommand cmd = new MySqlCommand(validSql, mySqlConn);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@description", Category);
+                
+                object res = cmd.ExecuteScalar();
+                if (res != null)
+                    valid = res.ToString();
+                
+                if (int.Parse(valid) != 1)
+                {
+                    string insertSql = string.Format(@"INSERT INTO column_value_desc(table_column_id,
                               value,
                               description,
                               date_added)
    VALUES (
              (SELECT table_column_id
                 FROM table_column
-               WHERE table_name = 'contribution' AND column_name = 'category'),
+               WHERE table_name = 'contribution' AND column_name = 'category' and status = 1),
              (SELECT max(value) + 1
                 FROM table_column tc
                      JOIN column_value_desc cvd
                         ON     tc.table_column_id = cvd.table_column_id
                            AND tc.table_name = 'contribution'
-                           AND tc.column_name = 'category'),
+                           AND tc.column_name = 'category'
+                           AND cvd.status = 1),
              '{0}',
              now());", Category);
+
+                    MySqlCommand insertCmd = new MySqlCommand(insertSql, mySqlConn);
+                    int count = insertCmd.ExecuteNonQuery();
+
+                    if (count > 0)
+                    {
+                        MessageBox.Show("New Category Added", "Success");
+                        status = true;
+                    }
+                    else
+                        MessageBox.Show("New Category Add Failed", "Failure");
+
+
+                    string GetCategoryValueSql = string.Format(@"SELECT cvd.value
+  FROM table_column tc
+       JOIN column_value_desc cvd
+          ON     tc.table_column_id = cvd.table_column_id
+             AND tc.table_name = 'contribution'
+             AND tc.column_name = 'category'
+             AND cvd.description = '{0}'
+             AND cvd.status = 1", Category);
+
+                    MySqlCommand GetCatVAlueCmd = new MySqlCommand(GetCategoryValueSql, mySqlConn);
+                    
+                    object catRes = GetCatVAlueCmd.ExecuteScalar();
+
+                    if (catRes != null)
+                        categoryValue = catRes.ToString();
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Category [{0}] already exists", Category));
+                }
+            }
+            catch(Exception ex)
+            {
+            }
+
+            return status;
         }
 
         private int Insert(string contributor_id, string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
@@ -469,5 +543,6 @@ namespace BIPCAccounting
                 CategoryCombo.Enabled = true;
             }
         }
+        
     }
 }
