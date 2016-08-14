@@ -89,5 +89,14 @@ namespace BIPCAccounting
 
             return (List<CVD>)query.ToList();
         }
+
+        public string GetCVD(string table_name, string column_name, string description)
+        {
+            var query = from cvd in this.CVDList
+                        where cvd.TableName == table_name && cvd.ColumnName == column_name && cvd.Description == description
+                        select cvd.Value;
+
+            return query.FirstOrDefault();
+        }
     }
 }

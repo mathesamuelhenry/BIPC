@@ -37,11 +37,11 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.CheckRadionButton = new System.Windows.Forms.RadioButton();
+            this.CashRadionButton = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.DebitRadionButton = new System.Windows.Forms.RadioButton();
+            this.CreditRadioButton = new System.Windows.Forms.RadioButton();
             this.NoteTextBox = new System.Windows.Forms.TextBox();
             this.TransactionDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.AmountTextBox = new System.Windows.Forms.TextBox();
@@ -57,8 +57,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label22 = new System.Windows.Forms.Label();
+            this.SearchResultsDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ResetButton = new System.Windows.Forms.Button();
+            this.SearchButton = new System.Windows.Forms.Button();
+            this.SearchToDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label21 = new System.Windows.Forms.Label();
+            this.SearchFromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label20 = new System.Windows.Forms.Label();
+            this.SearchCheckTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.SearchTransModeComboBox = new System.Windows.Forms.ComboBox();
             this.SearchTransTypeComboBox = new System.Windows.Forms.ComboBox();
@@ -80,18 +89,14 @@
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.FamilyNameTextBox = new System.Windows.Forms.TextBox();
             this.AddContributorButton = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label20 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label21 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -102,10 +107,10 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 71);
+            this.tabControl1.Location = new System.Drawing.Point(12, 22);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1102, 596);
+            this.tabControl1.Size = new System.Drawing.Size(1102, 654);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -135,7 +140,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1094, 570);
+            this.tabPage1.Size = new System.Drawing.Size(1094, 628);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Contributions";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -203,67 +208,67 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radioButton4);
-            this.groupBox2.Controls.Add(this.radioButton3);
+            this.groupBox2.Controls.Add(this.CheckRadionButton);
+            this.groupBox2.Controls.Add(this.CashRadionButton);
             this.groupBox2.Location = new System.Drawing.Point(138, 246);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 49);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             // 
-            // radioButton4
+            // CheckRadionButton
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(106, 19);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(62, 17);
-            this.radioButton4.TabIndex = 9;
-            this.radioButton4.Text = "Cheque";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.CheckRadionButton.AutoSize = true;
+            this.CheckRadionButton.Location = new System.Drawing.Point(106, 19);
+            this.CheckRadionButton.Name = "CheckRadionButton";
+            this.CheckRadionButton.Size = new System.Drawing.Size(56, 17);
+            this.CheckRadionButton.TabIndex = 9;
+            this.CheckRadionButton.Text = "Check";
+            this.CheckRadionButton.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // CashRadionButton
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(17, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(49, 17);
-            this.radioButton3.TabIndex = 8;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Cash";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.CashRadionButton.AutoSize = true;
+            this.CashRadionButton.Checked = true;
+            this.CashRadionButton.Location = new System.Drawing.Point(17, 19);
+            this.CashRadionButton.Name = "CashRadionButton";
+            this.CashRadionButton.Size = new System.Drawing.Size(49, 17);
+            this.CashRadionButton.TabIndex = 8;
+            this.CashRadionButton.TabStop = true;
+            this.CashRadionButton.Text = "Cash";
+            this.CashRadionButton.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.DebitRadionButton);
+            this.groupBox1.Controls.Add(this.CreditRadioButton);
             this.groupBox1.Location = new System.Drawing.Point(138, 192);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 48);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             // 
-            // radioButton2
+            // DebitRadionButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Checked = true;
-            this.radioButton2.Location = new System.Drawing.Point(108, 19);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(50, 17);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Debit";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.DebitRadionButton.AutoSize = true;
+            this.DebitRadionButton.Checked = true;
+            this.DebitRadionButton.Location = new System.Drawing.Point(108, 19);
+            this.DebitRadionButton.Name = "DebitRadionButton";
+            this.DebitRadionButton.Size = new System.Drawing.Size(50, 17);
+            this.DebitRadionButton.TabIndex = 7;
+            this.DebitRadionButton.TabStop = true;
+            this.DebitRadionButton.Text = "Debit";
+            this.DebitRadionButton.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // CreditRadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(17, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(52, 17);
-            this.radioButton1.TabIndex = 6;
-            this.radioButton1.Text = "Credit";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.CreditRadioButton.AutoSize = true;
+            this.CreditRadioButton.Location = new System.Drawing.Point(17, 19);
+            this.CreditRadioButton.Name = "CreditRadioButton";
+            this.CreditRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.CreditRadioButton.TabIndex = 6;
+            this.CreditRadioButton.Text = "Credit";
+            this.CreditRadioButton.UseVisualStyleBackColor = true;
             // 
             // NoteTextBox
             // 
@@ -389,25 +394,59 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.label22);
+            this.tabPage2.Controls.Add(this.SearchResultsDataGridView);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1094, 570);
+            this.tabPage2.Size = new System.Drawing.Size(1094, 628);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Tag = "";
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Search Contributions";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(986, 203);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Export";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(14, 210);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(126, 16);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "Contributions Result";
+            // 
+            // SearchResultsDataGridView
+            // 
+            this.SearchResultsDataGridView.AllowUserToAddRows = false;
+            this.SearchResultsDataGridView.AllowUserToDeleteRows = false;
+            this.SearchResultsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SearchResultsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.SearchResultsDataGridView.Location = new System.Drawing.Point(17, 247);
+            this.SearchResultsDataGridView.Name = "SearchResultsDataGridView";
+            this.SearchResultsDataGridView.Size = new System.Drawing.Size(1044, 308);
+            this.SearchResultsDataGridView.TabIndex = 1;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button3);
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.dateTimePicker2);
+            this.groupBox3.Controls.Add(this.ResetButton);
+            this.groupBox3.Controls.Add(this.SearchButton);
+            this.groupBox3.Controls.Add(this.SearchToDateTimePicker);
             this.groupBox3.Controls.Add(this.label21);
-            this.groupBox3.Controls.Add(this.dateTimePicker1);
+            this.groupBox3.Controls.Add(this.SearchFromDateTimePicker);
             this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.SearchCheckTextBox);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.SearchTransModeComboBox);
             this.groupBox3.Controls.Add(this.SearchTransTypeComboBox);
@@ -425,12 +464,64 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             // 
-            // textBox1
+            // ResetButton
             // 
-            this.textBox1.Location = new System.Drawing.Point(448, 104);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(121, 20);
-            this.textBox1.TabIndex = 43;
+            this.ResetButton.Location = new System.Drawing.Point(836, 103);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(151, 23);
+            this.ResetButton.TabIndex = 49;
+            this.ResetButton.Text = "Reset";
+            this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // SearchButton
+            // 
+            this.SearchButton.Location = new System.Drawing.Point(662, 104);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(151, 23);
+            this.SearchButton.TabIndex = 48;
+            this.SearchButton.Text = "Search";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // SearchToDateTimePicker
+            // 
+            this.SearchToDateTimePicker.Location = new System.Drawing.Point(787, 68);
+            this.SearchToDateTimePicker.Name = "SearchToDateTimePicker";
+            this.SearchToDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.SearchToDateTimePicker.TabIndex = 47;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(659, 71);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(111, 13);
+            this.label21.TabIndex = 46;
+            this.label21.Text = "Transaction Date (To)";
+            // 
+            // SearchFromDateTimePicker
+            // 
+            this.SearchFromDateTimePicker.Location = new System.Drawing.Point(787, 28);
+            this.SearchFromDateTimePicker.Name = "SearchFromDateTimePicker";
+            this.SearchFromDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.SearchFromDateTimePicker.TabIndex = 45;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(659, 31);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(121, 13);
+            this.label20.TabIndex = 44;
+            this.label20.Text = "Transaction Date (From)";
+            // 
+            // SearchCheckTextBox
+            // 
+            this.SearchCheckTextBox.Location = new System.Drawing.Point(448, 104);
+            this.SearchCheckTextBox.Name = "SearchCheckTextBox";
+            this.SearchCheckTextBox.Size = new System.Drawing.Size(121, 20);
+            this.SearchCheckTextBox.TabIndex = 43;
             // 
             // label9
             // 
@@ -486,6 +577,7 @@
             this.SearchNameComboBox.Name = "SearchNameComboBox";
             this.SearchNameComboBox.Size = new System.Drawing.Size(121, 21);
             this.SearchNameComboBox.TabIndex = 35;
+            this.SearchNameComboBox.SelectedIndexChanged += new System.EventHandler(this.SearchNameComboBox_SelectedIndexChanged);
             // 
             // label14
             // 
@@ -501,7 +593,7 @@
             // 
             this.SearchCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchCategoryComboBox.FormattingEnabled = true;
-            this.SearchCategoryComboBox.Location = new System.Drawing.Point(122, 103);
+            this.SearchCategoryComboBox.Location = new System.Drawing.Point(122, 100);
             this.SearchCategoryComboBox.Name = "SearchCategoryComboBox";
             this.SearchCategoryComboBox.Size = new System.Drawing.Size(121, 21);
             this.SearchCategoryComboBox.TabIndex = 33;
@@ -530,6 +622,7 @@
             this.SearchNameTextBox.Name = "SearchNameTextBox";
             this.SearchNameTextBox.Size = new System.Drawing.Size(121, 20);
             this.SearchNameTextBox.TabIndex = 30;
+            this.SearchNameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchNameTextBox_KeyUp);
             // 
             // tabPage3
             // 
@@ -538,7 +631,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1094, 570);
+            this.tabPage3.Size = new System.Drawing.Size(1094, 628);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Add  Contributors";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -634,57 +727,6 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(787, 28);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 45;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(659, 31);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(121, 13);
-            this.label20.TabIndex = 44;
-            this.label20.Text = "Transaction Date (From)";
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(787, 68);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 47;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(659, 71);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(111, 13);
-            this.label21.TabIndex = 46;
-            this.label21.Text = "Transaction Date (To)";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(662, 104);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(151, 23);
-            this.button2.TabIndex = 48;
-            this.button2.Text = "Search";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(836, 103);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(151, 23);
-            this.button3.TabIndex = 49;
-            this.button3.Text = "Reset";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -692,8 +734,7 @@
             this.ClientSize = new System.Drawing.Size(1133, 702);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Text = "BIPC Accounting Tool";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -703,6 +744,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -724,10 +767,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton CheckRadionButton;
+        private System.Windows.Forms.RadioButton CashRadionButton;
+        private System.Windows.Forms.RadioButton DebitRadionButton;
+        private System.Windows.Forms.RadioButton CreditRadioButton;
         private System.Windows.Forms.ComboBox CategoryCombo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -765,14 +808,18 @@
         private System.Windows.Forms.ComboBox SearchTransTypeComboBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SearchCheckTextBox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Button ResetButton;
+        private System.Windows.Forms.Button SearchButton;
+        private System.Windows.Forms.DateTimePicker SearchToDateTimePicker;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker SearchFromDateTimePicker;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.DataGridView SearchResultsDataGridView;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

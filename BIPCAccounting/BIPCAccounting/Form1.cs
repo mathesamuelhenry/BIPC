@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace BIPCAccounting
 {
@@ -22,7 +23,7 @@ namespace BIPCAccounting
 
             connString = "DataSource=localhost;Port=3306;UID=root;PWD=;Database=BIPC;";
 
-            this.LoadDropDown();
+            this.LoadCategoryDropDown();
             this.LoadContributorIdComboBox();
             this.LoadTable();
             this.LoadCVD();
@@ -35,11 +36,16 @@ namespace BIPCAccounting
             this.LoadSearchTransTypeDropDown();
             this.LoadSearchCategoryDropDown();
             this.LoadSearchNameDropDown();
+
+            SearchFromDateTimePicker.Value = new DateTime(2000, 01, 01);
+            SearchToDateTimePicker.Value = new DateTime(2020, 01, 01);
         }
 
         private void LoadSearchTransTypeDropDown()
         {
             List<CVD> TransTypeCVDList = this.cvd.GetCVD("contribution", "transaction_type");
+
+            SearchTransTypeComboBox.Items.Clear();
 
             SearchTransTypeComboBox.Items.Add(new Item("", ""));
             foreach (CVD cvd in TransTypeCVDList)
@@ -55,6 +61,8 @@ namespace BIPCAccounting
         {
             List<CVD> TransModeCVDList = this.cvd.GetCVD("contribution", "transaction_mode");
 
+            SearchTransModeComboBox.Items.Clear();
+
             SearchTransModeComboBox.Items.Add(new Item("", ""));
             foreach (CVD cvd in TransModeCVDList)
             {
@@ -68,6 +76,8 @@ namespace BIPCAccounting
         private void LoadSearchCategoryDropDown()
         {
             List<CVD> CategoryCVDList = this.cvd.GetCVD("contribution", "category");
+
+            SearchCategoryComboBox.Items.Clear();
 
             SearchCategoryComboBox.Items.Add(new Item("", ""));
             foreach (CVD cvd in CategoryCVDList)
@@ -85,7 +95,9 @@ namespace BIPCAccounting
 
             try
             {
-                dt = this.LoadContributorId();
+                dt = this.GetContributorIdList();
+
+                SearchNameComboBox.Items.Clear();
 
                 SearchNameComboBox.Items.Add(new Item("", ""));
                 foreach (DataRow dRow in dt.Rows)
@@ -120,7 +132,7 @@ namespace BIPCAccounting
             }
         }
 
-        private void LoadDropDown()
+        private void LoadCategoryDropDown()
         {
             MySqlConnection mySqlConn = null;
 
@@ -149,6 +161,8 @@ namespace BIPCAccounting
                 CategoryCombo.ValueMember = "Id";
                 CategoryCombo.DisplayMember = "Name";
 
+                CategoryCombo.Items.Clear();
+
                 CategoryCombo.Items.Add(new Item("", ""));
                 foreach (DataRow dRow in dt.Rows)
                 {
@@ -168,7 +182,7 @@ namespace BIPCAccounting
 
         }
 
-        private DataTable LoadContributorId()
+        private DataTable GetContributorIdList()
         {
             MySqlConnection mySqlConn = null;
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -203,7 +217,9 @@ namespace BIPCAccounting
 
             try
             {
-                dt = this.LoadContributorId();
+                dt = this.GetContributorIdList();
+
+                ContributorIdComboBox.Items.Clear();
 
                 ContributorIdComboBox.Items.Add(new Item("", ""));
                 foreach (DataRow dRow in dt.Rows)
@@ -219,12 +235,7 @@ namespace BIPCAccounting
 
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void label8_Click(object sender, EventArgs e)
         {
 
@@ -249,7 +260,7 @@ namespace BIPCAccounting
       CASE
           WHEN IFNULL(cn.contribution_name, '') = ''
           THEN
-             CONCAT(cr.last_name, ', ', cr.first_name)
+             CONCAT(cr.first_name, ' ', cr.last_name)
           ELSE
              cn.contribution_name
        END
@@ -326,18 +337,31 @@ namespace BIPCAccounting
                 string Category = string.Empty;
                 string ContributorId = string.Empty;
 
-                bool isChecked = radioButton1.Checked;
+                bool isChecked = CreditRadioButton.Checked;
                 if (isChecked)
-                    transactionType = radioButton1.Text;
+                    transactionType = CreditRadioButton.Text;
                 else
-                    transactionType = radioButton2.Text;
+                    transactionType = DebitRadionButton.Text;
+
+                transactionType = this.cvd.GetCVD("contribution", "transaction_type", transactionType);
 
                 string transactionMode = string.Empty;
-                bool isTMChecked = radioButton3.Checked;
+                bool isTMChecked = CashRadionButton.Checked;
                 if (isTMChecked)
-                    transactionMode = radioButton3.Text;
+                    transactionMode = CashRadionButton.Text;
                 else
-                    transactionMode = radioButton3.Text;
+                    transactionMode = CheckRadionButton.Text;
+
+                if (transactionMode == "Check")
+                {
+                    if (string.IsNullOrEmpty(CheckTextBox.Text))
+                    {
+                        MessageBox.Show("Check # cannot be empty.");
+                        valid = false;
+                    }
+                }
+
+                transactionMode = this.cvd.GetCVD("contribution", "transaction_mode", transactionMode);
 
                 if (!string.IsNullOrEmpty(CategoryCombo.Text))
                 {
@@ -387,7 +411,7 @@ namespace BIPCAccounting
                         valid = false;
                     }
                 }
-
+               
                 if (valid)
                 {
                     count = this.Insert(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
@@ -467,6 +491,8 @@ namespace BIPCAccounting
                     {
                         throw new Exception("New Category Add Failed");
                     }
+
+                    this.LoadCategoryDropDown();
 
                     string GetCategoryValueSql = string.Format(@"SELECT cvd.value
   FROM table_column tc
@@ -600,6 +626,9 @@ namespace BIPCAccounting
                 else
                     MessageBox.Show("Issue adding a new member", "Failure");
 
+                this.LoadSearchNameDropDown();
+                this.LoadContributorIdComboBox();
+
             }
             catch(Exception ex)
             {
@@ -686,8 +715,233 @@ namespace BIPCAccounting
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Utils.ResetAllControls(this.SearchCategoryComboBox);
+            Utils.ResetAllControls(this.tabControl1.SelectedTab);
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string searchSQL = this.GetSearchSQL();
+
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            mySqlConn.Open();
+
+            try
+            {
+                System.Data.DataTable dt = new System.Data.DataTable();
+
+                dt = Utils.GetDataTable(mySqlConn, searchSQL);
+
+                BindingSource bs = new BindingSource();
+
+                bs.DataSource = dt;
+                SearchResultsDataGridView.DataSource = bs;
+                SearchResultsDataGridView.Visible = true;
+                SearchResultsDataGridView.AutoResizeRows();
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private string GetSearchSQL()
+        {
+            string where = string.Empty;
+
+            string searchSQL = string.Format(@"SELECT CASE
+          WHEN IFNULL(cn.contribution_name, '') = ''
+          THEN
+             CONCAT(con.first_name, ' ', con.last_name)
+          ELSE
+             cn.contribution_name
+       END
+          AS 'Contributor Name',
+       cvd.description AS Category,
+       cvd_transtype.description AS Type,
+       cvd_transmode.description AS Mode,
+       cn.amount AS Amount,
+       cn.check_number AS 'Check #',
+       cn.transaction_date AS 'Trans DT',
+       cn.note AS 'Note',
+       cn.date_added AS 'Date Added'
+  FROM contribution cn
+       LEFT JOIN contributor con
+          ON con.contributor_id = cn.contributor_id AND con.status = 1
+       LEFT JOIN table_column tc
+          ON     tc.table_name = 'contribution'
+             AND tc.column_name = 'category'
+             AND tc.status = 1
+       LEFT JOIN column_value_desc cvd
+          ON     cvd.table_column_id = tc.table_column_id
+             AND cvd.value = cn.category
+             AND cvd.status = 1
+       LEFT JOIN table_column tc_transtype
+          ON     tc_transtype.table_name = 'contribution'
+             AND tc_transtype.column_name = 'transaction_type'
+             AND tc_transtype.status = 1
+       LEFT JOIN column_value_desc cvd_transtype
+          ON     cvd_transtype.table_column_id = tc_transtype.table_column_id
+             AND cvd_transtype.value = cn.transaction_type
+             AND cvd_transtype.status = 1
+       LEFT JOIN table_column tc_transmode
+          ON     tc_transmode.table_name = 'contribution'
+             AND tc_transmode.column_name = 'transaction_mode'
+             AND tc_transmode.status = 1
+       LEFT JOIN column_value_desc cvd_transmode
+          ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
+             AND cvd_transmode.value = cn.transaction_mode
+             AND cvd_transmode.status = 1");
+
+            where = "cn.status = 1";
+
+            if (!string.IsNullOrEmpty(SearchNameTextBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                where += string.Format("cn.contribution_name like '%{0}%'", SearchNameTextBox.Text);
+            }
+            else if (!string.IsNullOrEmpty(SearchNameComboBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                Item nameItem = (Item)SearchNameComboBox.SelectedItem;
+
+                where += string.Format("con.contributor_id = '{0}'", nameItem.Id);
+            }
+
+            if (!string.IsNullOrEmpty(SearchCategoryComboBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                Item categoryItem = (Item)SearchCategoryComboBox.SelectedItem;
+
+                where += string.Format("cvd.value = '{0}'", categoryItem.Id);
+            }
+
+            if (!string.IsNullOrEmpty(SearchTransTypeComboBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                Item transTypeItem = (Item)SearchTransTypeComboBox.SelectedItem;
+
+                where += string.Format("cvd_transtype.value = '{0}'", transTypeItem.Id);
+            }
+
+            if (!string.IsNullOrEmpty(SearchTransModeComboBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                Item transModeItem = (Item)SearchTransModeComboBox.SelectedItem;
+
+                where += string.Format("cvd_transmode.value = '{0}'", transModeItem.Id);
+            }
+
+            if (!string.IsNullOrEmpty(SearchCheckTextBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                where += string.Format("cn.check_number like '%{0}%'", SearchCheckTextBox.Text);
+            }
+
+            if (!string.IsNullOrEmpty(SearchFromDateTimePicker.Value.ToString()))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                where += string.Format("date_format(cn.transaction_date, '%Y-%m-%d') >= '{0}'", SearchFromDateTimePicker.Value.ToString("yyyy-MM-dd"));
+            }
+
+            if (!string.IsNullOrEmpty(SearchToDateTimePicker.Value.ToString()))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                where += string.Format("date_format(cn.transaction_date, '%Y-%m-%d') <= '{0}'", SearchToDateTimePicker.Value.ToString("yyyy-MM-dd"));
+            }
+
+            searchSQL = searchSQL + " where " + where;
+
+            return searchSQL;
+        }
+
+        private void SearchNameTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(SearchNameTextBox.Text))
+            {
+                SearchNameComboBox.SelectedValue = string.Empty;
+                SearchNameComboBox.Enabled = false;
+            }
+            else
+            {
+                SearchNameComboBox.Enabled = true;
+            }
+        }
+
+        private void SearchNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(SearchNameComboBox.Text))
+            {
+                SearchNameTextBox.Text = string.Empty;
+                SearchNameTextBox.Enabled = false;
+            }
+            else
+            {
+                SearchNameTextBox.Enabled = true;
+            }
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV File|*.csv";
+            sfd.FileName = "My CSV File";
+            sfd.InitialDirectory = @"C:\Users\Prasanna\Documents\BIPC";
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string Path = sfd.FileName;
+
+                MySqlConnection mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                string SearchSQL = this.GetSearchSQL();
+
+                System.Data.DataTable dt = Utils.GetDataTable(mySqlConn, SearchSQL);
+
+                StringBuilder sb = new StringBuilder();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    sb.Append("Contributor Name,Category,Transaction Type, Transaction Mode, Amount, Check #, Transaction Date, Note, Date Added");
+                    sb.AppendLine();
+
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8}", dRow["Contributor Name"].ToString().Replace(",", "")
+                            , dRow["Category"].ToString().Replace(",", "")
+                            , dRow["Type"].ToString().Replace(",", "")
+                            , dRow["Mode"].ToString().Replace(",", "")
+                            , dRow["Amount"].ToString().Replace(",", "")
+                            , dRow["Check #"].ToString().Replace(",", "")
+                            , dRow["Trans DT"].ToString().Replace(",", "")
+                            , dRow["Note"].ToString().Replace(",", "")
+                            , dRow["Date Added"].ToString().Replace(",", ""));
+
+                        sb.AppendLine();
+                    }
+
+                    File.WriteAllText(Path, sb.ToString());
+
+                    MessageBox.Show(string.Format("File [{0}] created", sfd.FileName));
+                }
+            }
+        }
     }
 }
