@@ -62,6 +62,23 @@ namespace BIPCAccounting
                     ListBox listBox = (ListBox)control;
                     listBox.ClearSelected();
                 }
+
+                if (control is DateTimePicker)
+                {
+                    DateTimePicker dateTime = (DateTimePicker)control;
+                    if (dateTime.Name.Equals("SearchFromDateTimePicker"))
+                    {
+                        dateTime.Value = new DateTime(2000, 01, 01);
+                    }
+                    else if (dateTime.Name.Equals("SearchToDateTimePicker"))
+                    {
+                        dateTime.Value = new DateTime(2099, 01, 01);
+                    }
+                    else
+                    {
+                        dateTime.Value = DateTime.Now;
+                    }
+                }
             }
         }
     }

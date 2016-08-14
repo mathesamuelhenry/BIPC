@@ -28,6 +28,7 @@ namespace BIPCAccounting
             this.LoadTable();
             this.LoadCVD();
             this.LoadSearchTabDropDowns();
+            this.LoadSearchResultDataGrid();
         }
 
         private void LoadSearchTabDropDowns()
@@ -38,7 +39,7 @@ namespace BIPCAccounting
             this.LoadSearchNameDropDown();
 
             SearchFromDateTimePicker.Value = new DateTime(2000, 01, 01);
-            SearchToDateTimePicker.Value = new DateTime(2020, 01, 01);
+            SearchToDateTimePicker.Value = new DateTime(2099, 01, 01);
         }
 
         private void LoadSearchTransTypeDropDown()
@@ -464,7 +465,7 @@ namespace BIPCAccounting
                 if (res != null)
                     valid = res.ToString();
                 
-                if (int.Parse(valid) != 1)
+                if (int.Parse(valid) == 0)
                 {
                     string insertSql = string.Format(@"INSERT INTO column_value_desc(table_column_id,
                               value,
@@ -493,8 +494,9 @@ namespace BIPCAccounting
                     }
 
                     this.LoadCategoryDropDown();
+                }
 
-                    string GetCategoryValueSql = string.Format(@"SELECT cvd.value
+                string GetCategoryValueSql = string.Format(@"SELECT cvd.value
   FROM table_column tc
        JOIN column_value_desc cvd
           ON     tc.table_column_id = cvd.table_column_id
@@ -503,17 +505,12 @@ namespace BIPCAccounting
              AND cvd.description = '{0}'
              AND cvd.status = 1", Category);
 
-                    MySqlCommand GetCatVAlueCmd = new MySqlCommand(GetCategoryValueSql, mySqlConn);
-                    
-                    object catRes = GetCatVAlueCmd.ExecuteScalar();
+                MySqlCommand GetCatVAlueCmd = new MySqlCommand(GetCategoryValueSql, mySqlConn);
 
-                    if (catRes != null)
-                        categoryValue = catRes.ToString();
-                }
-                else
-                {
-                    MessageBox.Show(string.Format("Category [{0}] already exists", Category));
-                }
+                object catRes = GetCatVAlueCmd.ExecuteScalar();
+
+                if (catRes != null)
+                    categoryValue = catRes.ToString();
             }
             catch(Exception ex)
             {
@@ -717,8 +714,7 @@ namespace BIPCAccounting
         {
             Utils.ResetAllControls(this.tabControl1.SelectedTab);
         }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void LoadSearchResultDataGrid()
         {
             string searchSQL = this.GetSearchSQL();
 
@@ -743,6 +739,11 @@ namespace BIPCAccounting
                 if (mySqlConn != null)
                     mySqlConn.Close();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.LoadSearchResultDataGrid();
         }
 
         private string GetSearchSQL()
@@ -900,25 +901,29 @@ namespace BIPCAccounting
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "CSV File|*.csv";
-            sfd.FileName = "My CSV File";
-            sfd.InitialDirectory = @"C:\Users\Prasanna\Documents\BIPC";
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                string Path = sfd.FileName;
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            mySqlConn.Open();
 
-                MySqlConnection mySqlConn = new MySqlConnection(connString);
-                mySqlConn.Open();
+            string SearchSQL = this.GetSearchSQL();
 
-                string SearchSQL = this.GetSearchSQL();
+            System.Data.DataTable dt = Utils.GetDataTable(mySqlConn, SearchSQL);
 
-                System.Data.DataTable dt = Utils.GetDataTable(mySqlConn, SearchSQL);
-
-                StringBuilder sb = new StringBuilder();
-
-                if (dt != null && dt.Rows.Count > 0)
+            if (dt != null && dt.Rows.Count > 0)
+            { 
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "CSV File|*.csv";
+                sfd.FileName = "My CSV File";
+                sfd.InitialDirectory = @"C:\Users\Prasanna\Documents\BIPC";
+                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
+                    string Path = sfd.FileName;
+
+                    StringBuilder sb = new StringBuilder();
+                    
+                    string total = dt.AsEnumerable()
+                                .Sum(x => x.Field<Decimal>("amount"))
+                                .ToString();
+
                     sb.Append("Contributor Name,Category,Transaction Type, Transaction Mode, Amount, Check #, Transaction Date, Note, Date Added");
                     sb.AppendLine();
 
@@ -937,10 +942,17 @@ namespace BIPCAccounting
                         sb.AppendLine();
                     }
 
+                    sb.AppendLine();
+                    sb.AppendFormat("{0},,,,{1},,,,", "Total", total);
+
                     File.WriteAllText(Path, sb.ToString());
 
                     MessageBox.Show(string.Format("File [{0}] created", sfd.FileName));
                 }
+            }
+            else
+            {
+                MessageBox.Show("No records returned to be exported.");
             }
         }
     }
