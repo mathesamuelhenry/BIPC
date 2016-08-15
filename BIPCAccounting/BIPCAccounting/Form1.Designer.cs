@@ -142,7 +142,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1094, 628);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Contributions";
+            this.tabPage1.Text = "Add Expenditure";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // CategoryTextBox
@@ -404,7 +404,7 @@
             this.tabPage2.Size = new System.Drawing.Size(1094, 628);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Tag = "";
-            this.tabPage2.Text = "Search Contributions";
+            this.tabPage2.Text = "Search Expenditures";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button2
@@ -423,9 +423,9 @@
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.Location = new System.Drawing.Point(14, 210);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(126, 16);
+            this.label22.Size = new System.Drawing.Size(120, 16);
             this.label22.TabIndex = 2;
-            this.label22.Text = "Contributions Result";
+            this.label22.Text = "Expenditure Result";
             // 
             // SearchResultsDataGridView
             // 
@@ -633,7 +633,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(1094, 628);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Add  Contributors";
+            this.tabPage3.Text = "Add Contributors";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 

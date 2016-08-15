@@ -553,7 +553,7 @@ namespace BIPCAccounting
   ,'{8}'  -- note 
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
-)", contributor_id
+)", string.IsNullOrEmpty(contributor_id) ? "NULL" : contributor_id
   , name
   , category
   , trans_type
