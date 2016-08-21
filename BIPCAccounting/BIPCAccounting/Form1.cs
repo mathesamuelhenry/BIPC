@@ -265,7 +265,7 @@ namespace BIPCAccounting
           ELSE
              cn.contribution_name
        END
-          AS 'Contributor Name',
+          AS 'Name',
        cvd.description AS Category,
        cvd_transtype.description AS Type,
        cvd_transmode.description AS Mode,
@@ -300,7 +300,8 @@ namespace BIPCAccounting
           ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
              AND cvd_transmode.value = cn.transaction_mode
              AND cvd_transmode.status = 1 
- WHERE cn.status = 1;", mySqlConn);
+ WHERE cn.status = 1
+ ORDER BY cn.date_added DESC;", mySqlConn);
 
             try
             {
@@ -475,7 +476,7 @@ namespace BIPCAccounting
              (SELECT table_column_id
                 FROM table_column
                WHERE table_name = 'contribution' AND column_name = 'category' and status = 1),
-             (SELECT max(value) + 1
+             (SELECT max(CAST(value as UNSIGNED)) + 1
                 FROM table_column tc
                      JOIN column_value_desc cvd
                         ON     tc.table_column_id = cvd.table_column_id
@@ -757,7 +758,7 @@ namespace BIPCAccounting
           ELSE
              cn.contribution_name
        END
-          AS 'Contributor Name',
+          AS 'Name',
        cvd.description AS Category,
        cvd_transtype.description AS Type,
        cvd_transmode.description AS Mode,
@@ -913,7 +914,8 @@ namespace BIPCAccounting
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Filter = "CSV File|*.csv";
                 sfd.FileName = "My CSV File";
-                sfd.InitialDirectory = @"C:\Users\Prasanna\Documents\BIPC";
+                sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
                 if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     string Path = sfd.FileName;
@@ -929,7 +931,7 @@ namespace BIPCAccounting
 
                     foreach (DataRow dRow in dt.Rows)
                     {
-                        sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8}", dRow["Contributor Name"].ToString().Replace(",", "")
+                        sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8}", dRow["Name"].ToString().Replace(",", "")
                             , dRow["Category"].ToString().Replace(",", "")
                             , dRow["Type"].ToString().Replace(",", "")
                             , dRow["Mode"].ToString().Replace(",", "")

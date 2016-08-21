@@ -251,22 +251,22 @@
             // DebitRadionButton
             // 
             this.DebitRadionButton.AutoSize = true;
-            this.DebitRadionButton.Checked = true;
             this.DebitRadionButton.Location = new System.Drawing.Point(108, 19);
             this.DebitRadionButton.Name = "DebitRadionButton";
             this.DebitRadionButton.Size = new System.Drawing.Size(50, 17);
             this.DebitRadionButton.TabIndex = 7;
-            this.DebitRadionButton.TabStop = true;
             this.DebitRadionButton.Text = "Debit";
             this.DebitRadionButton.UseVisualStyleBackColor = true;
             // 
             // CreditRadioButton
             // 
             this.CreditRadioButton.AutoSize = true;
+            this.CreditRadioButton.Checked = true;
             this.CreditRadioButton.Location = new System.Drawing.Point(17, 19);
             this.CreditRadioButton.Name = "CreditRadioButton";
             this.CreditRadioButton.Size = new System.Drawing.Size(52, 17);
             this.CreditRadioButton.TabIndex = 6;
+            this.CreditRadioButton.TabStop = true;
             this.CreditRadioButton.Text = "Credit";
             this.CreditRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -633,7 +633,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(1094, 628);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Add Contributors";
+            this.tabPage3.Text = "Add Name";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
@@ -643,9 +643,9 @@
             this.label11.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.label11.Location = new System.Drawing.Point(28, 17);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(80, 13);
+            this.label11.Size = new System.Drawing.Size(57, 13);
             this.label11.TabIndex = 8;
-            this.label11.Text = "Add Contributor";
+            this.label11.Text = "Add Name";
             // 
             // tableLayoutPanel1
             // 
