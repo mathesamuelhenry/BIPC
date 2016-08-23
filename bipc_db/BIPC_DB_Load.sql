@@ -128,7 +128,7 @@ insert into column_value_desc (
 ) VALUES (
   (select table_column_id from table_column where status = 1 and table_name = 'contribution' and column_name = 'transaction_mode')
   ,'2' -- value - IN varchar(50)
-  ,'Credit' -- description - IN varchar(500)
+  ,'Check' -- description - IN varchar(500)
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
 );

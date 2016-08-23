@@ -354,15 +354,7 @@ namespace BIPCAccounting
                 else
                     transactionMode = CheckRadionButton.Text;
 
-                if (transactionMode == "Check")
-                {
-                    if (string.IsNullOrEmpty(CheckTextBox.Text))
-                    {
-                        MessageBox.Show("Check # cannot be empty.");
-                        valid = false;
-                    }
-                }
-
+                
                 transactionMode = this.cvd.GetCVD("contribution", "transaction_mode", transactionMode);
 
                 if (!string.IsNullOrEmpty(CategoryCombo.Text))
