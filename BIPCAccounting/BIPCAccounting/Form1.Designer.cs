@@ -57,6 +57,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.TotalBalanceLabel = new System.Windows.Forms.Label();
+            this.TotalLabel = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.SearchResultsDataGridView = new System.Windows.Forms.DataGridView();
@@ -90,6 +95,7 @@
             this.FamilyNameTextBox = new System.Windows.Forms.TextBox();
             this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.OpeningBalanceValue = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -394,6 +400,12 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.OpeningBalanceValue);
+            this.tabPage2.Controls.Add(this.TotalBalanceLabel);
+            this.tabPage2.Controls.Add(this.TotalLabel);
+            this.tabPage2.Controls.Add(this.label25);
+            this.tabPage2.Controls.Add(this.label24);
+            this.tabPage2.Controls.Add(this.label23);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.SearchResultsDataGridView);
@@ -406,6 +418,49 @@
             this.tabPage2.Tag = "";
             this.tabPage2.Text = "Search Expenditures";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // TotalBalanceLabel
+            // 
+            this.TotalBalanceLabel.AutoSize = true;
+            this.TotalBalanceLabel.Location = new System.Drawing.Point(653, 581);
+            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
+            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalBalanceLabel.TabIndex = 9;
+            // 
+            // TotalLabel
+            // 
+            this.TotalLabel.AutoSize = true;
+            this.TotalLabel.Location = new System.Drawing.Point(365, 581);
+            this.TotalLabel.Name = "TotalLabel";
+            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalLabel.TabIndex = 8;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(577, 581);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(79, 13);
+            this.label25.TabIndex = 7;
+            this.label25.Text = "Total Balance :";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(328, 581);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(40, 13);
+            this.label24.TabIndex = 6;
+            this.label24.Text = "Total : ";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(14, 581);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(95, 13);
+            this.label23.TabIndex = 4;
+            this.label23.Text = "Opening Balance :";
             // 
             // button2
             // 
@@ -433,7 +488,7 @@
             this.SearchResultsDataGridView.AllowUserToDeleteRows = false;
             this.SearchResultsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SearchResultsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.SearchResultsDataGridView.Location = new System.Drawing.Point(17, 247);
+            this.SearchResultsDataGridView.Location = new System.Drawing.Point(17, 246);
             this.SearchResultsDataGridView.Name = "SearchResultsDataGridView";
             this.SearchResultsDataGridView.Size = new System.Drawing.Size(1044, 308);
             this.SearchResultsDataGridView.TabIndex = 1;
@@ -727,6 +782,14 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
+            // OpeningBalanceValue
+            // 
+            this.OpeningBalanceValue.AutoSize = true;
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(115, 581);
+            this.OpeningBalanceValue.Name = "OpeningBalanceValue";
+            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
+            this.OpeningBalanceValue.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -820,6 +883,12 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label TotalBalanceLabel;
+        private System.Windows.Forms.Label TotalLabel;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label OpeningBalanceValue;
     }
 }
 

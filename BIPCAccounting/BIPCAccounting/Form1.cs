@@ -374,6 +374,9 @@ namespace BIPCAccounting
                 if (!string.IsNullOrEmpty(newCategory))
                     this.AddNewCategory(newCategory, out Category);
 
+                this.LoadCVD();
+                this.LoadSearchCategoryDropDown();
+
                 DateTime TransactionDate = TransactionDateTimePicker.Value;
                 //NAme
                 if (string.IsNullOrEmpty(NameTextBox.Text) && string.IsNullOrEmpty(ContributorIdComboBox.Text))
@@ -710,6 +713,11 @@ namespace BIPCAccounting
         private void LoadSearchResultDataGrid()
         {
             string searchSQL = this.GetSearchSQL();
+            decimal TotalBalance = 0;
+            decimal OpeningBalance = 10000;
+            decimal Total = 0;
+            decimal CreditAmount = 0;
+            decimal DebitAmount = 0;
 
             MySqlConnection mySqlConn = new MySqlConnection(connString);
             mySqlConn.Open();
@@ -719,6 +727,26 @@ namespace BIPCAccounting
                 System.Data.DataTable dt = new System.Data.DataTable();
 
                 dt = Utils.GetDataTable(mySqlConn, searchSQL);
+
+                if (dt != null)
+                {
+                    foreach(DataRow dRow in dt.Rows)
+                    {
+                        if (dRow["Type"].ToString().Equals("Credit", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            CreditAmount += decimal.Parse(dRow["Amount"].ToString());
+                        }
+                        else
+                        {
+                            DebitAmount += decimal.Parse(dRow["Amount"].ToString());
+                        }
+                    }
+                }
+
+                TotalBalance = OpeningBalance + CreditAmount - DebitAmount;
+
+                TotalBalanceLabel.Text = TotalBalance.ToString();
+                OpeningBalanceValue.Text = OpeningBalance.ToString();
 
                 BindingSource bs = new BindingSource();
 
@@ -949,5 +977,6 @@ namespace BIPCAccounting
                 MessageBox.Show("No records returned to be exported.");
             }
         }
+        
     }
 }

@@ -66,6 +66,7 @@ namespace BIPCAccounting
         public CVD(MySqlConnection mySqlConn)
         {
             MySqlCommand cmdDataBase = new MySqlCommand(this.sql, mySqlConn);
+            this.CVDList = new List<CVD>();
 
             MySqlDataAdapter sda = new MySqlDataAdapter();
             sda.SelectCommand = cmdDataBase;
