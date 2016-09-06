@@ -278,7 +278,8 @@ namespace BIPCAccounting
             //string connString = "DataSource=dbdprsql-bct.risk.regn.net;Port=3306;UID=mbs_ws;PWD=mbs_ws123;Database=sales_assignment;";
 
             MySqlConnection mySqlConn = new MySqlConnection(connString);
-            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT                           
+            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT 
+      cn.contribution_id as 'Contribution Id',                          
       CASE
           WHEN IFNULL(cn.contribution_name, '') = ''
           THEN
@@ -331,12 +332,26 @@ namespace BIPCAccounting
                 System.Data.DataTable dt = new System.Data.DataTable();
                 sda.Fill(dt);
 
-                BindingSource bs = new BindingSource();
+                dataGridView1.Rows.Clear();
+                dataGridView1.Refresh();
 
-                bs.DataSource = dt;
-                dataGridView1.DataSource = bs;
-                dataGridView1.Visible = true;
-
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        int n = dataGridView1.Rows.Add();
+                        dataGridView1.Rows[n].Cells["ID"].Value = dRow["Contribution Id"].ToString();
+                        dataGridView1.Rows[n].Cells["CName"].Value = dRow["Name"].ToString();
+                        dataGridView1.Rows[n].Cells["Category"].Value = dRow["Category"].ToString();
+                        dataGridView1.Rows[n].Cells["Type"].Value = dRow["Type"].ToString();
+                        dataGridView1.Rows[n].Cells["Mode"].Value = dRow["Mode"].ToString();
+                        dataGridView1.Rows[n].Cells["Checkno"].Value = dRow["Check #"].ToString();
+                        dataGridView1.Rows[n].Cells["Amount"].Value = dRow["Amount"].ToString();
+                        dataGridView1.Rows[n].Cells["TransDt"].Value = dRow["Trans DT"].ToString();
+                        dataGridView1.Rows[n].Cells["Note"].Value = dRow["Note"].ToString();
+                        dataGridView1.Rows[n].Cells["DateAdded"].Value = dRow["Date Added"].ToString();
+                    }
+                }
             }
             finally
             {
@@ -438,6 +453,9 @@ namespace BIPCAccounting
                         MessageBox.Show("Record added");
                     else
                         MessageBox.Show("Record not added");
+
+                    this.LoadTable();
+                    this.LoadSearchResultDataGrid();
                 }
             }
             catch(Exception ex)
@@ -596,10 +614,6 @@ namespace BIPCAccounting
             return count;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void tabPage3_Click(object sender, EventArgs e)
         {
@@ -772,12 +786,35 @@ namespace BIPCAccounting
                 TotalBalanceLabel.Text = TotalBalance.ToString();
                 OpeningBalanceValue.Text = OpeningBalance.ToString();
 
-                BindingSource bs = new BindingSource();
+                SearchResultsDataGridView.Rows.Clear();
+                SearchResultsDataGridView.Refresh();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        int n = SearchResultsDataGridView.Rows.Add();
+                        SearchResultsDataGridView.Rows[n].Cells["IDSearch"].Value = dRow["Contribution Id"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["CNameSearch"].Value = dRow["Name"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["CategorySearch"].Value = dRow["Category"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["TypeSearch"].Value = dRow["Type"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["ModeSearch"].Value = dRow["Mode"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["ChecknoSearch"].Value = dRow["Check #"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["AmountSearch"].Value = dRow["Amount"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["TransDtSearch"].Value = dRow["Trans DT"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["NoteSearch"].Value = dRow["Note"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["DateAddedSearch"].Value = dRow["Date Added"].ToString();
+                    }
+                }
+                SearchResultsDataGridView.Rows[0].Selected = true;
+                SearchResultsDataGridView.AutoResizeRows();
+
+                /*BindingSource bs = new BindingSource();
 
                 bs.DataSource = dt;
                 SearchResultsDataGridView.DataSource = bs;
                 SearchResultsDataGridView.Visible = true;
-                SearchResultsDataGridView.AutoResizeRows();
+                SearchResultsDataGridView.AutoResizeRows();*/
             }
             finally
             {
@@ -795,7 +832,9 @@ namespace BIPCAccounting
         {
             string where = string.Empty;
 
-            string searchSQL = string.Format(@"SELECT CASE
+            string searchSQL = string.Format(@"SELECT 
+       cn.contribution_id as 'Contribution Id',
+       CASE
           WHEN IFNULL(cn.contribution_name, '') = ''
           THEN
              CONCAT(con.first_name, ' ', con.last_name)
@@ -1119,6 +1158,93 @@ INSERT INTO column_value_desc(table_column_id,
             MessageBox.Show("All Form data loaded.", "Result", MessageBoxButtons.OK);
         }
 
-        
+        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //DataGridViewRow row = dataGridView1.CurrentRow;
+            //MessageBox.Show(row.Cells["ID"].Value.ToString());
+
+        }
+
+        private void EditSearchRow_Click(object sender, EventArgs e)
+        {
+            if (SearchResultsDataGridView.SelectedRows.Count > 0)
+            {
+                if (SearchResultsDataGridView.SelectedRows.Count > 1)
+                    MessageBox.Show("Multiple records cannot be selected to EDIT. Please select only one.");
+                else
+                {
+                    tabControl1.SelectedTab = tabPage1;
+                    EditModeLabel.ForeColor = Color.Red;
+                    EditModeLabel.Text = string.Format("EDIT MODE FOR EXPENDITURE ID : {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+
+                    EditModelink.ActiveLinkColor = Color.Red;
+                    EditModelink.Text = "CANCEL EDIT MODE";
+                }
+            }
+            else
+            {
+                MessageBox.Show("No rows were selected");
+            }
+        }
+
+        private void DeleteSearchRow_Click(object sender, EventArgs e)
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                int count = 0;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                List<string> contributionIdList = new List<string>();
+                string contributionIds = string.Empty;
+
+                if (SearchResultsDataGridView.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        foreach (DataGridViewRow row in SearchResultsDataGridView.SelectedRows)
+                        {
+                            contributionIdList.Add(row.Cells["IDSearch"].Value.ToString());
+                        }
+
+                        contributionIds = string.Join(",", contributionIdList);
+
+                        string sql = string.Format(@"UPDATE contribution
+   SET status = 0, date_changed = now()
+ WHERE contribution_id IN ({0})", contributionIds);
+
+                        MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                        count = cmd.ExecuteNonQuery();
+
+                        MessageBox.Show(string.Format("{0} expenditure records deleted.", contributionIdList.Count));
+
+                        this.LoadTable();
+                        this.LoadSearchResultDataGrid();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No rows were selected");
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void EditModelink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            EditModeLabel.ForeColor = Color.Green;
+            EditModeLabel.Text = string.Empty;
+
+            EditModelink.ActiveLinkColor = Color.Green;
+            EditModelink.Text = string.Empty;
+        }
+
     }
 }

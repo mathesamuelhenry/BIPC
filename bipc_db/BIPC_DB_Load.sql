@@ -132,3 +132,16 @@ insert into column_value_desc (
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
 );
+
+insert into table_column (
+  table_name
+  ,column_name
+  ,status
+  ,date_added
+) VALUES (
+  'TEMP' -- table_name - IN varchar(50)
+  ,'opening_balance' -- column_name - IN varchar(50)
+  ,1   -- status - IN tinyint(4)
+  ,now()  -- date_added - IN datetime
+);
+

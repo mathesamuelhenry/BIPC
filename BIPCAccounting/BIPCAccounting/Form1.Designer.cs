@@ -30,11 +30,23 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.EditModelink = new System.Windows.Forms.LinkLabel();
+            this.EditModeLabel = new System.Windows.Forms.Label();
             this.CategoryTextBox = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.ContributorIdComboBox = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Category = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Checkno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TransDt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CheckRadionButton = new System.Windows.Forms.RadioButton();
@@ -57,6 +69,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.DeleteSearchRow = new System.Windows.Forms.Button();
+            this.EditSearchRow = new System.Windows.Forms.Button();
             this.OpeningBalanceValue = new System.Windows.Forms.Label();
             this.TotalBalanceLabel = new System.Windows.Forms.Label();
             this.TotalLabel = new System.Windows.Forms.Label();
@@ -66,6 +80,16 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.SearchResultsDataGridView = new System.Windows.Forms.DataGridView();
+            this.CNameSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IDSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategorySearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TypeSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ModeSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AmountSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ChecknoSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TransDtSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NoteSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateAddedSearch = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ResetButton = new System.Windows.Forms.Button();
             this.SearchButton = new System.Windows.Forms.Button();
@@ -87,23 +111,23 @@
             this.SearchNameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.OpeningBalanceAddUpdateButton = new System.Windows.Forms.Button();
+            this.OpeningBalanceTextBox = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.AddContributorButton = new System.Windows.Forms.Button();
+            this.FirstNameLabel = new System.Windows.Forms.Label();
+            this.FirstNameTextBox = new System.Windows.Forms.TextBox();
+            this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.FamilyNameTextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.LastNameTextBox = new System.Windows.Forms.TextBox();
-            this.FirstNameTextBox = new System.Windows.Forms.TextBox();
-            this.FirstNameLabel = new System.Windows.Forms.Label();
+            this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.OpeningBalanceTextBox = new System.Windows.Forms.TextBox();
-            this.OpeningBalanceAddUpdateButton = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -114,12 +138,12 @@
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -135,6 +159,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.EditModelink);
+            this.tabPage1.Controls.Add(this.EditModeLabel);
             this.tabPage1.Controls.Add(this.CategoryTextBox);
             this.tabPage1.Controls.Add(this.label15);
             this.tabPage1.Controls.Add(this.ContributorIdComboBox);
@@ -165,9 +191,29 @@
             this.tabPage1.Text = "Add Expenditure";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // EditModelink
+            // 
+            this.EditModelink.AutoSize = true;
+            this.EditModelink.Location = new System.Drawing.Point(41, 17);
+            this.EditModelink.Name = "EditModelink";
+            this.EditModelink.Size = new System.Drawing.Size(35, 13);
+            this.EditModelink.TabIndex = 31;
+            this.EditModelink.TabStop = true;
+            this.EditModelink.Text = "dfsdfs";
+            this.EditModelink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.EditModelink_LinkClicked);
+            // 
+            // EditModeLabel
+            // 
+            this.EditModeLabel.AutoSize = true;
+            this.EditModeLabel.ForeColor = System.Drawing.Color.Green;
+            this.EditModeLabel.Location = new System.Drawing.Point(166, 17);
+            this.EditModeLabel.Name = "EditModeLabel";
+            this.EditModeLabel.Size = new System.Drawing.Size(0, 13);
+            this.EditModeLabel.TabIndex = 30;
+            // 
             // CategoryTextBox
             // 
-            this.CategoryTextBox.Location = new System.Drawing.Point(138, 161);
+            this.CategoryTextBox.Location = new System.Drawing.Point(140, 161);
             this.CategoryTextBox.Name = "CategoryTextBox";
             this.CategoryTextBox.Size = new System.Drawing.Size(121, 20);
             this.CategoryTextBox.TabIndex = 29;
@@ -176,7 +222,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(135, 145);
+            this.label15.Location = new System.Drawing.Point(137, 145);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(148, 13);
             this.label15.TabIndex = 28;
@@ -186,7 +232,7 @@
             // 
             this.ContributorIdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ContributorIdComboBox.FormattingEnabled = true;
-            this.ContributorIdComboBox.Location = new System.Drawing.Point(138, 83);
+            this.ContributorIdComboBox.Location = new System.Drawing.Point(140, 83);
             this.ContributorIdComboBox.Name = "ContributorIdComboBox";
             this.ContributorIdComboBox.Size = new System.Drawing.Size(121, 21);
             this.ContributorIdComboBox.TabIndex = 26;
@@ -196,7 +242,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(178, 69);
+            this.label13.Location = new System.Drawing.Point(180, 69);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(25, 12);
             this.label13.TabIndex = 25;
@@ -208,17 +254,88 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.CName,
+            this.Category,
+            this.Type,
+            this.Mode,
+            this.Checkno,
+            this.Amount,
+            this.TransDt,
+            this.Note,
+            this.DateAdded});
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dataGridView1.Location = new System.Drawing.Point(366, 46);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(706, 453);
             this.dataGridView1.TabIndex = 24;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.Visible = false;
+            // 
+            // CName
+            // 
+            this.CName.HeaderText = "Name";
+            this.CName.Name = "CName";
+            this.CName.ReadOnly = true;
+            // 
+            // Category
+            // 
+            this.Category.HeaderText = "Category";
+            this.Category.Name = "Category";
+            this.Category.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            // 
+            // Mode
+            // 
+            this.Mode.HeaderText = "Mode";
+            this.Mode.Name = "Mode";
+            this.Mode.ReadOnly = true;
+            // 
+            // Checkno
+            // 
+            this.Checkno.HeaderText = "Check #";
+            this.Checkno.Name = "Checkno";
+            this.Checkno.ReadOnly = true;
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            // 
+            // TransDt
+            // 
+            this.TransDt.HeaderText = "Trans DT";
+            this.TransDt.Name = "TransDt";
+            this.TransDt.ReadOnly = true;
+            // 
+            // Note
+            // 
+            this.Note.HeaderText = "Note";
+            this.Note.Name = "Note";
+            this.Note.ReadOnly = true;
+            // 
+            // DateAdded
+            // 
+            this.DateAdded.HeaderText = "Date Added";
+            this.DateAdded.Name = "DateAdded";
+            this.DateAdded.ReadOnly = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(138, 522);
+            this.button1.Location = new System.Drawing.Point(140, 522);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 23;
@@ -230,7 +347,7 @@
             // 
             this.groupBox2.Controls.Add(this.CheckRadionButton);
             this.groupBox2.Controls.Add(this.CashRadionButton);
-            this.groupBox2.Location = new System.Drawing.Point(138, 246);
+            this.groupBox2.Location = new System.Drawing.Point(140, 246);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 49);
             this.groupBox2.TabIndex = 22;
@@ -262,7 +379,7 @@
             // 
             this.groupBox1.Controls.Add(this.DebitRadionButton);
             this.groupBox1.Controls.Add(this.CreditRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(138, 192);
+            this.groupBox1.Location = new System.Drawing.Point(140, 192);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 48);
             this.groupBox1.TabIndex = 21;
@@ -292,7 +409,7 @@
             // 
             // NoteTextBox
             // 
-            this.NoteTextBox.Location = new System.Drawing.Point(138, 412);
+            this.NoteTextBox.Location = new System.Drawing.Point(140, 412);
             this.NoteTextBox.Multiline = true;
             this.NoteTextBox.Name = "NoteTextBox";
             this.NoteTextBox.Size = new System.Drawing.Size(200, 87);
@@ -300,21 +417,21 @@
             // 
             // TransactionDateTimePicker
             // 
-            this.TransactionDateTimePicker.Location = new System.Drawing.Point(138, 379);
+            this.TransactionDateTimePicker.Location = new System.Drawing.Point(140, 379);
             this.TransactionDateTimePicker.Name = "TransactionDateTimePicker";
             this.TransactionDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.TransactionDateTimePicker.TabIndex = 18;
             // 
             // AmountTextBox
             // 
-            this.AmountTextBox.Location = new System.Drawing.Point(138, 344);
+            this.AmountTextBox.Location = new System.Drawing.Point(140, 344);
             this.AmountTextBox.Name = "AmountTextBox";
             this.AmountTextBox.Size = new System.Drawing.Size(121, 20);
             this.AmountTextBox.TabIndex = 15;
             // 
             // CheckTextBox
             // 
-            this.CheckTextBox.Location = new System.Drawing.Point(138, 309);
+            this.CheckTextBox.Location = new System.Drawing.Point(140, 309);
             this.CheckTextBox.Name = "CheckTextBox";
             this.CheckTextBox.Size = new System.Drawing.Size(121, 20);
             this.CheckTextBox.TabIndex = 14;
@@ -322,7 +439,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(39, 412);
+            this.label8.Location = new System.Drawing.Point(41, 412);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 13;
@@ -332,7 +449,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(39, 379);
+            this.label7.Location = new System.Drawing.Point(41, 379);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 12;
@@ -341,7 +458,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(39, 344);
+            this.label6.Location = new System.Drawing.Point(41, 344);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(43, 13);
             this.label6.TabIndex = 11;
@@ -350,7 +467,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(39, 309);
+            this.label5.Location = new System.Drawing.Point(41, 309);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 13);
             this.label5.TabIndex = 10;
@@ -360,7 +477,7 @@
             // 
             this.CategoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CategoryCombo.FormattingEnabled = true;
-            this.CategoryCombo.Location = new System.Drawing.Point(138, 121);
+            this.CategoryCombo.Location = new System.Drawing.Point(140, 121);
             this.CategoryCombo.Name = "CategoryCombo";
             this.CategoryCombo.Size = new System.Drawing.Size(121, 21);
             this.CategoryCombo.TabIndex = 5;
@@ -369,7 +486,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 265);
+            this.label4.Location = new System.Drawing.Point(41, 265);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 13);
             this.label4.TabIndex = 4;
@@ -378,7 +495,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 211);
+            this.label3.Location = new System.Drawing.Point(41, 211);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 13);
             this.label3.TabIndex = 3;
@@ -387,7 +504,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 121);
+            this.label2.Location = new System.Drawing.Point(41, 121);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 13);
             this.label2.TabIndex = 2;
@@ -397,7 +514,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 46);
+            this.label1.Location = new System.Drawing.Point(41, 46);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -405,7 +522,7 @@
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Location = new System.Drawing.Point(138, 46);
+            this.NameTextBox.Location = new System.Drawing.Point(140, 46);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(121, 20);
             this.NameTextBox.TabIndex = 0;
@@ -414,6 +531,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.DeleteSearchRow);
+            this.tabPage2.Controls.Add(this.EditSearchRow);
             this.tabPage2.Controls.Add(this.OpeningBalanceValue);
             this.tabPage2.Controls.Add(this.TotalBalanceLabel);
             this.tabPage2.Controls.Add(this.TotalLabel);
@@ -433,10 +552,30 @@
             this.tabPage2.Text = "Search Expenditures";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // DeleteSearchRow
+            // 
+            this.DeleteSearchRow.Location = new System.Drawing.Point(778, 203);
+            this.DeleteSearchRow.Name = "DeleteSearchRow";
+            this.DeleteSearchRow.Size = new System.Drawing.Size(75, 23);
+            this.DeleteSearchRow.TabIndex = 12;
+            this.DeleteSearchRow.Text = "Delete";
+            this.DeleteSearchRow.UseVisualStyleBackColor = true;
+            this.DeleteSearchRow.Click += new System.EventHandler(this.DeleteSearchRow_Click);
+            // 
+            // EditSearchRow
+            // 
+            this.EditSearchRow.Location = new System.Drawing.Point(883, 203);
+            this.EditSearchRow.Name = "EditSearchRow";
+            this.EditSearchRow.Size = new System.Drawing.Size(75, 23);
+            this.EditSearchRow.TabIndex = 11;
+            this.EditSearchRow.Text = "Edit Row";
+            this.EditSearchRow.UseVisualStyleBackColor = true;
+            this.EditSearchRow.Click += new System.EventHandler(this.EditSearchRow_Click);
+            // 
             // OpeningBalanceValue
             // 
             this.OpeningBalanceValue.AutoSize = true;
-            this.OpeningBalanceValue.Location = new System.Drawing.Point(115, 581);
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(266, 581);
             this.OpeningBalanceValue.Name = "OpeningBalanceValue";
             this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
             this.OpeningBalanceValue.TabIndex = 10;
@@ -452,7 +591,7 @@
             // TotalLabel
             // 
             this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(365, 581);
+            this.TotalLabel.Location = new System.Drawing.Point(420, 581);
             this.TotalLabel.Name = "TotalLabel";
             this.TotalLabel.Size = new System.Drawing.Size(0, 13);
             this.TotalLabel.TabIndex = 8;
@@ -469,7 +608,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(328, 581);
+            this.label24.Location = new System.Drawing.Point(383, 581);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(40, 13);
             this.label24.TabIndex = 6;
@@ -478,7 +617,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(14, 581);
+            this.label23.Location = new System.Drawing.Point(165, 581);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(95, 13);
             this.label23.TabIndex = 4;
@@ -508,12 +647,85 @@
             // 
             this.SearchResultsDataGridView.AllowUserToAddRows = false;
             this.SearchResultsDataGridView.AllowUserToDeleteRows = false;
+            this.SearchResultsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.SearchResultsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SearchResultsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CNameSearch,
+            this.IDSearch,
+            this.CategorySearch,
+            this.TypeSearch,
+            this.ModeSearch,
+            this.AmountSearch,
+            this.ChecknoSearch,
+            this.TransDtSearch,
+            this.NoteSearch,
+            this.DateAddedSearch});
             this.SearchResultsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.SearchResultsDataGridView.Location = new System.Drawing.Point(17, 246);
             this.SearchResultsDataGridView.Name = "SearchResultsDataGridView";
             this.SearchResultsDataGridView.Size = new System.Drawing.Size(1044, 308);
             this.SearchResultsDataGridView.TabIndex = 1;
+            // 
+            // CNameSearch
+            // 
+            this.CNameSearch.HeaderText = "Name";
+            this.CNameSearch.Name = "CNameSearch";
+            this.CNameSearch.ReadOnly = true;
+            // 
+            // IDSearch
+            // 
+            this.IDSearch.HeaderText = "ID";
+            this.IDSearch.Name = "IDSearch";
+            this.IDSearch.ReadOnly = true;
+            this.IDSearch.Visible = false;
+            // 
+            // CategorySearch
+            // 
+            this.CategorySearch.HeaderText = "Category";
+            this.CategorySearch.Name = "CategorySearch";
+            this.CategorySearch.ReadOnly = true;
+            // 
+            // TypeSearch
+            // 
+            this.TypeSearch.HeaderText = "Type";
+            this.TypeSearch.Name = "TypeSearch";
+            this.TypeSearch.ReadOnly = true;
+            // 
+            // ModeSearch
+            // 
+            this.ModeSearch.HeaderText = "Mode";
+            this.ModeSearch.Name = "ModeSearch";
+            this.ModeSearch.ReadOnly = true;
+            // 
+            // AmountSearch
+            // 
+            this.AmountSearch.HeaderText = "Amount";
+            this.AmountSearch.Name = "AmountSearch";
+            this.AmountSearch.ReadOnly = true;
+            // 
+            // ChecknoSearch
+            // 
+            this.ChecknoSearch.HeaderText = "Check #";
+            this.ChecknoSearch.Name = "ChecknoSearch";
+            this.ChecknoSearch.ReadOnly = true;
+            // 
+            // TransDtSearch
+            // 
+            this.TransDtSearch.HeaderText = "Trans DT";
+            this.TransDtSearch.Name = "TransDtSearch";
+            this.TransDtSearch.ReadOnly = true;
+            // 
+            // NoteSearch
+            // 
+            this.NoteSearch.HeaderText = "Note";
+            this.NoteSearch.Name = "NoteSearch";
+            this.NoteSearch.ReadOnly = true;
+            // 
+            // DateAddedSearch
+            // 
+            this.DateAddedSearch.HeaderText = "DateAdded";
+            this.DateAddedSearch.Name = "DateAddedSearch";
+            this.DateAddedSearch.ReadOnly = true;
             // 
             // groupBox3
             // 
@@ -729,6 +941,40 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 494);
             this.tableLayoutPanel2.TabIndex = 9;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(320, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(302, 241);
+            this.tableLayoutPanel3.TabIndex = 8;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.button3);
+            this.groupBox6.Location = new System.Drawing.Point(3, 123);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(264, 100);
+            this.groupBox6.TabIndex = 7;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Global Refresh";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(21, 41);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(218, 23);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "Refresh Data";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.OpeningBalanceAddUpdateButton);
@@ -739,6 +985,35 @@
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opening Balance";
+            // 
+            // OpeningBalanceAddUpdateButton
+            // 
+            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(17, 62);
+            this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
+            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(222, 23);
+            this.OpeningBalanceAddUpdateButton.TabIndex = 1;
+            this.OpeningBalanceAddUpdateButton.Text = "Add";
+            this.OpeningBalanceAddUpdateButton.UseVisualStyleBackColor = true;
+            this.OpeningBalanceAddUpdateButton.Click += new System.EventHandler(this.OpeningBalanceAddUpdateButton_Click);
+            // 
+            // OpeningBalanceTextBox
+            // 
+            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(17, 29);
+            this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
+            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
+            this.OpeningBalanceTextBox.TabIndex = 0;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.groupBox5, 0, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(311, 241);
+            this.tableLayoutPanel4.TabIndex = 9;
             // 
             // groupBox5
             // 
@@ -772,15 +1047,28 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(246, 156);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
-            // AddContributorButton
+            // FirstNameLabel
             // 
-            this.AddContributorButton.Location = new System.Drawing.Point(99, 105);
-            this.AddContributorButton.Name = "AddContributorButton";
-            this.AddContributorButton.Size = new System.Drawing.Size(75, 21);
-            this.AddContributorButton.TabIndex = 7;
-            this.AddContributorButton.Text = "Add";
-            this.AddContributorButton.UseVisualStyleBackColor = true;
-            this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
+            this.FirstNameLabel.AutoSize = true;
+            this.FirstNameLabel.Location = new System.Drawing.Point(3, 0);
+            this.FirstNameLabel.Name = "FirstNameLabel";
+            this.FirstNameLabel.Size = new System.Drawing.Size(57, 13);
+            this.FirstNameLabel.TabIndex = 1;
+            this.FirstNameLabel.Text = "First Name";
+            // 
+            // FirstNameTextBox
+            // 
+            this.FirstNameTextBox.Location = new System.Drawing.Point(99, 3);
+            this.FirstNameTextBox.Name = "FirstNameTextBox";
+            this.FirstNameTextBox.Size = new System.Drawing.Size(140, 20);
+            this.FirstNameTextBox.TabIndex = 4;
+            // 
+            // LastNameTextBox
+            // 
+            this.LastNameTextBox.Location = new System.Drawing.Point(99, 35);
+            this.LastNameTextBox.Name = "LastNameTextBox";
+            this.LastNameTextBox.Size = new System.Drawing.Size(140, 20);
+            this.LastNameTextBox.TabIndex = 5;
             // 
             // FamilyNameTextBox
             // 
@@ -807,91 +1095,15 @@
             this.label10.TabIndex = 3;
             this.label10.Text = "Family Name";
             // 
-            // LastNameTextBox
+            // AddContributorButton
             // 
-            this.LastNameTextBox.Location = new System.Drawing.Point(99, 35);
-            this.LastNameTextBox.Name = "LastNameTextBox";
-            this.LastNameTextBox.Size = new System.Drawing.Size(140, 20);
-            this.LastNameTextBox.TabIndex = 5;
-            // 
-            // FirstNameTextBox
-            // 
-            this.FirstNameTextBox.Location = new System.Drawing.Point(99, 3);
-            this.FirstNameTextBox.Name = "FirstNameTextBox";
-            this.FirstNameTextBox.Size = new System.Drawing.Size(140, 20);
-            this.FirstNameTextBox.TabIndex = 4;
-            // 
-            // FirstNameLabel
-            // 
-            this.FirstNameLabel.AutoSize = true;
-            this.FirstNameLabel.Location = new System.Drawing.Point(3, 0);
-            this.FirstNameLabel.Name = "FirstNameLabel";
-            this.FirstNameLabel.Size = new System.Drawing.Size(57, 13);
-            this.FirstNameLabel.TabIndex = 1;
-            this.FirstNameLabel.Text = "First Name";
-            // 
-            // OpeningBalanceTextBox
-            // 
-            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(17, 29);
-            this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
-            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
-            this.OpeningBalanceTextBox.TabIndex = 0;
-            // 
-            // OpeningBalanceAddUpdateButton
-            // 
-            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(17, 62);
-            this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
-            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(222, 23);
-            this.OpeningBalanceAddUpdateButton.TabIndex = 1;
-            this.OpeningBalanceAddUpdateButton.Text = "Add";
-            this.OpeningBalanceAddUpdateButton.UseVisualStyleBackColor = true;
-            this.OpeningBalanceAddUpdateButton.Click += new System.EventHandler(this.OpeningBalanceAddUpdateButton_Click);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.button3);
-            this.groupBox6.Location = new System.Drawing.Point(3, 123);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(264, 100);
-            this.groupBox6.TabIndex = 7;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Global Refresh";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(21, 41);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(218, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Refresh Data";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(320, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(302, 241);
-            this.tableLayoutPanel3.TabIndex = 8;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.groupBox5, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(311, 241);
-            this.tableLayoutPanel4.TabIndex = 9;
+            this.AddContributorButton.Location = new System.Drawing.Point(99, 105);
+            this.AddContributorButton.Name = "AddContributorButton";
+            this.AddContributorButton.Size = new System.Drawing.Size(75, 21);
+            this.AddContributorButton.TabIndex = 7;
+            this.AddContributorButton.Text = "Add";
+            this.AddContributorButton.UseVisualStyleBackColor = true;
+            this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
             // Form1
             // 
@@ -916,14 +1128,14 @@
             this.groupBox3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1006,6 +1218,30 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Category;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Mode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Checkno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransDt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateAdded;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CNameSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IDSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CategorySearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TypeSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ModeSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AmountSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ChecknoSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransDtSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NoteSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateAddedSearch;
+        private System.Windows.Forms.Button EditSearchRow;
+        private System.Windows.Forms.Button DeleteSearchRow;
+        private System.Windows.Forms.Label EditModeLabel;
+        private System.Windows.Forms.LinkLabel EditModelink;
     }
 }
 
