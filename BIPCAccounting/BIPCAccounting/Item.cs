@@ -34,12 +34,14 @@ namespace BIPCAccounting
  
     public class CVD
     {
+        public int ColumnValueDescID { get; set; }
         public string TableName { get; set; }
         public string ColumnName { get; set; }
         public string Value { get; set; }
         public string Description { get; set; }
 
-        private string sql = @"SELECT tc.table_name,
+        private string sql = @"SELECT cvd.column_value_desc_id, 
+       tc.table_name,
        tc.column_name,
        cvd.value,
        cvd.description
@@ -57,6 +59,7 @@ namespace BIPCAccounting
 
         public CVD(DataRow dRow)
         {
+            this.ColumnValueDescID = int.Parse(dRow["column_value_desc_id"].ToString());
             this.TableName = dRow["table_name"].ToString();
             this.ColumnName = dRow["column_name"].ToString();
             this.Value = dRow["value"].ToString();

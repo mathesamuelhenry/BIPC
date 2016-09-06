@@ -23,12 +23,33 @@ namespace BIPCAccounting
 
             connString = "DataSource=localhost;Port=3306;UID=root;PWD=;Database=BIPC;";
 
+            this.LoadFormData();
+        }
+
+        private void LoadFormData()
+        {
             this.LoadCategoryDropDown();
             this.LoadContributorIdComboBox();
             this.LoadTable();
             this.LoadCVD();
             this.LoadSearchTabDropDowns();
             this.LoadSearchResultDataGrid();
+
+            this.LoadOpeningBalance();
+        }
+
+        private void LoadOpeningBalance()
+        {
+            decimal OpeningBalance = 0;
+            List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
+            OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
+
+            OpeningBalanceTextBox.Text = OpeningBalance.Equals(0M) ? string.Empty : OpeningBalance.ToString();
+
+            if (OpeningBalance != 0M)
+                OpeningBalanceAddUpdateButton.Text = "Update";
+            else
+                OpeningBalanceAddUpdateButton.Text = "Add";
         }
 
         private void LoadSearchTabDropDowns()
@@ -714,10 +735,13 @@ namespace BIPCAccounting
         {
             string searchSQL = this.GetSearchSQL();
             decimal TotalBalance = 0;
-            decimal OpeningBalance = 10000;
+            decimal OpeningBalance = 0;
             decimal Total = 0;
             decimal CreditAmount = 0;
             decimal DebitAmount = 0;
+
+            List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
+            OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
 
             MySqlConnection mySqlConn = new MySqlConnection(connString);
             mySqlConn.Open();
@@ -977,6 +1001,124 @@ namespace BIPCAccounting
                 MessageBox.Show("No records returned to be exported.");
             }
         }
+
+        private void OpeningBalanceAddUpdateButton_Click(object sender, EventArgs e)
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                int count = 0;
+                decimal ob = 0M;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                DialogResult result = MessageBox.Show("Please confirm?", "Confirm", MessageBoxButtons.YesNo);
+
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    if (!string.IsNullOrEmpty(OpeningBalanceTextBox.Text))
+                    {
+                        if (decimal.TryParse(OpeningBalanceTextBox.Text, out ob))
+                        {
+                            if (!decimal.Equals(decimal.Parse(OpeningBalanceTextBox.Text), 0M))
+                            {
+                                if (this.cvd.GetCVD("TEMP", "opening_balance").Count > 0)
+                                {
+                                    int column_value_desc_id = this.cvd.GetCVD("TEMP", "opening_balance")[0].ColumnValueDescID;
+                                    string updateSql = string.Format(@"UPDATE column_value_desc cvd
+   SET value = '{0}',
+       description = '{0}',
+       date_changed = now()
+ WHERE column_value_desc_id = {1};", OpeningBalanceTextBox.Text
+                                               , column_value_desc_id);
+
+                                    MySqlCommand cmd = new MySqlCommand(updateSql, mySqlConn);
+                                    count = cmd.ExecuteNonQuery();
+
+                                    MessageBox.Show("Opening Balance Updated.");
+                                }
+                                else
+                                {
+                                    string addSql = string.Format(@"
+DROP TABLE IF EXISTS t_OB;
+CREATE TEMPORARY TABLE t_OB(table_name varchar(30), column_name varchar(30));
+
+INSERT INTO t_OB
+VALUES ('TEMP', 'opening_balance');
+
+INSERT INTO table_column(table_name,
+                         column_name,
+                         status,
+                         date_added)
+   SELECT t.table_name,
+          t.column_name,
+          1,
+          now()
+     FROM t_OB t
+          LEFT JOIN table_column tc
+             ON     tc.table_name = t.table_name
+                AND tc.column_name = t.column_name
+    WHERE tc.table_column_id IS NULL;
+
+INSERT INTO column_value_desc(table_column_id,
+                              value,
+                              description,
+                              date_added)
+   VALUES (
+             (SELECT table_column_id
+                FROM table_column
+               WHERE table_name = 'TEMP' AND column_name = 'opening_balance' and status = 1),
+             '{0}',
+             '{0}',
+             now());", OpeningBalanceTextBox.Text);
+
+                                    MySqlCommand cmd = new MySqlCommand(addSql, mySqlConn);
+                                    count = cmd.ExecuteNonQuery();
+
+                                    MessageBox.Show("Opening Balance Added.");
+
+                                    OpeningBalanceAddUpdateButton.Text = "Update";
+                                }
+
+                                this.LoadCVD();
+                                this.LoadOpeningBalance();
+                                this.LoadSearchResultDataGrid();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid decimal value");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Opening balance entered is either invalid or 0");
+                    }
+                }
+                else
+                {
+                    this.LoadOpeningBalance();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(string.Format("Error Adding/Updating Opening balance : {0}", ex.Message));
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            this.LoadFormData();
+
+            MessageBox.Show("All Form data loaded.", "Result", MessageBoxButtons.OK);
+        }
+
         
     }
 }
