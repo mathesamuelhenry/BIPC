@@ -1247,6 +1247,12 @@ INSERT INTO column_value_desc(table_column_id,
 
             EditModelink.ActiveLinkColor = Color.Green;
             EditModelink.Text = string.Empty;
+
+            Control.ControlCollection collection = this.tabControl1.SelectedTab.Controls;
+            Control GroupControl = (Control)collection.Cast<Control>().Where(x => x.AccessibleName == "AddUpdateFormGroup").FirstOrDefault();
+
+            Utils.ResetAllControls(GroupControl);
+
         }
 
     }
