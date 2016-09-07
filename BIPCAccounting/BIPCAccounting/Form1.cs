@@ -743,7 +743,10 @@ namespace BIPCAccounting
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Utils.ResetAllControls(this.tabControl1.SelectedTab);
+            Control.ControlCollection collection = this.tabControl1.SelectedTab.Controls;
+            Control GroupControl = (Control)collection.Cast<Control>().Where(x => x.AccessibleName == "SearchGroupBox").FirstOrDefault();
+           
+            Utils.ResetAllControls(GroupControl);
         }
         private void LoadSearchResultDataGrid()
         {

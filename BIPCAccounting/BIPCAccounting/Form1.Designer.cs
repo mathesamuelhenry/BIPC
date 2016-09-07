@@ -729,6 +729,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.AccessibleName = "SearchGroupBox";
             this.groupBox3.Controls.Add(this.ResetButton);
             this.groupBox3.Controls.Add(this.SearchButton);
             this.groupBox3.Controls.Add(this.SearchToDateTimePicker);
@@ -750,7 +751,7 @@
             this.groupBox3.Location = new System.Drawing.Point(17, 19);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(1044, 158);
-            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
             // ResetButton

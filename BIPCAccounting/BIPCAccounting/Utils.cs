@@ -31,11 +31,6 @@ namespace BIPCAccounting
 
         public static void ResetAllControls(Control form)
         {   
-            if (form.Controls[3] is GroupBox)
-            {
-                form = form.Controls[3];
-            }
-
             foreach (Control control in form.Controls)
             {
                 if (control is TextBox)
