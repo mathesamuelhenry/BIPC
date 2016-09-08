@@ -30,6 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.TotalBalanceLabel = new System.Windows.Forms.Label();
+            this.TotalLabel = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.OpeningBalanceValue = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.AddUpdateFormGroup = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
@@ -125,12 +131,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.OpeningBalanceValue = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.TotalBalanceLabel = new System.Windows.Forms.Label();
-            this.TotalLabel = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.AddUpdateFormGroup.SuspendLayout();
@@ -180,6 +180,57 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Add Expenditure";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // TotalBalanceLabel
+            // 
+            this.TotalBalanceLabel.AutoSize = true;
+            this.TotalBalanceLabel.Location = new System.Drawing.Point(975, 538);
+            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
+            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalBalanceLabel.TabIndex = 38;
+            // 
+            // TotalLabel
+            // 
+            this.TotalLabel.AutoSize = true;
+            this.TotalLabel.Location = new System.Drawing.Point(694, 538);
+            this.TotalLabel.Name = "TotalLabel";
+            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalLabel.TabIndex = 37;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(899, 538);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(79, 13);
+            this.label25.TabIndex = 36;
+            this.label25.Text = "Total Balance :";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(657, 538);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(40, 13);
+            this.label24.TabIndex = 35;
+            this.label24.Text = "Total : ";
+            // 
+            // OpeningBalanceValue
+            // 
+            this.OpeningBalanceValue.AutoSize = true;
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(474, 538);
+            this.OpeningBalanceValue.Name = "OpeningBalanceValue";
+            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
+            this.OpeningBalanceValue.TabIndex = 34;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(373, 538);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(95, 13);
+            this.label23.TabIndex = 33;
+            this.label23.Text = "Opening Balance :";
             // 
             // AddUpdateFormGroup
             // 
@@ -449,10 +500,8 @@
             this.EditModelink.AutoSize = true;
             this.EditModelink.Location = new System.Drawing.Point(26, 17);
             this.EditModelink.Name = "EditModelink";
-            this.EditModelink.Size = new System.Drawing.Size(35, 13);
+            this.EditModelink.Size = new System.Drawing.Size(0, 13);
             this.EditModelink.TabIndex = 31;
-            this.EditModelink.TabStop = true;
-            this.EditModelink.Text = "dfsdfs";
             this.EditModelink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.EditModelink_LinkClicked);
             // 
             // EditModeLabel
@@ -1090,57 +1139,6 @@
             this.AddContributorButton.Text = "Add";
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
-            // 
-            // OpeningBalanceValue
-            // 
-            this.OpeningBalanceValue.AutoSize = true;
-            this.OpeningBalanceValue.Location = new System.Drawing.Point(474, 538);
-            this.OpeningBalanceValue.Name = "OpeningBalanceValue";
-            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
-            this.OpeningBalanceValue.TabIndex = 34;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(373, 538);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(95, 13);
-            this.label23.TabIndex = 33;
-            this.label23.Text = "Opening Balance :";
-            // 
-            // TotalBalanceLabel
-            // 
-            this.TotalBalanceLabel.AutoSize = true;
-            this.TotalBalanceLabel.Location = new System.Drawing.Point(975, 538);
-            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
-            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
-            this.TotalBalanceLabel.TabIndex = 38;
-            // 
-            // TotalLabel
-            // 
-            this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(694, 538);
-            this.TotalLabel.Name = "TotalLabel";
-            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
-            this.TotalLabel.TabIndex = 37;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(899, 538);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(79, 13);
-            this.label25.TabIndex = 36;
-            this.label25.Text = "Total Balance :";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(657, 538);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(40, 13);
-            this.label24.TabIndex = 35;
-            this.label24.Text = "Total : ";
             // 
             // Form1
             // 

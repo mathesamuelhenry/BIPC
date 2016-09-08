@@ -1098,8 +1098,8 @@ namespace BIPCAccounting
                         sb.AppendLine();
                     }
 
-                    sb.AppendLine();
-                    sb.AppendFormat("{0},,,,{1},,,,", "Total", total);
+                    //sb.AppendLine();
+                    //sb.AppendFormat("{0},,,,{1},,,,", "Total", total);
 
                     File.WriteAllText(Path, sb.ToString());
 
