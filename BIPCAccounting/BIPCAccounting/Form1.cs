@@ -36,8 +36,104 @@ namespace BIPCAccounting
             this.LoadSearchResultDataGrid();
 
             this.LoadOpeningBalance();
+            this.LoadBalancesOnExpenditureTab();
         }
 
+        private void LoadBalancesOnExpenditureTab()
+        {
+            decimal TotalBalance = 0;
+            decimal OpeningBalance = 0;
+            decimal CreditAmount = 0;
+            decimal DebitAmount = 0;
+            decimal Total = 0;
+
+            List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
+            OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
+
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            mySqlConn.Open();
+
+            try
+            {
+                System.Data.DataTable dt = new System.Data.DataTable();
+
+                string sql = @"SELECT 
+      cn.contribution_id as 'Contribution Id',                          
+      CASE
+          WHEN IFNULL(cn.contribution_name, '') = ''
+          THEN
+             CONCAT(cr.first_name, ' ', cr.last_name)
+          ELSE
+             cn.contribution_name
+       END
+          AS 'Name',
+       cvd.description AS Category,
+       cvd_transtype.description AS Type,
+       cvd_transmode.description AS Mode,
+       cn.amount AS Amount,
+       cn.check_number AS 'Check #',
+       cn.transaction_date AS 'Trans DT',
+       cn.note AS 'Note',
+       cn.date_added AS 'Date Added'
+  FROM contribution cn
+       LEFT JOIN contributor cr ON cr.contributor_id = cn.contributor_id
+       LEFT JOIN table_column tc
+          ON     tc.table_name = 'contribution'
+             AND tc.column_name = 'category'
+             AND tc.status = 1
+       LEFT JOIN column_value_desc cvd
+          ON     cvd.table_column_id = tc.table_column_id
+             AND cvd.value = cn.category
+             AND cvd.status = 1
+       LEFT JOIN table_column tc_transtype
+          ON     tc_transtype.table_name = 'contribution'
+             AND tc_transtype.column_name = 'transaction_type'
+             AND tc_transtype.status = 1
+       LEFT JOIN column_value_desc cvd_transtype
+          ON     cvd_transtype.table_column_id = tc_transtype.table_column_id
+             AND cvd_transtype.value = cn.transaction_type
+             AND cvd_transtype.status = 1
+       LEFT JOIN table_column tc_transmode
+          ON     tc_transmode.table_name = 'contribution'
+             AND tc_transmode.column_name = 'transaction_mode'
+             AND tc_transmode.status = 1
+       LEFT JOIN column_value_desc cvd_transmode
+          ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
+             AND cvd_transmode.value = cn.transaction_mode
+             AND cvd_transmode.status = 1 
+ WHERE cn.status = 1
+ ORDER BY cn.date_added DESC;";
+
+                dt = Utils.GetDataTable(mySqlConn, sql);
+
+                if (dt != null)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        if (dRow["Type"].ToString().Equals("Credit", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            CreditAmount += decimal.Parse(dRow["Amount"].ToString());
+                        }
+                        else
+                        {
+                            DebitAmount += decimal.Parse(dRow["Amount"].ToString());
+                        }
+                    }
+                }
+
+                TotalBalance = OpeningBalance + CreditAmount - DebitAmount;
+                Total = CreditAmount - DebitAmount;
+                TotalBalanceLabel.Text = TotalBalance.ToString();
+                OpeningBalanceValue.Text = OpeningBalance.ToString();
+                TotalLabel.Text = Total.ToString();
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+    
         private void LoadOpeningBalance()
         {
             decimal OpeningBalance = 0;
@@ -751,15 +847,7 @@ namespace BIPCAccounting
         private void LoadSearchResultDataGrid()
         {
             string searchSQL = this.GetSearchSQL();
-            decimal TotalBalance = 0;
-            decimal OpeningBalance = 0;
-            decimal Total = 0;
-            decimal CreditAmount = 0;
-            decimal DebitAmount = 0;
-
-            List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
-            OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
-
+            
             MySqlConnection mySqlConn = new MySqlConnection(connString);
             mySqlConn.Open();
 
@@ -768,27 +856,7 @@ namespace BIPCAccounting
                 System.Data.DataTable dt = new System.Data.DataTable();
 
                 dt = Utils.GetDataTable(mySqlConn, searchSQL);
-
-                if (dt != null)
-                {
-                    foreach(DataRow dRow in dt.Rows)
-                    {
-                        if (dRow["Type"].ToString().Equals("Credit", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            CreditAmount += decimal.Parse(dRow["Amount"].ToString());
-                        }
-                        else
-                        {
-                            DebitAmount += decimal.Parse(dRow["Amount"].ToString());
-                        }
-                    }
-                }
-
-                TotalBalance = OpeningBalance + CreditAmount - DebitAmount;
-
-                TotalBalanceLabel.Text = TotalBalance.ToString();
-                OpeningBalanceValue.Text = OpeningBalance.ToString();
-
+                
                 SearchResultsDataGridView.Rows.Clear();
                 SearchResultsDataGridView.Refresh();
 
@@ -1255,5 +1323,14 @@ INSERT INTO column_value_desc(table_column_id,
 
         }
 
+        private void SelectAll_Click(object sender, EventArgs e)
+        {
+            SearchResultsDataGridView.SelectAll();
+        }
+
+        private void DeselectAll_Click(object sender, EventArgs e)
+        {
+            SearchResultsDataGridView.ClearSelection();
+        }
     }
 }

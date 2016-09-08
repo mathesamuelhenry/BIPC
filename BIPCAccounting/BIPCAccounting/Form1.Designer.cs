@@ -30,12 +30,34 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.AddUpdateFormGroup = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.NameTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.CategoryTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ContributorIdComboBox = new System.Windows.Forms.ComboBox();
+            this.CategoryCombo = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.CheckRadionButton = new System.Windows.Forms.RadioButton();
+            this.CashRadionButton = new System.Windows.Forms.RadioButton();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.DebitRadionButton = new System.Windows.Forms.RadioButton();
+            this.CreditRadioButton = new System.Windows.Forms.RadioButton();
+            this.CheckTextBox = new System.Windows.Forms.TextBox();
+            this.NoteTextBox = new System.Windows.Forms.TextBox();
+            this.AmountTextBox = new System.Windows.Forms.TextBox();
+            this.TransactionDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.EditModelink = new System.Windows.Forms.LinkLabel();
             this.EditModeLabel = new System.Windows.Forms.Label();
-            this.CategoryTextBox = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.ContributorIdComboBox = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,36 +69,11 @@
             this.TransDt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.CheckRadionButton = new System.Windows.Forms.RadioButton();
-            this.CashRadionButton = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.DebitRadionButton = new System.Windows.Forms.RadioButton();
-            this.CreditRadioButton = new System.Windows.Forms.RadioButton();
-            this.NoteTextBox = new System.Windows.Forms.TextBox();
-            this.TransactionDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.AmountTextBox = new System.Windows.Forms.TextBox();
-            this.CheckTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.CategoryCombo = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.DeselectAll = new System.Windows.Forms.Button();
+            this.SelectAll = new System.Windows.Forms.Button();
             this.DeleteSearchRow = new System.Windows.Forms.Button();
             this.EditSearchRow = new System.Windows.Forms.Button();
-            this.OpeningBalanceValue = new System.Windows.Forms.Label();
-            this.TotalBalanceLabel = new System.Windows.Forms.Label();
-            this.TotalLabel = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.SearchResultsDataGridView = new System.Windows.Forms.DataGridView();
@@ -128,12 +125,18 @@
             this.label10 = new System.Windows.Forms.Label();
             this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.AddUpdateFormGroup = new System.Windows.Forms.GroupBox();
+            this.OpeningBalanceValue = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.TotalBalanceLabel = new System.Windows.Forms.Label();
+            this.TotalLabel = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.AddUpdateFormGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -145,7 +148,6 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.AddUpdateFormGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -161,6 +163,12 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.TotalBalanceLabel);
+            this.tabPage1.Controls.Add(this.TotalLabel);
+            this.tabPage1.Controls.Add(this.label25);
+            this.tabPage1.Controls.Add(this.label24);
+            this.tabPage1.Controls.Add(this.OpeningBalanceValue);
+            this.tabPage1.Controls.Add(this.label23);
             this.tabPage1.Controls.Add(this.AddUpdateFormGroup);
             this.tabPage1.Controls.Add(this.EditModelink);
             this.tabPage1.Controls.Add(this.EditModeLabel);
@@ -172,6 +180,269 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Add Expenditure";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // AddUpdateFormGroup
+            // 
+            this.AddUpdateFormGroup.AccessibleName = "AddUpdateFormGroup";
+            this.AddUpdateFormGroup.Controls.Add(this.label1);
+            this.AddUpdateFormGroup.Controls.Add(this.NameTextBox);
+            this.AddUpdateFormGroup.Controls.Add(this.label2);
+            this.AddUpdateFormGroup.Controls.Add(this.CategoryTextBox);
+            this.AddUpdateFormGroup.Controls.Add(this.label3);
+            this.AddUpdateFormGroup.Controls.Add(this.label15);
+            this.AddUpdateFormGroup.Controls.Add(this.label4);
+            this.AddUpdateFormGroup.Controls.Add(this.ContributorIdComboBox);
+            this.AddUpdateFormGroup.Controls.Add(this.CategoryCombo);
+            this.AddUpdateFormGroup.Controls.Add(this.label13);
+            this.AddUpdateFormGroup.Controls.Add(this.label5);
+            this.AddUpdateFormGroup.Controls.Add(this.label6);
+            this.AddUpdateFormGroup.Controls.Add(this.button1);
+            this.AddUpdateFormGroup.Controls.Add(this.label7);
+            this.AddUpdateFormGroup.Controls.Add(this.groupBox2);
+            this.AddUpdateFormGroup.Controls.Add(this.label8);
+            this.AddUpdateFormGroup.Controls.Add(this.groupBox1);
+            this.AddUpdateFormGroup.Controls.Add(this.CheckTextBox);
+            this.AddUpdateFormGroup.Controls.Add(this.NoteTextBox);
+            this.AddUpdateFormGroup.Controls.Add(this.AmountTextBox);
+            this.AddUpdateFormGroup.Controls.Add(this.TransactionDateTimePicker);
+            this.AddUpdateFormGroup.Location = new System.Drawing.Point(6, 33);
+            this.AddUpdateFormGroup.Name = "AddUpdateFormGroup";
+            this.AddUpdateFormGroup.Size = new System.Drawing.Size(344, 549);
+            this.AddUpdateFormGroup.TabIndex = 32;
+            this.AddUpdateFormGroup.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Name";
+            // 
+            // NameTextBox
+            // 
+            this.NameTextBox.Location = new System.Drawing.Point(117, 29);
+            this.NameTextBox.Name = "NameTextBox";
+            this.NameTextBox.Size = new System.Drawing.Size(121, 20);
+            this.NameTextBox.TabIndex = 0;
+            this.NameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NameTextBox_KeyUp);
+            this.NameTextBox.Leave += new System.EventHandler(this.NameTextBox_Leave);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 104);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Category";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // CategoryTextBox
+            // 
+            this.CategoryTextBox.Location = new System.Drawing.Point(117, 144);
+            this.CategoryTextBox.Name = "CategoryTextBox";
+            this.CategoryTextBox.Size = new System.Drawing.Size(121, 20);
+            this.CategoryTextBox.TabIndex = 29;
+            this.CategoryTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CategoryTextBox_KeyUp);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 194);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(90, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Transaction Type";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(114, 128);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(148, 13);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "(If new Category, enter below)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 248);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Transaction Mode";
+            // 
+            // ContributorIdComboBox
+            // 
+            this.ContributorIdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ContributorIdComboBox.FormattingEnabled = true;
+            this.ContributorIdComboBox.Location = new System.Drawing.Point(117, 66);
+            this.ContributorIdComboBox.Name = "ContributorIdComboBox";
+            this.ContributorIdComboBox.Size = new System.Drawing.Size(121, 21);
+            this.ContributorIdComboBox.TabIndex = 26;
+            this.ContributorIdComboBox.SelectedIndexChanged += new System.EventHandler(this.ContributorIdComboBox_SelectedIndexChanged);
+            // 
+            // CategoryCombo
+            // 
+            this.CategoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CategoryCombo.FormattingEnabled = true;
+            this.CategoryCombo.Location = new System.Drawing.Point(117, 104);
+            this.CategoryCombo.Name = "CategoryCombo";
+            this.CategoryCombo.Size = new System.Drawing.Size(121, 21);
+            this.CategoryCombo.TabIndex = 5;
+            this.CategoryCombo.SelectedIndexChanged += new System.EventHandler(this.CategoryCombo_SelectedIndexChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(157, 52);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(25, 12);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "(OR)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(18, 292);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Check Number";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 327);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Amount";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(117, 505);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "Add";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(18, 362);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Transaction Date";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.CheckRadionButton);
+            this.groupBox2.Controls.Add(this.CashRadionButton);
+            this.groupBox2.Location = new System.Drawing.Point(117, 229);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 49);
+            this.groupBox2.TabIndex = 22;
+            this.groupBox2.TabStop = false;
+            // 
+            // CheckRadionButton
+            // 
+            this.CheckRadionButton.AutoSize = true;
+            this.CheckRadionButton.Location = new System.Drawing.Point(106, 19);
+            this.CheckRadionButton.Name = "CheckRadionButton";
+            this.CheckRadionButton.Size = new System.Drawing.Size(56, 17);
+            this.CheckRadionButton.TabIndex = 9;
+            this.CheckRadionButton.Text = "Check";
+            this.CheckRadionButton.UseVisualStyleBackColor = true;
+            // 
+            // CashRadionButton
+            // 
+            this.CashRadionButton.AutoSize = true;
+            this.CashRadionButton.Checked = true;
+            this.CashRadionButton.Location = new System.Drawing.Point(17, 19);
+            this.CashRadionButton.Name = "CashRadionButton";
+            this.CashRadionButton.Size = new System.Drawing.Size(49, 17);
+            this.CashRadionButton.TabIndex = 8;
+            this.CashRadionButton.TabStop = true;
+            this.CashRadionButton.Text = "Cash";
+            this.CashRadionButton.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(18, 395);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(30, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Note";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.DebitRadionButton);
+            this.groupBox1.Controls.Add(this.CreditRadioButton);
+            this.groupBox1.Location = new System.Drawing.Point(117, 175);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 48);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            // 
+            // DebitRadionButton
+            // 
+            this.DebitRadionButton.AutoSize = true;
+            this.DebitRadionButton.Location = new System.Drawing.Point(108, 19);
+            this.DebitRadionButton.Name = "DebitRadionButton";
+            this.DebitRadionButton.Size = new System.Drawing.Size(50, 17);
+            this.DebitRadionButton.TabIndex = 7;
+            this.DebitRadionButton.Text = "Debit";
+            this.DebitRadionButton.UseVisualStyleBackColor = true;
+            // 
+            // CreditRadioButton
+            // 
+            this.CreditRadioButton.AutoSize = true;
+            this.CreditRadioButton.Checked = true;
+            this.CreditRadioButton.Location = new System.Drawing.Point(17, 19);
+            this.CreditRadioButton.Name = "CreditRadioButton";
+            this.CreditRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.CreditRadioButton.TabIndex = 6;
+            this.CreditRadioButton.TabStop = true;
+            this.CreditRadioButton.Text = "Credit";
+            this.CreditRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // CheckTextBox
+            // 
+            this.CheckTextBox.Location = new System.Drawing.Point(117, 292);
+            this.CheckTextBox.Name = "CheckTextBox";
+            this.CheckTextBox.Size = new System.Drawing.Size(121, 20);
+            this.CheckTextBox.TabIndex = 14;
+            // 
+            // NoteTextBox
+            // 
+            this.NoteTextBox.Location = new System.Drawing.Point(117, 395);
+            this.NoteTextBox.Multiline = true;
+            this.NoteTextBox.Name = "NoteTextBox";
+            this.NoteTextBox.Size = new System.Drawing.Size(200, 87);
+            this.NoteTextBox.TabIndex = 19;
+            // 
+            // AmountTextBox
+            // 
+            this.AmountTextBox.Location = new System.Drawing.Point(117, 327);
+            this.AmountTextBox.Name = "AmountTextBox";
+            this.AmountTextBox.Size = new System.Drawing.Size(121, 20);
+            this.AmountTextBox.TabIndex = 15;
+            // 
+            // TransactionDateTimePicker
+            // 
+            this.TransactionDateTimePicker.Location = new System.Drawing.Point(117, 362);
+            this.TransactionDateTimePicker.Name = "TransactionDateTimePicker";
+            this.TransactionDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.TransactionDateTimePicker.TabIndex = 18;
             // 
             // EditModelink
             // 
@@ -192,43 +463,6 @@
             this.EditModeLabel.Name = "EditModeLabel";
             this.EditModeLabel.Size = new System.Drawing.Size(0, 13);
             this.EditModeLabel.TabIndex = 30;
-            // 
-            // CategoryTextBox
-            // 
-            this.CategoryTextBox.Location = new System.Drawing.Point(117, 144);
-            this.CategoryTextBox.Name = "CategoryTextBox";
-            this.CategoryTextBox.Size = new System.Drawing.Size(121, 20);
-            this.CategoryTextBox.TabIndex = 29;
-            this.CategoryTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CategoryTextBox_KeyUp);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(114, 128);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(148, 13);
-            this.label15.TabIndex = 28;
-            this.label15.Text = "(If new Category, enter below)";
-            // 
-            // ContributorIdComboBox
-            // 
-            this.ContributorIdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ContributorIdComboBox.FormattingEnabled = true;
-            this.ContributorIdComboBox.Location = new System.Drawing.Point(117, 66);
-            this.ContributorIdComboBox.Name = "ContributorIdComboBox";
-            this.ContributorIdComboBox.Size = new System.Drawing.Size(121, 21);
-            this.ContributorIdComboBox.TabIndex = 26;
-            this.ContributorIdComboBox.SelectedIndexChanged += new System.EventHandler(this.ContributorIdComboBox_SelectedIndexChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(157, 52);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(25, 12);
-            this.label13.TabIndex = 25;
-            this.label13.Text = "(OR)";
             // 
             // dataGridView1
             // 
@@ -315,212 +549,12 @@
             this.DateAdded.Name = "DateAdded";
             this.DateAdded.ReadOnly = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(117, 505);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.CheckRadionButton);
-            this.groupBox2.Controls.Add(this.CashRadionButton);
-            this.groupBox2.Location = new System.Drawing.Point(117, 229);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 49);
-            this.groupBox2.TabIndex = 22;
-            this.groupBox2.TabStop = false;
-            // 
-            // CheckRadionButton
-            // 
-            this.CheckRadionButton.AutoSize = true;
-            this.CheckRadionButton.Location = new System.Drawing.Point(106, 19);
-            this.CheckRadionButton.Name = "CheckRadionButton";
-            this.CheckRadionButton.Size = new System.Drawing.Size(56, 17);
-            this.CheckRadionButton.TabIndex = 9;
-            this.CheckRadionButton.Text = "Check";
-            this.CheckRadionButton.UseVisualStyleBackColor = true;
-            // 
-            // CashRadionButton
-            // 
-            this.CashRadionButton.AutoSize = true;
-            this.CashRadionButton.Checked = true;
-            this.CashRadionButton.Location = new System.Drawing.Point(17, 19);
-            this.CashRadionButton.Name = "CashRadionButton";
-            this.CashRadionButton.Size = new System.Drawing.Size(49, 17);
-            this.CashRadionButton.TabIndex = 8;
-            this.CashRadionButton.TabStop = true;
-            this.CashRadionButton.Text = "Cash";
-            this.CashRadionButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.DebitRadionButton);
-            this.groupBox1.Controls.Add(this.CreditRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(117, 175);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 48);
-            this.groupBox1.TabIndex = 21;
-            this.groupBox1.TabStop = false;
-            // 
-            // DebitRadionButton
-            // 
-            this.DebitRadionButton.AutoSize = true;
-            this.DebitRadionButton.Location = new System.Drawing.Point(108, 19);
-            this.DebitRadionButton.Name = "DebitRadionButton";
-            this.DebitRadionButton.Size = new System.Drawing.Size(50, 17);
-            this.DebitRadionButton.TabIndex = 7;
-            this.DebitRadionButton.Text = "Debit";
-            this.DebitRadionButton.UseVisualStyleBackColor = true;
-            // 
-            // CreditRadioButton
-            // 
-            this.CreditRadioButton.AutoSize = true;
-            this.CreditRadioButton.Checked = true;
-            this.CreditRadioButton.Location = new System.Drawing.Point(17, 19);
-            this.CreditRadioButton.Name = "CreditRadioButton";
-            this.CreditRadioButton.Size = new System.Drawing.Size(52, 17);
-            this.CreditRadioButton.TabIndex = 6;
-            this.CreditRadioButton.TabStop = true;
-            this.CreditRadioButton.Text = "Credit";
-            this.CreditRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // NoteTextBox
-            // 
-            this.NoteTextBox.Location = new System.Drawing.Point(117, 395);
-            this.NoteTextBox.Multiline = true;
-            this.NoteTextBox.Name = "NoteTextBox";
-            this.NoteTextBox.Size = new System.Drawing.Size(200, 87);
-            this.NoteTextBox.TabIndex = 19;
-            // 
-            // TransactionDateTimePicker
-            // 
-            this.TransactionDateTimePicker.Location = new System.Drawing.Point(117, 362);
-            this.TransactionDateTimePicker.Name = "TransactionDateTimePicker";
-            this.TransactionDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.TransactionDateTimePicker.TabIndex = 18;
-            // 
-            // AmountTextBox
-            // 
-            this.AmountTextBox.Location = new System.Drawing.Point(117, 327);
-            this.AmountTextBox.Name = "AmountTextBox";
-            this.AmountTextBox.Size = new System.Drawing.Size(121, 20);
-            this.AmountTextBox.TabIndex = 15;
-            // 
-            // CheckTextBox
-            // 
-            this.CheckTextBox.Location = new System.Drawing.Point(117, 292);
-            this.CheckTextBox.Name = "CheckTextBox";
-            this.CheckTextBox.Size = new System.Drawing.Size(121, 20);
-            this.CheckTextBox.TabIndex = 14;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 395);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(30, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Note";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(18, 362);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Transaction Date";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 327);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Amount";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 292);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(78, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Check Number";
-            // 
-            // CategoryCombo
-            // 
-            this.CategoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CategoryCombo.FormattingEnabled = true;
-            this.CategoryCombo.Location = new System.Drawing.Point(117, 104);
-            this.CategoryCombo.Name = "CategoryCombo";
-            this.CategoryCombo.Size = new System.Drawing.Size(121, 21);
-            this.CategoryCombo.TabIndex = 5;
-            this.CategoryCombo.SelectedIndexChanged += new System.EventHandler(this.CategoryCombo_SelectedIndexChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 248);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Transaction Mode";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 194);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Transaction Type";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 104);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Category";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Name";
-            // 
-            // NameTextBox
-            // 
-            this.NameTextBox.Location = new System.Drawing.Point(117, 29);
-            this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(121, 20);
-            this.NameTextBox.TabIndex = 0;
-            this.NameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NameTextBox_KeyUp);
-            this.NameTextBox.Leave += new System.EventHandler(this.NameTextBox_Leave);
-            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.DeselectAll);
+            this.tabPage2.Controls.Add(this.SelectAll);
             this.tabPage2.Controls.Add(this.DeleteSearchRow);
             this.tabPage2.Controls.Add(this.EditSearchRow);
-            this.tabPage2.Controls.Add(this.OpeningBalanceValue);
-            this.tabPage2.Controls.Add(this.TotalBalanceLabel);
-            this.tabPage2.Controls.Add(this.TotalLabel);
-            this.tabPage2.Controls.Add(this.label25);
-            this.tabPage2.Controls.Add(this.label24);
-            this.tabPage2.Controls.Add(this.label23);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.SearchResultsDataGridView);
@@ -533,6 +567,26 @@
             this.tabPage2.Tag = "";
             this.tabPage2.Text = "Search Expenditures";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // DeselectAll
+            // 
+            this.DeselectAll.Location = new System.Drawing.Point(456, 203);
+            this.DeselectAll.Name = "DeselectAll";
+            this.DeselectAll.Size = new System.Drawing.Size(75, 23);
+            this.DeselectAll.TabIndex = 14;
+            this.DeselectAll.Text = "Deselect All";
+            this.DeselectAll.UseVisualStyleBackColor = true;
+            this.DeselectAll.Click += new System.EventHandler(this.DeselectAll_Click);
+            // 
+            // SelectAll
+            // 
+            this.SelectAll.Location = new System.Drawing.Point(345, 203);
+            this.SelectAll.Name = "SelectAll";
+            this.SelectAll.Size = new System.Drawing.Size(75, 23);
+            this.SelectAll.TabIndex = 13;
+            this.SelectAll.Text = "Select All";
+            this.SelectAll.UseVisualStyleBackColor = true;
+            this.SelectAll.Click += new System.EventHandler(this.SelectAll_Click);
             // 
             // DeleteSearchRow
             // 
@@ -553,57 +607,6 @@
             this.EditSearchRow.Text = "Edit Row";
             this.EditSearchRow.UseVisualStyleBackColor = true;
             this.EditSearchRow.Click += new System.EventHandler(this.EditSearchRow_Click);
-            // 
-            // OpeningBalanceValue
-            // 
-            this.OpeningBalanceValue.AutoSize = true;
-            this.OpeningBalanceValue.Location = new System.Drawing.Point(266, 581);
-            this.OpeningBalanceValue.Name = "OpeningBalanceValue";
-            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
-            this.OpeningBalanceValue.TabIndex = 10;
-            // 
-            // TotalBalanceLabel
-            // 
-            this.TotalBalanceLabel.AutoSize = true;
-            this.TotalBalanceLabel.Location = new System.Drawing.Point(653, 581);
-            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
-            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
-            this.TotalBalanceLabel.TabIndex = 9;
-            // 
-            // TotalLabel
-            // 
-            this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(420, 581);
-            this.TotalLabel.Name = "TotalLabel";
-            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
-            this.TotalLabel.TabIndex = 8;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(577, 581);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(79, 13);
-            this.label25.TabIndex = 7;
-            this.label25.Text = "Total Balance :";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(383, 581);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(40, 13);
-            this.label24.TabIndex = 6;
-            this.label24.Text = "Total : ";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(165, 581);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(95, 13);
-            this.label23.TabIndex = 4;
-            this.label23.Text = "Opening Balance :";
             // 
             // button2
             // 
@@ -1088,35 +1091,56 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
-            // AddUpdateFormGroup
+            // OpeningBalanceValue
             // 
-            this.AddUpdateFormGroup.AccessibleName = "AddUpdateFormGroup";
-            this.AddUpdateFormGroup.Controls.Add(this.label1);
-            this.AddUpdateFormGroup.Controls.Add(this.NameTextBox);
-            this.AddUpdateFormGroup.Controls.Add(this.label2);
-            this.AddUpdateFormGroup.Controls.Add(this.CategoryTextBox);
-            this.AddUpdateFormGroup.Controls.Add(this.label3);
-            this.AddUpdateFormGroup.Controls.Add(this.label15);
-            this.AddUpdateFormGroup.Controls.Add(this.label4);
-            this.AddUpdateFormGroup.Controls.Add(this.ContributorIdComboBox);
-            this.AddUpdateFormGroup.Controls.Add(this.CategoryCombo);
-            this.AddUpdateFormGroup.Controls.Add(this.label13);
-            this.AddUpdateFormGroup.Controls.Add(this.label5);
-            this.AddUpdateFormGroup.Controls.Add(this.label6);
-            this.AddUpdateFormGroup.Controls.Add(this.button1);
-            this.AddUpdateFormGroup.Controls.Add(this.label7);
-            this.AddUpdateFormGroup.Controls.Add(this.groupBox2);
-            this.AddUpdateFormGroup.Controls.Add(this.label8);
-            this.AddUpdateFormGroup.Controls.Add(this.groupBox1);
-            this.AddUpdateFormGroup.Controls.Add(this.CheckTextBox);
-            this.AddUpdateFormGroup.Controls.Add(this.NoteTextBox);
-            this.AddUpdateFormGroup.Controls.Add(this.AmountTextBox);
-            this.AddUpdateFormGroup.Controls.Add(this.TransactionDateTimePicker);
-            this.AddUpdateFormGroup.Location = new System.Drawing.Point(6, 33);
-            this.AddUpdateFormGroup.Name = "AddUpdateFormGroup";
-            this.AddUpdateFormGroup.Size = new System.Drawing.Size(344, 549);
-            this.AddUpdateFormGroup.TabIndex = 32;
-            this.AddUpdateFormGroup.TabStop = false;
+            this.OpeningBalanceValue.AutoSize = true;
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(474, 538);
+            this.OpeningBalanceValue.Name = "OpeningBalanceValue";
+            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
+            this.OpeningBalanceValue.TabIndex = 34;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(373, 538);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(95, 13);
+            this.label23.TabIndex = 33;
+            this.label23.Text = "Opening Balance :";
+            // 
+            // TotalBalanceLabel
+            // 
+            this.TotalBalanceLabel.AutoSize = true;
+            this.TotalBalanceLabel.Location = new System.Drawing.Point(975, 538);
+            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
+            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalBalanceLabel.TabIndex = 38;
+            // 
+            // TotalLabel
+            // 
+            this.TotalLabel.AutoSize = true;
+            this.TotalLabel.Location = new System.Drawing.Point(694, 538);
+            this.TotalLabel.Name = "TotalLabel";
+            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalLabel.TabIndex = 37;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(899, 538);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(79, 13);
+            this.label25.TabIndex = 36;
+            this.label25.Text = "Total Balance :";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(657, 538);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(40, 13);
+            this.label24.TabIndex = 35;
+            this.label24.Text = "Total : ";
             // 
             // Form1
             // 
@@ -1129,11 +1153,13 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.AddUpdateFormGroup.ResumeLayout(false);
+            this.AddUpdateFormGroup.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).EndInit();
@@ -1149,8 +1175,6 @@
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.AddUpdateFormGroup.ResumeLayout(false);
-            this.AddUpdateFormGroup.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1218,12 +1242,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label TotalBalanceLabel;
-        private System.Windows.Forms.Label TotalLabel;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label OpeningBalanceValue;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -1258,6 +1276,14 @@
         private System.Windows.Forms.Label EditModeLabel;
         private System.Windows.Forms.LinkLabel EditModelink;
         private System.Windows.Forms.GroupBox AddUpdateFormGroup;
+        private System.Windows.Forms.Button DeselectAll;
+        private System.Windows.Forms.Button SelectAll;
+        private System.Windows.Forms.Label OpeningBalanceValue;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label TotalBalanceLabel;
+        private System.Windows.Forms.Label TotalLabel;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
     }
 }
 
