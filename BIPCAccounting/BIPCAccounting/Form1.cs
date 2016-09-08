@@ -37,6 +37,17 @@ namespace BIPCAccounting
 
             this.LoadOpeningBalance();
             this.LoadBalancesOnExpenditureTab();
+
+            OpeningBalanceTooltip.SetToolTip(OpeningBalanceLabel, "Display Opening Balance");
+            this.SetToolTipProp(OpeningBalanceTooltip);
+
+            TotalBalanceFromOpeningBalanceToolTip.SetToolTip(TotalBalanceByOpeningLabel, "Total Balance on the Account.");
+            this.SetToolTipProp(TotalBalanceFromOpeningBalanceToolTip);
+        }
+
+        private void SetToolTipProp(System.Windows.Forms.ToolTip ttip)
+        {
+            ttip.IsBalloon = true;
         }
 
         private void LoadBalancesOnExpenditureTab()
@@ -1244,17 +1255,110 @@ INSERT INTO column_value_desc(table_column_id,
                     MessageBox.Show("Multiple records cannot be selected to EDIT. Please select only one.");
                 else
                 {
-                    tabControl1.SelectedTab = tabPage1;
-                    EditModeLabel.ForeColor = Color.Red;
-                    EditModeLabel.Text = string.Format("EDIT MODE FOR EXPENDITURE ID : {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+                    DialogResult result = MessageBox.Show("Inorder to EDIT, need to Redirect to EDIT Mode screen?", "Redirect?", MessageBoxButtons.YesNo);
 
-                    EditModelink.ActiveLinkColor = Color.Red;
-                    EditModelink.Text = "CANCEL EDIT MODE";
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        tabControl1.SelectedTab = tabPage1;
+                        EditModeLabel.ForeColor = Color.Red;
+                        EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+
+                        EditModelink.ActiveLinkColor = Color.Red;
+                        EditModelink.Text = "CANCEL EDIT MODE";
+
+                        AddUpdateFormGroup.BackColor = Color.Red;
+
+                        AddUpdateButton.Text = "Update";
+
+                        this.PreloadEditModeFormWithValues();
+                    }
                 }
             }
             else
             {
                 MessageBox.Show("No rows were selected");
+            }
+        }
+
+        private void PreloadEditModeFormWithValues()
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                string sql = string.Format(@"SELECT cn.contribution_id,
+           cn.contribution_name,
+           cn.contributor_id,
+           cn.category,
+           cn.transaction_type,
+           cn.transaction_mode,
+           cn.amount,
+           cn.check_number,
+           cn.transaction_date,
+           cn.note
+      FROM contribution cn
+     WHERE cn.contribution_id = {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+
+                System.Data.DataTable dt = new System.Data.DataTable();
+
+                dt = Utils.GetDataTable(mySqlConn, sql);
+
+                if (dt != null)
+                {
+                    foreach(DataRow dRow in dt.Rows)
+                    {
+                        NameTextBox.Text = dRow["contribution_name"].ToString();
+                        foreach (Item d in ContributorIdComboBox.Items)
+                        {
+                            if (d.Id == dRow["contributor_id"].ToString())
+                            {
+                                ContributorIdComboBox.SelectedItem = d;
+                                break;
+                            }
+                        }
+
+                        foreach (Item cc in CategoryCombo.Items)
+                        {
+                            if (cc.Id == dRow["category"].ToString())
+                            {
+                                CategoryCombo.SelectedItem = cc;
+                                break;
+                            }
+                        }
+
+                        if (this.cvd.GetCVDDescription("contribution", "transaction_type", dRow["transaction_type"].ToString()).Equals("Credit", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            CreditRadioButton.Checked = true;
+                        }
+                        else
+                        {
+                            DebitRadionButton.Checked = false;
+                        }
+
+                        if (this.cvd.GetCVDDescription("contribution", "transaction_mode", dRow["transaction_mode"].ToString()).Equals("Cash", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            CashRadionButton.Checked = true;
+                        }
+                        else
+                        {
+                            CheckRadionButton.Checked = false;
+                        }
+
+                        AmountTextBox.Text = dRow["amount"].ToString();
+                        CheckTextBox.Text = dRow["check_number"].ToString();
+                        NoteTextBox.Text = dRow["note"].ToString();
+                        TransactionDateTimePicker.Value = Convert.ToDateTime(dRow["transaction_date"].ToString()); 
+                    }
+                }
+
+            }
+            catch
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
             }
         }
 
@@ -1321,6 +1425,9 @@ INSERT INTO column_value_desc(table_column_id,
 
             Utils.ResetAllControls(GroupControl);
 
+            AddUpdateFormGroup.BackColor = Color.Transparent;
+
+            AddUpdateButton.Text = "Add";
         }
 
         private void SelectAll_Click(object sender, EventArgs e)
@@ -1331,6 +1438,11 @@ INSERT INTO column_value_desc(table_column_id,
         private void DeselectAll_Click(object sender, EventArgs e)
         {
             SearchResultsDataGridView.ClearSelection();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
         }
     }
 }

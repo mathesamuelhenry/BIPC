@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.TotalBalanceLabel = new System.Windows.Forms.Label();
             this.TotalLabel = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
+            this.TotalBalanceByOpeningLabel = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.OpeningBalanceValue = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
+            this.OpeningBalanceLabel = new System.Windows.Forms.Label();
             this.AddUpdateFormGroup = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
@@ -49,7 +50,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.AddUpdateButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CheckRadionButton = new System.Windows.Forms.RadioButton();
@@ -131,6 +132,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.AddUpdateFormGroup.SuspendLayout();
@@ -165,10 +168,10 @@
             // 
             this.tabPage1.Controls.Add(this.TotalBalanceLabel);
             this.tabPage1.Controls.Add(this.TotalLabel);
-            this.tabPage1.Controls.Add(this.label25);
+            this.tabPage1.Controls.Add(this.TotalBalanceByOpeningLabel);
             this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.OpeningBalanceValue);
-            this.tabPage1.Controls.Add(this.label23);
+            this.tabPage1.Controls.Add(this.OpeningBalanceLabel);
             this.tabPage1.Controls.Add(this.AddUpdateFormGroup);
             this.tabPage1.Controls.Add(this.EditModelink);
             this.tabPage1.Controls.Add(this.EditModeLabel);
@@ -197,14 +200,14 @@
             this.TotalLabel.Size = new System.Drawing.Size(0, 13);
             this.TotalLabel.TabIndex = 37;
             // 
-            // label25
+            // TotalBalanceByOpeningLabel
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(899, 538);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(79, 13);
-            this.label25.TabIndex = 36;
-            this.label25.Text = "Total Balance :";
+            this.TotalBalanceByOpeningLabel.AutoSize = true;
+            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(899, 538);
+            this.TotalBalanceByOpeningLabel.Name = "TotalBalanceByOpeningLabel";
+            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(79, 13);
+            this.TotalBalanceByOpeningLabel.TabIndex = 36;
+            this.TotalBalanceByOpeningLabel.Text = "Total Balance :";
             // 
             // label24
             // 
@@ -223,14 +226,14 @@
             this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
             this.OpeningBalanceValue.TabIndex = 34;
             // 
-            // label23
+            // OpeningBalanceLabel
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(373, 538);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(95, 13);
-            this.label23.TabIndex = 33;
-            this.label23.Text = "Opening Balance :";
+            this.OpeningBalanceLabel.AutoSize = true;
+            this.OpeningBalanceLabel.Location = new System.Drawing.Point(373, 538);
+            this.OpeningBalanceLabel.Name = "OpeningBalanceLabel";
+            this.OpeningBalanceLabel.Size = new System.Drawing.Size(95, 13);
+            this.OpeningBalanceLabel.TabIndex = 33;
+            this.OpeningBalanceLabel.Text = "Opening Balance :";
             // 
             // AddUpdateFormGroup
             // 
@@ -247,7 +250,7 @@
             this.AddUpdateFormGroup.Controls.Add(this.label13);
             this.AddUpdateFormGroup.Controls.Add(this.label5);
             this.AddUpdateFormGroup.Controls.Add(this.label6);
-            this.AddUpdateFormGroup.Controls.Add(this.button1);
+            this.AddUpdateFormGroup.Controls.Add(this.AddUpdateButton);
             this.AddUpdateFormGroup.Controls.Add(this.label7);
             this.AddUpdateFormGroup.Controls.Add(this.groupBox2);
             this.AddUpdateFormGroup.Controls.Add(this.label8);
@@ -373,15 +376,15 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "Amount";
             // 
-            // button1
+            // AddUpdateButton
             // 
-            this.button1.Location = new System.Drawing.Point(117, 505);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.AddUpdateButton.Location = new System.Drawing.Point(117, 505);
+            this.AddUpdateButton.Name = "AddUpdateButton";
+            this.AddUpdateButton.Size = new System.Drawing.Size(75, 23);
+            this.AddUpdateButton.TabIndex = 23;
+            this.AddUpdateButton.Text = "Add";
+            this.AddUpdateButton.UseVisualStyleBackColor = true;
+            this.AddUpdateButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
             // 
@@ -1202,7 +1205,7 @@
         private System.Windows.Forms.TextBox CheckTextBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button AddUpdateButton;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TabPage tabPage3;
@@ -1277,11 +1280,13 @@
         private System.Windows.Forms.Button DeselectAll;
         private System.Windows.Forms.Button SelectAll;
         private System.Windows.Forms.Label OpeningBalanceValue;
-        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label OpeningBalanceLabel;
         private System.Windows.Forms.Label TotalBalanceLabel;
         private System.Windows.Forms.Label TotalLabel;
-        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label TotalBalanceByOpeningLabel;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ToolTip OpeningBalanceTooltip;
+        private System.Windows.Forms.ToolTip TotalBalanceFromOpeningBalanceToolTip;
     }
 }
 

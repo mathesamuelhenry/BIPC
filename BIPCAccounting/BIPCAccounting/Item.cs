@@ -102,5 +102,14 @@ namespace BIPCAccounting
 
             return query.FirstOrDefault();
         }
+
+        public string GetCVDDescription(string table_name, string column_name, string value)
+        {
+            var query = from cvd in this.CVDList
+                        where cvd.TableName == table_name && cvd.ColumnName == column_name && cvd.Value == value
+                        select cvd.Description;
+
+            return query.FirstOrDefault();
+        }
     }
 }
