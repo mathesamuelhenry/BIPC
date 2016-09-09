@@ -28,6 +28,8 @@ namespace BIPCAccounting
 
         private void LoadFormData()
         {
+            EditModeHidden.Text = "dasd";
+
             this.LoadCVD();
             this.LoadCategoryDropDown();
             this.LoadContributorIdComboBox();
@@ -458,7 +460,11 @@ namespace BIPCAccounting
                         dataGridView1.Rows[n].Cells["Note"].Value = dRow["Note"].ToString();
                         dataGridView1.Rows[n].Cells["DateAdded"].Value = dRow["Date Added"].ToString();
                     }
+
+                    dataGridView1.Rows[0].Selected = true;
                 }
+
+                dataGridView1.AutoResizeRows();
             }
             finally
             {
@@ -903,8 +909,10 @@ namespace BIPCAccounting
                         SearchResultsDataGridView.Rows[n].Cells["NoteSearch"].Value = dRow["Note"].ToString();
                         SearchResultsDataGridView.Rows[n].Cells["DateAddedSearch"].Value = dRow["Date Added"].ToString();
                     }
+
+                    SearchResultsDataGridView.Rows[0].Selected = true;
                 }
-                SearchResultsDataGridView.Rows[0].Selected = true;
+                
                 SearchResultsDataGridView.AutoResizeRows();
 
                 /*BindingSource bs = new BindingSource();
@@ -1286,7 +1294,9 @@ INSERT INTO column_value_desc(table_column_id,
 
                         AddUpdateButton.Text = "Update";
 
-                        this.PreloadEditModeFormWithValues();
+                        ContributionIdHidden.Text = SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString();
+
+                        this.PreloadEditModeFormWithValues(SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
 
                         EditModeHidden.Text = "EDIT";
                     }
@@ -1298,7 +1308,7 @@ INSERT INTO column_value_desc(table_column_id,
             }
         }
 
-        private void PreloadEditModeFormWithValues()
+        private void PreloadEditModeFormWithValues(string contribution_id)
         {
             MySqlConnection mySqlConn = null;
 
@@ -1318,7 +1328,7 @@ INSERT INTO column_value_desc(table_column_id,
            cn.transaction_date,
            cn.note
       FROM contribution cn
-     WHERE cn.contribution_id = {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+     WHERE cn.contribution_id = {0}", contribution_id);
 
                 System.Data.DataTable dt = new System.Data.DataTable();
 
@@ -1409,7 +1419,7 @@ INSERT INTO column_value_desc(table_column_id,
   , Utils.FormatDBText(checque_number)
   , Utils.FormatDBText(transaction_date.ToString("yyyy-MM-dd"))
   , Utils.FormatDBText(note)
-  , SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+  , ContributionIdHidden.Text);
 
                 MySqlCommand cmd = new MySqlCommand(updateSql, mySqlConn);
                 count = cmd.ExecuteNonQuery();
@@ -1534,6 +1544,97 @@ INSERT INTO column_value_desc(table_column_id,
                     }
                 }
             }
+        }
+
+        private void DeleteInAddUpdatePage_Click(object sender, EventArgs e)
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                int count = 0;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                List<string> contributionIdList = new List<string>();
+                string contributionIds = string.Empty;
+
+                if (dataGridView1.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                        {
+                            contributionIdList.Add(row.Cells["ID"].Value.ToString());
+                        }
+
+                        contributionIds = string.Join(",", contributionIdList);
+
+                        string sql = string.Format(@"UPDATE contribution
+   SET status = 0, date_changed = now()
+ WHERE contribution_id IN ({0})", contributionIds);
+
+                        MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                        count = cmd.ExecuteNonQuery();
+
+                        MessageBox.Show(string.Format("{0} expenditure records deleted.", contributionIdList.Count));
+
+                        this.LoadTable();
+                        this.LoadSearchResultDataGrid();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No rows were selected");
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void EditInAddUpdatePage_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                if (dataGridView1.SelectedRows.Count > 1)
+                    MessageBox.Show("Multiple records cannot be selected to EDIT. Please select only one.");
+                else
+                {
+                        EditModeLabel.ForeColor = Color.Red;
+                        EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString());
+
+                        EditModelink.ActiveLinkColor = Color.Red;
+                        EditModelink.Text = "CANCEL EDIT MODE";
+
+                        AddUpdateFormGroup.BackColor = Color.Red;
+
+                        AddUpdateButton.Text = "Update";
+
+                        ContributionIdHidden.Text = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
+
+                        this.PreloadEditModeFormWithValues(dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString());
+
+                        EditModeHidden.Text = "EDIT";
+                }
+            }
+            else
+            {
+                MessageBox.Show("No rows were selected");
+            }
+        }
+
+        private void SelectAllOnAddUpdatePage_Click(object sender, EventArgs e)
+        {
+            dataGridView1.SelectAll();
+        }
+
+        private void DeSelectAllOnAddUpdatePage_Click(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
         }
     }
 }

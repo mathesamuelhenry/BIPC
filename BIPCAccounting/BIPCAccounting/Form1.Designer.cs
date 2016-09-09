@@ -29,15 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
-            this.TotalBalanceLabel = new System.Windows.Forms.Label();
-            this.TotalLabel = new System.Windows.Forms.Label();
-            this.TotalBalanceByOpeningLabel = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
+            this.DeSelectAllOnAddUpdatePage = new System.Windows.Forms.Button();
+            this.SelectAllOnAddUpdatePage = new System.Windows.Forms.Button();
+            this.DeleteInAddUpdatePage = new System.Windows.Forms.Button();
+            this.EditInAddUpdatePage = new System.Windows.Forms.Button();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.OpeningBalanceValue = new System.Windows.Forms.Label();
             this.OpeningBalanceLabel = new System.Windows.Forms.Label();
+            this.TotalBalanceLabel = new System.Windows.Forms.Label();
+            this.TotalBalanceByOpeningLabel = new System.Windows.Forms.Label();
+            this.TotalLabel = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.EditModeHidden = new System.Windows.Forms.TextBox();
             this.AddUpdateFormGroup = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
@@ -135,9 +141,10 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.EditModeHidden = new System.Windows.Forms.TextBox();
+            this.ContributionIdHidden = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.AddUpdateFormGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -169,13 +176,13 @@
             // 
             // AddUpdateExpenditureTab
             // 
+            this.AddUpdateExpenditureTab.Controls.Add(this.ContributionIdHidden);
+            this.AddUpdateExpenditureTab.Controls.Add(this.DeSelectAllOnAddUpdatePage);
+            this.AddUpdateExpenditureTab.Controls.Add(this.SelectAllOnAddUpdatePage);
+            this.AddUpdateExpenditureTab.Controls.Add(this.DeleteInAddUpdatePage);
+            this.AddUpdateExpenditureTab.Controls.Add(this.EditInAddUpdatePage);
+            this.AddUpdateExpenditureTab.Controls.Add(this.tableLayoutPanel5);
             this.AddUpdateExpenditureTab.Controls.Add(this.EditModeHidden);
-            this.AddUpdateExpenditureTab.Controls.Add(this.TotalBalanceLabel);
-            this.AddUpdateExpenditureTab.Controls.Add(this.TotalLabel);
-            this.AddUpdateExpenditureTab.Controls.Add(this.TotalBalanceByOpeningLabel);
-            this.AddUpdateExpenditureTab.Controls.Add(this.label24);
-            this.AddUpdateExpenditureTab.Controls.Add(this.OpeningBalanceValue);
-            this.AddUpdateExpenditureTab.Controls.Add(this.OpeningBalanceLabel);
             this.AddUpdateExpenditureTab.Controls.Add(this.AddUpdateFormGroup);
             this.AddUpdateExpenditureTab.Controls.Add(this.EditModelink);
             this.AddUpdateExpenditureTab.Controls.Add(this.EditModeLabel);
@@ -188,44 +195,72 @@
             this.AddUpdateExpenditureTab.Text = "Add Expenditure";
             this.AddUpdateExpenditureTab.UseVisualStyleBackColor = true;
             // 
-            // TotalBalanceLabel
+            // DeSelectAllOnAddUpdatePage
             // 
-            this.TotalBalanceLabel.AutoSize = true;
-            this.TotalBalanceLabel.Location = new System.Drawing.Point(975, 538);
-            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
-            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
-            this.TotalBalanceLabel.TabIndex = 38;
+            this.DeSelectAllOnAddUpdatePage.Location = new System.Drawing.Point(782, 518);
+            this.DeSelectAllOnAddUpdatePage.Name = "DeSelectAllOnAddUpdatePage";
+            this.DeSelectAllOnAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.DeSelectAllOnAddUpdatePage.TabIndex = 44;
+            this.DeSelectAllOnAddUpdatePage.Text = "Deselect All";
+            this.DeSelectAllOnAddUpdatePage.UseVisualStyleBackColor = true;
+            this.DeSelectAllOnAddUpdatePage.Click += new System.EventHandler(this.DeSelectAllOnAddUpdatePage_Click);
             // 
-            // TotalLabel
+            // SelectAllOnAddUpdatePage
             // 
-            this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(694, 538);
-            this.TotalLabel.Name = "TotalLabel";
-            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
-            this.TotalLabel.TabIndex = 37;
+            this.SelectAllOnAddUpdatePage.Location = new System.Drawing.Point(671, 518);
+            this.SelectAllOnAddUpdatePage.Name = "SelectAllOnAddUpdatePage";
+            this.SelectAllOnAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.SelectAllOnAddUpdatePage.TabIndex = 43;
+            this.SelectAllOnAddUpdatePage.Text = "Select All";
+            this.SelectAllOnAddUpdatePage.UseVisualStyleBackColor = true;
+            this.SelectAllOnAddUpdatePage.Click += new System.EventHandler(this.SelectAllOnAddUpdatePage_Click);
             // 
-            // TotalBalanceByOpeningLabel
+            // DeleteInAddUpdatePage
             // 
-            this.TotalBalanceByOpeningLabel.AutoSize = true;
-            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(899, 538);
-            this.TotalBalanceByOpeningLabel.Name = "TotalBalanceByOpeningLabel";
-            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(79, 13);
-            this.TotalBalanceByOpeningLabel.TabIndex = 36;
-            this.TotalBalanceByOpeningLabel.Text = "Total Balance :";
+            this.DeleteInAddUpdatePage.Location = new System.Drawing.Point(892, 518);
+            this.DeleteInAddUpdatePage.Name = "DeleteInAddUpdatePage";
+            this.DeleteInAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.DeleteInAddUpdatePage.TabIndex = 42;
+            this.DeleteInAddUpdatePage.Text = "Delete";
+            this.DeleteInAddUpdatePage.UseVisualStyleBackColor = true;
+            this.DeleteInAddUpdatePage.Click += new System.EventHandler(this.DeleteInAddUpdatePage_Click);
             // 
-            // label24
+            // EditInAddUpdatePage
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(657, 538);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(40, 13);
-            this.label24.TabIndex = 35;
-            this.label24.Text = "Total : ";
+            this.EditInAddUpdatePage.Location = new System.Drawing.Point(997, 518);
+            this.EditInAddUpdatePage.Name = "EditInAddUpdatePage";
+            this.EditInAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.EditInAddUpdatePage.TabIndex = 41;
+            this.EditInAddUpdatePage.Text = "Edit Row";
+            this.EditInAddUpdatePage.UseVisualStyleBackColor = true;
+            this.EditInAddUpdatePage.Click += new System.EventHandler(this.EditInAddUpdatePage_Click);
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 6;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 185F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 216F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
+            this.tableLayoutPanel5.Controls.Add(this.OpeningBalanceValue, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.OpeningBalanceLabel, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.TotalBalanceLabel, 5, 0);
+            this.tableLayoutPanel5.Controls.Add(this.TotalBalanceByOpeningLabel, 4, 0);
+            this.tableLayoutPanel5.Controls.Add(this.TotalLabel, 3, 0);
+            this.tableLayoutPanel5.Controls.Add(this.label24, 2, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(366, 566);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(706, 39);
+            this.tableLayoutPanel5.TabIndex = 40;
             // 
             // OpeningBalanceValue
             // 
             this.OpeningBalanceValue.AutoSize = true;
-            this.OpeningBalanceValue.Location = new System.Drawing.Point(474, 538);
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(105, 0);
             this.OpeningBalanceValue.Name = "OpeningBalanceValue";
             this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
             this.OpeningBalanceValue.TabIndex = 34;
@@ -233,11 +268,53 @@
             // OpeningBalanceLabel
             // 
             this.OpeningBalanceLabel.AutoSize = true;
-            this.OpeningBalanceLabel.Location = new System.Drawing.Point(373, 538);
+            this.OpeningBalanceLabel.Location = new System.Drawing.Point(3, 0);
             this.OpeningBalanceLabel.Name = "OpeningBalanceLabel";
             this.OpeningBalanceLabel.Size = new System.Drawing.Size(95, 13);
             this.OpeningBalanceLabel.TabIndex = 33;
             this.OpeningBalanceLabel.Text = "Opening Balance :";
+            // 
+            // TotalBalanceLabel
+            // 
+            this.TotalBalanceLabel.AutoSize = true;
+            this.TotalBalanceLabel.Location = new System.Drawing.Point(635, 0);
+            this.TotalBalanceLabel.Name = "TotalBalanceLabel";
+            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalBalanceLabel.TabIndex = 38;
+            // 
+            // TotalBalanceByOpeningLabel
+            // 
+            this.TotalBalanceByOpeningLabel.AutoSize = true;
+            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(549, 0);
+            this.TotalBalanceByOpeningLabel.Name = "TotalBalanceByOpeningLabel";
+            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(79, 13);
+            this.TotalBalanceByOpeningLabel.TabIndex = 36;
+            this.TotalBalanceByOpeningLabel.Text = "Total Balance :";
+            // 
+            // TotalLabel
+            // 
+            this.TotalLabel.AutoSize = true;
+            this.TotalLabel.Location = new System.Drawing.Point(333, 0);
+            this.TotalLabel.Name = "TotalLabel";
+            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalLabel.TabIndex = 37;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.Transparent;
+            this.label24.Location = new System.Drawing.Point(290, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(37, 13);
+            this.label24.TabIndex = 35;
+            this.label24.Text = "Total : ";
+            // 
+            // EditModeHidden
+            // 
+            this.EditModeHidden.Location = new System.Drawing.Point(357, 585);
+            this.EditModeHidden.Name = "EditModeHidden";
+            this.EditModeHidden.Size = new System.Drawing.Size(0, 20);
+            this.EditModeHidden.TabIndex = 39;
             // 
             // AddUpdateFormGroup
             // 
@@ -583,9 +660,9 @@
             // 
             // Amount
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.Amount.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle1;
             this.Amount.HeaderText = "Amount";
             this.Amount.Name = "Amount";
             this.Amount.ReadOnly = true;
@@ -629,7 +706,7 @@
             // 
             // DeselectAll
             // 
-            this.DeselectAll.Location = new System.Drawing.Point(456, 203);
+            this.DeselectAll.Location = new System.Drawing.Point(668, 203);
             this.DeselectAll.Name = "DeselectAll";
             this.DeselectAll.Size = new System.Drawing.Size(75, 23);
             this.DeselectAll.TabIndex = 14;
@@ -639,7 +716,7 @@
             // 
             // SelectAll
             // 
-            this.SelectAll.Location = new System.Drawing.Point(345, 203);
+            this.SelectAll.Location = new System.Drawing.Point(557, 203);
             this.SelectAll.Name = "SelectAll";
             this.SelectAll.Size = new System.Drawing.Size(75, 23);
             this.SelectAll.TabIndex = 13;
@@ -1150,12 +1227,12 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
-            // EditModeHidden
+            // ContributionIdHidden
             // 
-            this.EditModeHidden.Location = new System.Drawing.Point(376, 574);
-            this.EditModeHidden.Name = "EditModeHidden";
-            this.EditModeHidden.Size = new System.Drawing.Size(0, 20);
-            this.EditModeHidden.TabIndex = 39;
+            this.ContributionIdHidden.Location = new System.Drawing.Point(29, 589);
+            this.ContributionIdHidden.Name = "ContributionIdHidden";
+            this.ContributionIdHidden.Size = new System.Drawing.Size(0, 20);
+            this.ContributionIdHidden.TabIndex = 45;
             // 
             // Form1
             // 
@@ -1168,6 +1245,8 @@
             this.tabControl1.ResumeLayout(false);
             this.AddUpdateExpenditureTab.ResumeLayout(false);
             this.AddUpdateExpenditureTab.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.AddUpdateFormGroup.ResumeLayout(false);
             this.AddUpdateFormGroup.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1302,6 +1381,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Note;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateAdded;
         private System.Windows.Forms.TextBox EditModeHidden;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Button DeleteInAddUpdatePage;
+        private System.Windows.Forms.Button EditInAddUpdatePage;
+        private System.Windows.Forms.Button DeSelectAllOnAddUpdatePage;
+        private System.Windows.Forms.Button SelectAllOnAddUpdatePage;
+        private System.Windows.Forms.TextBox ContributionIdHidden;
     }
 }
 
