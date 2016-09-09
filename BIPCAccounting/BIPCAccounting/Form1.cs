@@ -28,10 +28,10 @@ namespace BIPCAccounting
 
         private void LoadFormData()
         {
+            this.LoadCVD();
             this.LoadCategoryDropDown();
             this.LoadContributorIdComboBox();
             this.LoadTable();
-            this.LoadCVD();
             this.LoadSearchTabDropDowns();
             this.LoadSearchResultDataGrid();
 
@@ -465,6 +465,8 @@ namespace BIPCAccounting
                 if (mySqlConn != null)
                     mySqlConn.Close();
             }
+
+            this.LoadBalancesOnExpenditureTab();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -554,12 +556,26 @@ namespace BIPCAccounting
                
                 if (valid)
                 {
-                    count = this.Insert(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+                    if (EditModeHidden.Text == "EDIT")
+                    {
+                        count = this.UpdateRecord(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
 
-                    if (count > 0)
-                        MessageBox.Show("Record added");
+                        if (count > 0)
+                            MessageBox.Show("Record updated");
+                        else
+                            MessageBox.Show("Record not updated");
+                        
+                        this.CancelEditMode();
+                    }
                     else
-                        MessageBox.Show("Record not added");
+                    {
+                        count = this.Insert(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+
+                        if (count > 0)
+                            MessageBox.Show("Record added");
+                        else
+                            MessageBox.Show("Record not added");
+                    }
 
                     this.LoadTable();
                     this.LoadSearchResultDataGrid();
@@ -685,25 +701,25 @@ namespace BIPCAccounting
   ,date_added
 ) VALUES (
   {0}   -- contributor_id - IN int(11)
-  ,'{1}'  -- contribution_name - IN varchar(60)
-  ,'{2}'  -- category - IN varchar(50)
-  ,'{3}'   -- transaction_type - IN int(11)
-  ,'{4}' -- transaction_mode - IN int(11)
+  ,{1}  -- contribution_name - IN varchar(60)
+  ,{2}  -- category - IN varchar(50)
+  ,{3}   -- transaction_type - IN int(11)
+  ,{4} -- transaction_mode - IN int(11)
   ,{5} -- amount - IN decimal(11,2)
-  ,'{6}'  -- check_number - IN varchar(50)
-  ,'{7}'  -- transaction_date - IN datetime
-  ,'{8}'  -- note 
+  ,{6}  -- check_number - IN varchar(50)
+  ,{7}  -- transaction_date - IN datetime
+  ,{8}  -- note 
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
-)", string.IsNullOrEmpty(contributor_id) ? "NULL" : contributor_id
-  , name
-  , category
-  , trans_type
-  , trans_mode
-  , amount
-  , checque_number
-  , transaction_date.ToString("yyyy-MM-dd")
-  , note);
+)", Utils.FormatDBIntegers(contributor_id)
+  , Utils.FormatDBText(name)
+  , Utils.FormatDBText(category)
+  , Utils.FormatDBIntegers(trans_type)
+  , Utils.FormatDBIntegers(trans_mode)
+  , Utils.FormatDBIntegers(amount)
+  , Utils.FormatDBText(checque_number)
+  , Utils.FormatDBText(transaction_date.ToString("yyyy-MM-dd"))
+  , Utils.FormatDBText(note));
 
                 MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
                 count = cmd.ExecuteNonQuery();
@@ -1259,7 +1275,7 @@ INSERT INTO column_value_desc(table_column_id,
 
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
-                        tabControl1.SelectedTab = tabPage1;
+                        tabControl1.SelectedTab = AddUpdateExpenditureTab;
                         EditModeLabel.ForeColor = Color.Red;
                         EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
 
@@ -1271,6 +1287,8 @@ INSERT INTO column_value_desc(table_column_id,
                         AddUpdateButton.Text = "Update";
 
                         this.PreloadEditModeFormWithValues();
+
+                        EditModeHidden.Text = "EDIT";
                     }
                 }
             }
@@ -1335,7 +1353,7 @@ INSERT INTO column_value_desc(table_column_id,
                         }
                         else
                         {
-                            DebitRadionButton.Checked = false;
+                            DebitRadionButton.Checked = true;
                         }
 
                         if (this.cvd.GetCVDDescription("contribution", "transaction_mode", dRow["transaction_mode"].ToString()).Equals("Cash", StringComparison.InvariantCultureIgnoreCase))
@@ -1344,7 +1362,7 @@ INSERT INTO column_value_desc(table_column_id,
                         }
                         else
                         {
-                            CheckRadionButton.Checked = false;
+                            CheckRadionButton.Checked = true;
                         }
 
                         AmountTextBox.Text = dRow["amount"].ToString();
@@ -1360,6 +1378,53 @@ INSERT INTO column_value_desc(table_column_id,
                 if (mySqlConn != null)
                     mySqlConn.Close();
             }
+        }
+
+        private int UpdateRecord(string contributor_id, string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
+        {
+            int count = 0;
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                string updateSql = string.Format(@"UPDATE contribution
+   SET contributor_id = {0},
+       contribution_name = {1},
+       category = {2},
+       transaction_type = {3},
+       transaction_mode = {4},
+       amount = {5},
+       check_number = {6},
+       transaction_date = {7},
+       note = {8},
+       date_changed = now()
+ WHERE contribution_id = {9}", Utils.FormatDBIntegers(contributor_id)
+  , Utils.FormatDBText(name)
+  , Utils.FormatDBText(category)
+  , Utils.FormatDBIntegers(trans_type)
+  , Utils.FormatDBIntegers(trans_mode)
+  , Utils.FormatDBIntegers(amount)
+  , Utils.FormatDBText(checque_number)
+  , Utils.FormatDBText(transaction_date.ToString("yyyy-MM-dd"))
+  , Utils.FormatDBText(note)
+  , SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
+
+                MySqlCommand cmd = new MySqlCommand(updateSql, mySqlConn);
+                count = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+
+            return count;
         }
 
         private void DeleteSearchRow_Click(object sender, EventArgs e)
@@ -1414,13 +1479,18 @@ INSERT INTO column_value_desc(table_column_id,
 
         private void EditModelink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            this.CancelEditMode();
+        }
+
+        private void CancelEditMode()
+        {
             EditModeLabel.ForeColor = Color.Green;
             EditModeLabel.Text = string.Empty;
 
             EditModelink.ActiveLinkColor = Color.Green;
             EditModelink.Text = string.Empty;
 
-            Control.ControlCollection collection = this.tabControl1.SelectedTab.Controls;
+            Control.ControlCollection collection = AddUpdateExpenditureTab.Controls;
             Control GroupControl = (Control)collection.Cast<Control>().Where(x => x.AccessibleName == "AddUpdateFormGroup").FirstOrDefault();
 
             Utils.ResetAllControls(GroupControl);
@@ -1428,6 +1498,7 @@ INSERT INTO column_value_desc(table_column_id,
             AddUpdateFormGroup.BackColor = Color.Transparent;
 
             AddUpdateButton.Text = "Add";
+            EditModeHidden.Text = string.Empty;
         }
 
         private void SelectAll_Click(object sender, EventArgs e)
@@ -1443,6 +1514,26 @@ INSERT INTO column_value_desc(table_column_id,
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
 
+        }
+
+        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (tabControl1.SelectedTab == SearchExpendituresTab || tabControl1.SelectedTab == MiscellaneousTab)
+            {
+                if (EditModeHidden.Text == "EDIT")
+                {
+                    DialogResult result = MessageBox.Show("Would you like to cancel EDIT mode?", "Cancel Edit Mode?", MessageBoxButtons.YesNo);
+
+                    if (result != System.Windows.Forms.DialogResult.Yes)
+                    {
+                        tabControl1.SelectedTab = AddUpdateExpenditureTab;
+                    }
+                    else
+                    {
+                        this.CancelEditMode();
+                    }
+                }
+            }
         }
     }
 }

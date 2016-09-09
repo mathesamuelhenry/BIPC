@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
             this.TotalBalanceLabel = new System.Windows.Forms.Label();
             this.TotalLabel = new System.Windows.Forms.Label();
             this.TotalBalanceByOpeningLabel = new System.Windows.Forms.Label();
@@ -76,7 +77,7 @@
             this.TransDt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.SearchExpendituresTab = new System.Windows.Forms.TabPage();
             this.DeselectAll = new System.Windows.Forms.Button();
             this.SelectAll = new System.Windows.Forms.Button();
             this.DeleteSearchRow = new System.Windows.Forms.Button();
@@ -113,7 +114,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.SearchNameTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.MiscellaneousTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -134,16 +135,17 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.EditModeHidden = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.AddUpdateExpenditureTab.SuspendLayout();
             this.AddUpdateFormGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.SearchExpendituresTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.MiscellaneousTab.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -155,34 +157,36 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.AddUpdateExpenditureTab);
+            this.tabControl1.Controls.Add(this.SearchExpendituresTab);
+            this.tabControl1.Controls.Add(this.MiscellaneousTab);
             this.tabControl1.Location = new System.Drawing.Point(12, 22);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1102, 654);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
-            // tabPage1
+            // AddUpdateExpenditureTab
             // 
-            this.tabPage1.Controls.Add(this.TotalBalanceLabel);
-            this.tabPage1.Controls.Add(this.TotalLabel);
-            this.tabPage1.Controls.Add(this.TotalBalanceByOpeningLabel);
-            this.tabPage1.Controls.Add(this.label24);
-            this.tabPage1.Controls.Add(this.OpeningBalanceValue);
-            this.tabPage1.Controls.Add(this.OpeningBalanceLabel);
-            this.tabPage1.Controls.Add(this.AddUpdateFormGroup);
-            this.tabPage1.Controls.Add(this.EditModelink);
-            this.tabPage1.Controls.Add(this.EditModeLabel);
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1094, 628);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Add Expenditure";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.AddUpdateExpenditureTab.Controls.Add(this.EditModeHidden);
+            this.AddUpdateExpenditureTab.Controls.Add(this.TotalBalanceLabel);
+            this.AddUpdateExpenditureTab.Controls.Add(this.TotalLabel);
+            this.AddUpdateExpenditureTab.Controls.Add(this.TotalBalanceByOpeningLabel);
+            this.AddUpdateExpenditureTab.Controls.Add(this.label24);
+            this.AddUpdateExpenditureTab.Controls.Add(this.OpeningBalanceValue);
+            this.AddUpdateExpenditureTab.Controls.Add(this.OpeningBalanceLabel);
+            this.AddUpdateExpenditureTab.Controls.Add(this.AddUpdateFormGroup);
+            this.AddUpdateExpenditureTab.Controls.Add(this.EditModelink);
+            this.AddUpdateExpenditureTab.Controls.Add(this.EditModeLabel);
+            this.AddUpdateExpenditureTab.Controls.Add(this.dataGridView1);
+            this.AddUpdateExpenditureTab.Location = new System.Drawing.Point(4, 22);
+            this.AddUpdateExpenditureTab.Name = "AddUpdateExpenditureTab";
+            this.AddUpdateExpenditureTab.Padding = new System.Windows.Forms.Padding(3);
+            this.AddUpdateExpenditureTab.Size = new System.Drawing.Size(1094, 628);
+            this.AddUpdateExpenditureTab.TabIndex = 0;
+            this.AddUpdateExpenditureTab.Text = "Add Expenditure";
+            this.AddUpdateExpenditureTab.UseVisualStyleBackColor = true;
             // 
             // TotalBalanceLabel
             // 
@@ -535,7 +539,7 @@
             this.DateAdded});
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.dataGridView1.Location = new System.Drawing.Point(366, 46);
+            this.dataGridView1.Location = new System.Drawing.Point(366, 45);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(706, 453);
             this.dataGridView1.TabIndex = 24;
@@ -579,6 +583,9 @@
             // 
             // Amount
             // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle2;
             this.Amount.HeaderText = "Amount";
             this.Amount.Name = "Amount";
             this.Amount.ReadOnly = true;
@@ -601,24 +608,24 @@
             this.DateAdded.Name = "DateAdded";
             this.DateAdded.ReadOnly = true;
             // 
-            // tabPage2
+            // SearchExpendituresTab
             // 
-            this.tabPage2.Controls.Add(this.DeselectAll);
-            this.tabPage2.Controls.Add(this.SelectAll);
-            this.tabPage2.Controls.Add(this.DeleteSearchRow);
-            this.tabPage2.Controls.Add(this.EditSearchRow);
-            this.tabPage2.Controls.Add(this.button2);
-            this.tabPage2.Controls.Add(this.label22);
-            this.tabPage2.Controls.Add(this.SearchResultsDataGridView);
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1094, 628);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Tag = "";
-            this.tabPage2.Text = "Search Expenditures";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.SearchExpendituresTab.Controls.Add(this.DeselectAll);
+            this.SearchExpendituresTab.Controls.Add(this.SelectAll);
+            this.SearchExpendituresTab.Controls.Add(this.DeleteSearchRow);
+            this.SearchExpendituresTab.Controls.Add(this.EditSearchRow);
+            this.SearchExpendituresTab.Controls.Add(this.button2);
+            this.SearchExpendituresTab.Controls.Add(this.label22);
+            this.SearchExpendituresTab.Controls.Add(this.SearchResultsDataGridView);
+            this.SearchExpendituresTab.Controls.Add(this.groupBox3);
+            this.SearchExpendituresTab.Location = new System.Drawing.Point(4, 22);
+            this.SearchExpendituresTab.Name = "SearchExpendituresTab";
+            this.SearchExpendituresTab.Padding = new System.Windows.Forms.Padding(3);
+            this.SearchExpendituresTab.Size = new System.Drawing.Size(1094, 628);
+            this.SearchExpendituresTab.TabIndex = 1;
+            this.SearchExpendituresTab.Tag = "";
+            this.SearchExpendituresTab.Text = "Search Expenditures";
+            this.SearchExpendituresTab.UseVisualStyleBackColor = true;
             // 
             // DeselectAll
             // 
@@ -951,17 +958,17 @@
             this.SearchNameTextBox.TabIndex = 30;
             this.SearchNameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchNameTextBox_KeyUp);
             // 
-            // tabPage3
+            // MiscellaneousTab
             // 
-            this.tabPage3.Controls.Add(this.tableLayoutPanel2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1094, 628);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Micellaneous";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
+            this.MiscellaneousTab.Controls.Add(this.tableLayoutPanel2);
+            this.MiscellaneousTab.Location = new System.Drawing.Point(4, 22);
+            this.MiscellaneousTab.Name = "MiscellaneousTab";
+            this.MiscellaneousTab.Padding = new System.Windows.Forms.Padding(3);
+            this.MiscellaneousTab.Size = new System.Drawing.Size(1094, 628);
+            this.MiscellaneousTab.TabIndex = 2;
+            this.MiscellaneousTab.Text = "Micellaneous";
+            this.MiscellaneousTab.UseVisualStyleBackColor = true;
+            this.MiscellaneousTab.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -1143,6 +1150,13 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
+            // EditModeHidden
+            // 
+            this.EditModeHidden.Location = new System.Drawing.Point(376, 574);
+            this.EditModeHidden.Name = "EditModeHidden";
+            this.EditModeHidden.Size = new System.Drawing.Size(0, 20);
+            this.EditModeHidden.TabIndex = 39;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1152,8 +1166,8 @@
             this.Name = "Form1";
             this.Text = "BIPC Accounting Tool";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.AddUpdateExpenditureTab.ResumeLayout(false);
+            this.AddUpdateExpenditureTab.PerformLayout();
             this.AddUpdateFormGroup.ResumeLayout(false);
             this.AddUpdateFormGroup.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1161,12 +1175,12 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.SearchExpendituresTab.ResumeLayout(false);
+            this.SearchExpendituresTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
+            this.MiscellaneousTab.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
@@ -1183,8 +1197,8 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage AddUpdateExpenditureTab;
+        private System.Windows.Forms.TabPage SearchExpendituresTab;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.Label label8;
@@ -1208,7 +1222,7 @@
         private System.Windows.Forms.Button AddUpdateButton;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage MiscellaneousTab;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label FirstNameLabel;
         private System.Windows.Forms.ComboBox ContributorIdComboBox;
@@ -1252,16 +1266,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Category;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Mode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Checkno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TransDt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateAdded;
         private System.Windows.Forms.DataGridViewTextBoxColumn CNameSearch;
         private System.Windows.Forms.DataGridViewTextBoxColumn IDSearch;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategorySearch;
@@ -1287,6 +1291,17 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ToolTip OpeningBalanceTooltip;
         private System.Windows.Forms.ToolTip TotalBalanceFromOpeningBalanceToolTip;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Category;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Mode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Checkno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransDt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateAdded;
+        private System.Windows.Forms.TextBox EditModeHidden;
     }
 }
 

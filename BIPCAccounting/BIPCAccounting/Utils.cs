@@ -76,5 +76,15 @@ namespace BIPCAccounting
                 }
             }
         }
+
+        public static string FormatDBIntegers(string value)
+        {
+            return string.IsNullOrEmpty(value) ? "NULL" : value.Trim();
+        }
+
+        public static string FormatDBText(string value)
+        {
+            return string.IsNullOrEmpty(value) ? "NULL" : "'" + value.Trim() + "'";
+        }
     }
 }
