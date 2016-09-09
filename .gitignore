@@ -1,5 +1,5 @@
 *.suo
 Document1.xml
 BIPCAccounting/BIPCAccounting/obj/
-BIPCAccounting/BIPCAccounting/bin/
 BIPCAccounting/.vs/
+BIPCAccounting/BIPCAccounting/bin/!BIPCAccounting/BIPCAccounting/bin/Debug/BIPCAccounting.exe
