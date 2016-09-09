@@ -2,3 +2,6 @@
 Document1.xml
 BIPCAccounting/BIPCAccounting/obj/
 BIPCAccounting/.vs/
+BIPCAccounting/BIPCAccounting/bin/
+!BIPCAccounting/BIPCAccounting/bin/Debug/MySqlData.dll
+!BIPCAccounting/BIPCAccounting/bin/Debug/BIPCAccounting.exe
