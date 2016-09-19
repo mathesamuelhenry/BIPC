@@ -30,8 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
+            this.ContributionIdHidden = new System.Windows.Forms.TextBox();
             this.DeSelectAllOnAddUpdatePage = new System.Windows.Forms.Button();
             this.SelectAllOnAddUpdatePage = new System.Windows.Forms.Button();
             this.DeleteInAddUpdatePage = new System.Windows.Forms.Button();
@@ -121,6 +123,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.SearchNameTextBox = new System.Windows.Forms.TextBox();
             this.MiscellaneousTab = new System.Windows.Forms.TabPage();
+            this.UpdateNamesTableButton = new System.Windows.Forms.Button();
+            this.NameGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -134,14 +138,15 @@
             this.FirstNameLabel = new System.Windows.Forms.Label();
             this.FirstNameTextBox = new System.Windows.Forms.TextBox();
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
-            this.FamilyNameTextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.ContributionIdHidden = new System.Windows.Forms.TextBox();
+            this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -153,6 +158,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.MiscellaneousTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NameGridView)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -194,6 +200,13 @@
             this.AddUpdateExpenditureTab.TabIndex = 0;
             this.AddUpdateExpenditureTab.Text = "Add Expenditure";
             this.AddUpdateExpenditureTab.UseVisualStyleBackColor = true;
+            // 
+            // ContributionIdHidden
+            // 
+            this.ContributionIdHidden.Location = new System.Drawing.Point(29, 589);
+            this.ContributionIdHidden.Name = "ContributionIdHidden";
+            this.ContributionIdHidden.Size = new System.Drawing.Size(0, 20);
+            this.ContributionIdHidden.TabIndex = 45;
             // 
             // DeSelectAllOnAddUpdatePage
             // 
@@ -1037,6 +1050,8 @@
             // 
             // MiscellaneousTab
             // 
+            this.MiscellaneousTab.Controls.Add(this.UpdateNamesTableButton);
+            this.MiscellaneousTab.Controls.Add(this.NameGridView);
             this.MiscellaneousTab.Controls.Add(this.tableLayoutPanel2);
             this.MiscellaneousTab.Location = new System.Drawing.Point(4, 22);
             this.MiscellaneousTab.Name = "MiscellaneousTab";
@@ -1047,20 +1062,42 @@
             this.MiscellaneousTab.UseVisualStyleBackColor = true;
             this.MiscellaneousTab.Click += new System.EventHandler(this.tabPage3_Click);
             // 
+            // UpdateNamesTableButton
+            // 
+            this.UpdateNamesTableButton.Location = new System.Drawing.Point(102, 538);
+            this.UpdateNamesTableButton.Name = "UpdateNamesTableButton";
+            this.UpdateNamesTableButton.Size = new System.Drawing.Size(178, 23);
+            this.UpdateNamesTableButton.TabIndex = 11;
+            this.UpdateNamesTableButton.Text = "Update Names Table";
+            this.UpdateNamesTableButton.UseVisualStyleBackColor = true;
+            this.UpdateNamesTableButton.Click += new System.EventHandler(this.UpdateNamesTableButton_Click);
+            // 
+            // NameGridView
+            // 
+            this.NameGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.NameGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FirstName,
+            this.LastName,
+            this.ContributorId,
+            this.ContributorLastUpdated});
+            this.NameGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.NameGridView.Location = new System.Drawing.Point(18, 307);
+            this.NameGridView.Name = "NameGridView";
+            this.NameGridView.Size = new System.Drawing.Size(363, 215);
+            this.NameGridView.TabIndex = 10;
+            // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.72F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.28F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 334F));
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.375F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.625F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(18, 24);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 494);
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.90283F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 252);
             this.tableLayoutPanel2.TabIndex = 9;
             // 
             // tableLayoutPanel3
@@ -1069,12 +1106,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(320, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(381, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(302, 241);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(253, 241);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // groupBox6
@@ -1082,7 +1119,7 @@
             this.groupBox6.Controls.Add(this.button3);
             this.groupBox6.Location = new System.Drawing.Point(3, 123);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(264, 100);
+            this.groupBox6.Size = new System.Drawing.Size(247, 100);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Global Refresh";
@@ -1103,7 +1140,7 @@
             this.groupBox4.Controls.Add(this.OpeningBalanceTextBox);
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(264, 109);
+            this.groupBox4.Size = new System.Drawing.Size(247, 109);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opening Balance";
@@ -1134,7 +1171,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(311, 241);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(360, 241);
             this.tableLayoutPanel4.TabIndex = 9;
             // 
             // groupBox5
@@ -1142,7 +1179,7 @@
             this.groupBox5.Controls.Add(this.tableLayoutPanel1);
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(270, 220);
+            this.groupBox5.Size = new System.Drawing.Size(354, 220);
             this.groupBox5.TabIndex = 6;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Add Name";
@@ -1155,18 +1192,16 @@
             this.tableLayoutPanel1.Controls.Add(this.FirstNameLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.FirstNameTextBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.LastNameTextBox, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.FamilyNameTextBox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label12, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.AddContributorButton, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.AddContributorButton, 1, 2);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 29);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.29578F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.70422F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(246, 156);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(342, 156);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // FirstNameLabel
@@ -1180,46 +1215,30 @@
             // 
             // FirstNameTextBox
             // 
-            this.FirstNameTextBox.Location = new System.Drawing.Point(99, 3);
+            this.FirstNameTextBox.Location = new System.Drawing.Point(137, 3);
             this.FirstNameTextBox.Name = "FirstNameTextBox";
             this.FirstNameTextBox.Size = new System.Drawing.Size(140, 20);
             this.FirstNameTextBox.TabIndex = 4;
             // 
             // LastNameTextBox
             // 
-            this.LastNameTextBox.Location = new System.Drawing.Point(99, 35);
+            this.LastNameTextBox.Location = new System.Drawing.Point(137, 53);
             this.LastNameTextBox.Name = "LastNameTextBox";
             this.LastNameTextBox.Size = new System.Drawing.Size(140, 20);
             this.LastNameTextBox.TabIndex = 5;
             // 
-            // FamilyNameTextBox
-            // 
-            this.FamilyNameTextBox.Location = new System.Drawing.Point(99, 68);
-            this.FamilyNameTextBox.Name = "FamilyNameTextBox";
-            this.FamilyNameTextBox.Size = new System.Drawing.Size(140, 20);
-            this.FamilyNameTextBox.TabIndex = 6;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 32);
+            this.label12.Location = new System.Drawing.Point(3, 50);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(58, 13);
             this.label12.TabIndex = 2;
             this.label12.Text = "Last Name";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 65);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(67, 13);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "Family Name";
-            // 
             // AddContributorButton
             // 
-            this.AddContributorButton.Location = new System.Drawing.Point(99, 105);
+            this.AddContributorButton.Location = new System.Drawing.Point(137, 105);
             this.AddContributorButton.Name = "AddContributorButton";
             this.AddContributorButton.Size = new System.Drawing.Size(75, 21);
             this.AddContributorButton.TabIndex = 7;
@@ -1227,12 +1246,34 @@
             this.AddContributorButton.UseVisualStyleBackColor = true;
             this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
             // 
-            // ContributionIdHidden
+            // FirstName
             // 
-            this.ContributionIdHidden.Location = new System.Drawing.Point(29, 589);
-            this.ContributionIdHidden.Name = "ContributionIdHidden";
-            this.ContributionIdHidden.Size = new System.Drawing.Size(0, 20);
-            this.ContributionIdHidden.TabIndex = 45;
+            this.FirstName.Frozen = true;
+            this.FirstName.HeaderText = "First Name";
+            this.FirstName.Name = "FirstName";
+            // 
+            // LastName
+            // 
+            this.LastName.Frozen = true;
+            this.LastName.HeaderText = "Last Name";
+            this.LastName.Name = "LastName";
+            // 
+            // ContributorId
+            // 
+            this.ContributorId.HeaderText = "Contributor ID";
+            this.ContributorId.Name = "ContributorId";
+            this.ContributorId.Visible = false;
+            // 
+            // ContributorLastUpdated
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ContributorLastUpdated.HeaderText = "Last Updated Date";
+            this.ContributorLastUpdated.Name = "ContributorLastUpdated";
+            this.ContributorLastUpdated.ReadOnly = true;
+            this.ContributorLastUpdated.ToolTipText = "Last Updated Date is Read Only";
             // 
             // Form1
             // 
@@ -1260,6 +1301,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.MiscellaneousTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.NameGridView)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
@@ -1309,10 +1351,8 @@
         private System.Windows.Forms.TextBox CategoryTextBox;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox FirstNameTextBox;
         private System.Windows.Forms.TextBox LastNameTextBox;
-        private System.Windows.Forms.TextBox FamilyNameTextBox;
         private System.Windows.Forms.Button AddContributorButton;
         private System.Windows.Forms.ComboBox SearchNameComboBox;
         private System.Windows.Forms.Label label14;
@@ -1387,6 +1427,12 @@
         private System.Windows.Forms.Button DeSelectAllOnAddUpdatePage;
         private System.Windows.Forms.Button SelectAllOnAddUpdatePage;
         private System.Windows.Forms.TextBox ContributionIdHidden;
+        private System.Windows.Forms.DataGridView NameGridView;
+        private System.Windows.Forms.Button UpdateNamesTableButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FirstName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LastName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContributorId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContributorLastUpdated;
     }
 }
 

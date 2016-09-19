@@ -16,6 +16,7 @@ namespace BIPCAccounting
     {
         string connString = string.Empty;
         CVD cvd = null;
+        Dictionary<string, Contributor> ContributorList = new Dictionary<string, Contributor>();
 
         public Form1()
         {
@@ -37,6 +38,11 @@ namespace BIPCAccounting
             this.LoadSearchTabDropDowns();
             this.LoadSearchResultDataGrid();
 
+            // Load all names into dictionary
+            this.LoadAllContributorNames();
+
+            this.LoadContributorNames();
+
             this.LoadOpeningBalance();
             this.LoadBalancesOnExpenditureTab();
 
@@ -45,6 +51,37 @@ namespace BIPCAccounting
 
             TotalBalanceFromOpeningBalanceToolTip.SetToolTip(TotalBalanceByOpeningLabel, "Total Balance on the Account.");
             this.SetToolTipProp(TotalBalanceFromOpeningBalanceToolTip);
+        }
+
+        private void LoadContributorNames()
+        {
+            try
+            {
+                this.LoadAllContributorNames();
+
+                NameGridView.Rows.Clear();
+                NameGridView.Refresh();
+
+                if (this.ContributorList != null)
+                {
+                    foreach (KeyValuePair<string, Contributor> namePair in this.ContributorList)
+                    {
+                        Contributor contName = namePair.Value;
+
+                        int n = NameGridView.Rows.Add();
+                        NameGridView.Rows[n].Cells["ContributorId"].Value = namePair.Key;
+                        NameGridView.Rows[n].Cells["FirstName"].Value = contName.FirstName;
+                        NameGridView.Rows[n].Cells["LastName"].Value = contName.LastName;
+                        NameGridView.Rows[n].Cells["ContributorLastUpdated"].Value = contName.LastUpdated;
+                    }
+                }
+
+                NameGridView.AutoResizeRows();
+            }
+            finally
+            {
+                
+            }
         }
 
         private void SetToolTipProp(System.Windows.Forms.ToolTip ttip)
@@ -761,19 +798,16 @@ namespace BIPCAccounting
 
                 string FirstName = FirstNameTextBox.Text;
                 string LastName = LastNameTextBox.Text;
-                string FamilyName = FamilyNameTextBox.Text;
 
                 string sql = string.Format(@"INSERT INTO contributor (
   first_name
   ,last_name
-  ,family_name
   ,date_added
 ) VALUES (
   '{0}' -- first_name - IN varchar(50)
   ,'{1}'  -- last_name - IN varchar(50)
-  ,'{2}'  -- family_name - IN varchar(50)
   ,now()  -- date_added - IN datetime
-)", FirstName, LastName, FamilyName);
+)", FirstName, LastName);
 
                 MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
                 count = cmd.ExecuteNonQuery();
@@ -1635,6 +1669,109 @@ INSERT INTO column_value_desc(table_column_id,
         private void DeSelectAllOnAddUpdatePage_Click(object sender, EventArgs e)
         {
             dataGridView1.ClearSelection();
+        }
+
+        private void LoadAllContributorNames()
+        {
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            MySqlCommand cmdDataBase = new MySqlCommand(@"select contributor_id, first_name, last_name, IFNULL(date_changed, date_added) as last_updated  from contributor where status = 1;", mySqlConn);
+
+            ContributorList.Clear();
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        ContributorList.Add(dRow["contributor_id"].ToString(), new Contributor(dRow));
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void UpdateNamesTableButton_Click(object sender, EventArgs e)
+        {
+
+
+            int count = 0;
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                foreach (DataGridViewRow NGVRow in NameGridView.Rows)
+                {
+                    if (string.IsNullOrEmpty((string)NGVRow.Cells["ContributorId"].Value))
+                    {
+                        if (string.IsNullOrEmpty((string)NGVRow.Cells["FirstName"].Value) &&
+                            (string.IsNullOrEmpty((string)NGVRow.Cells["LastName"].Value)))
+                        {
+                        }
+                        else
+                        {
+                            string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
+                            string LastName = NGVRow.Cells["LastName"].Value.ToString();
+
+                            string sql = string.Format(@"INSERT INTO contributor (
+  first_name
+  ,last_name
+  ,date_added
+) VALUES (
+  '{0}' -- first_name - IN varchar(50)
+  ,'{1}'  -- last_name - IN varchar(50)
+  ,now()  -- date_added - IN datetime
+)", FirstName, LastName);
+
+                            MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                            count = cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        Contributor c = (Contributor)this.ContributorList.Where(s => s.Key == (string)NGVRow.Cells["ContributorId"].Value).FirstOrDefault().Value;
+
+                        string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
+                        string LastName = NGVRow.Cells["LastName"].Value.ToString();
+
+                        if (!c.FirstName.Equals(FirstName) ||
+                            !c.LastName.Equals(LastName))
+                        {
+                            string sql = string.Format(@"Update contributor 
+                                                    set first_name = {0},
+                                                        last_name = {1}
+                                                    where contributor_id = {2}", Utils.FormatDBText(FirstName)
+                                                                               , Utils.FormatDBText(LastName)
+                                                                               , (string)NGVRow.Cells["ContributorId"].Value);
+
+                            MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                            count = cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                this.LoadContributorNames();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Failure");
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
         }
     }
 }
