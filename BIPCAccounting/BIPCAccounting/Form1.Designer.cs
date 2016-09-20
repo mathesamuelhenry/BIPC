@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
             this.ContributionIdHidden = new System.Windows.Forms.TextBox();
@@ -123,30 +123,25 @@
             this.label17 = new System.Windows.Forms.Label();
             this.SearchNameTextBox = new System.Windows.Forms.TextBox();
             this.MiscellaneousTab = new System.Windows.Forms.TabPage();
+            this.DeleteNames = new System.Windows.Forms.Button();
             this.UpdateNamesTableButton = new System.Windows.Forms.Button();
-            this.NameGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.NameGridView = new System.Windows.Forms.DataGridView();
+            this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.OpeningBalanceAddUpdateButton = new System.Windows.Forms.Button();
             this.OpeningBalanceTextBox = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.FirstNameLabel = new System.Windows.Forms.Label();
-            this.FirstNameTextBox = new System.Windows.Forms.TextBox();
-            this.LastNameTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.AddContributorButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContributorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContributorLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -158,14 +153,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.SearchResultsDataGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.MiscellaneousTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NameGridView)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NameGridView)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -673,9 +667,9 @@
             // 
             // Amount
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            this.Amount.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle4;
             this.Amount.HeaderText = "Amount";
             this.Amount.Name = "Amount";
             this.Amount.ReadOnly = true;
@@ -1050,8 +1044,6 @@
             // 
             // MiscellaneousTab
             // 
-            this.MiscellaneousTab.Controls.Add(this.UpdateNamesTableButton);
-            this.MiscellaneousTab.Controls.Add(this.NameGridView);
             this.MiscellaneousTab.Controls.Add(this.tableLayoutPanel2);
             this.MiscellaneousTab.Location = new System.Drawing.Point(4, 22);
             this.MiscellaneousTab.Name = "MiscellaneousTab";
@@ -1062,105 +1054,39 @@
             this.MiscellaneousTab.UseVisualStyleBackColor = true;
             this.MiscellaneousTab.Click += new System.EventHandler(this.tabPage3_Click);
             // 
+            // DeleteNames
+            // 
+            this.DeleteNames.Location = new System.Drawing.Point(220, 270);
+            this.DeleteNames.Name = "DeleteNames";
+            this.DeleteNames.Size = new System.Drawing.Size(193, 23);
+            this.DeleteNames.TabIndex = 12;
+            this.DeleteNames.Text = "Delete Selected Names";
+            this.DeleteNames.UseVisualStyleBackColor = true;
+            this.DeleteNames.Click += new System.EventHandler(this.DeleteNames_Click);
+            // 
             // UpdateNamesTableButton
             // 
-            this.UpdateNamesTableButton.Location = new System.Drawing.Point(102, 538);
+            this.UpdateNamesTableButton.Location = new System.Drawing.Point(6, 270);
             this.UpdateNamesTableButton.Name = "UpdateNamesTableButton";
-            this.UpdateNamesTableButton.Size = new System.Drawing.Size(178, 23);
+            this.UpdateNamesTableButton.Size = new System.Drawing.Size(208, 23);
             this.UpdateNamesTableButton.TabIndex = 11;
             this.UpdateNamesTableButton.Text = "Update Names Table";
             this.UpdateNamesTableButton.UseVisualStyleBackColor = true;
             this.UpdateNamesTableButton.Click += new System.EventHandler(this.UpdateNamesTableButton_Click);
             // 
-            // NameGridView
-            // 
-            this.NameGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.NameGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.FirstName,
-            this.LastName,
-            this.ContributorId,
-            this.ContributorLastUpdated});
-            this.NameGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.NameGridView.Location = new System.Drawing.Point(18, 307);
-            this.NameGridView.Name = "NameGridView";
-            this.NameGridView.Size = new System.Drawing.Size(363, 215);
-            this.NameGridView.TabIndex = 10;
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.375F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.625F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.9375F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.0625F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(18, 24);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.90283F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 252);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 321);
             this.tableLayoutPanel2.TabIndex = 9;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(381, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(253, 241);
-            this.tableLayoutPanel3.TabIndex = 8;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.button3);
-            this.groupBox6.Location = new System.Drawing.Point(3, 123);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(247, 100);
-            this.groupBox6.TabIndex = 7;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Global Refresh";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(21, 41);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(218, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Refresh Data";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.OpeningBalanceAddUpdateButton);
-            this.groupBox4.Controls.Add(this.OpeningBalanceTextBox);
-            this.groupBox4.Location = new System.Drawing.Point(3, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(247, 109);
-            this.groupBox4.TabIndex = 5;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Opening Balance";
-            // 
-            // OpeningBalanceAddUpdateButton
-            // 
-            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(17, 62);
-            this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
-            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(222, 23);
-            this.OpeningBalanceAddUpdateButton.TabIndex = 1;
-            this.OpeningBalanceAddUpdateButton.Text = "Add";
-            this.OpeningBalanceAddUpdateButton.UseVisualStyleBackColor = true;
-            this.OpeningBalanceAddUpdateButton.Click += new System.EventHandler(this.OpeningBalanceAddUpdateButton_Click);
-            // 
-            // OpeningBalanceTextBox
-            // 
-            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(17, 29);
-            this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
-            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
-            this.OpeningBalanceTextBox.TabIndex = 0;
             // 
             // tableLayoutPanel4
             // 
@@ -1171,80 +1097,34 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(360, 241);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(425, 315);
             this.tableLayoutPanel4.TabIndex = 9;
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox5.Controls.Add(this.DeleteNames);
+            this.groupBox5.Controls.Add(this.NameGridView);
+            this.groupBox5.Controls.Add(this.UpdateNamesTableButton);
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(354, 220);
-            this.groupBox5.TabIndex = 6;
+            this.groupBox5.Size = new System.Drawing.Size(419, 309);
+            this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Add Name";
+            this.groupBox5.Text = "Names";
             // 
-            // tableLayoutPanel1
+            // NameGridView
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.33054F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.66946F));
-            this.tableLayoutPanel1.Controls.Add(this.FirstNameLabel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.FirstNameTextBox, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.LastNameTextBox, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label12, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.AddContributorButton, 1, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 29);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.29578F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.70422F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(342, 156);
-            this.tableLayoutPanel1.TabIndex = 4;
-            // 
-            // FirstNameLabel
-            // 
-            this.FirstNameLabel.AutoSize = true;
-            this.FirstNameLabel.Location = new System.Drawing.Point(3, 0);
-            this.FirstNameLabel.Name = "FirstNameLabel";
-            this.FirstNameLabel.Size = new System.Drawing.Size(57, 13);
-            this.FirstNameLabel.TabIndex = 1;
-            this.FirstNameLabel.Text = "First Name";
-            // 
-            // FirstNameTextBox
-            // 
-            this.FirstNameTextBox.Location = new System.Drawing.Point(137, 3);
-            this.FirstNameTextBox.Name = "FirstNameTextBox";
-            this.FirstNameTextBox.Size = new System.Drawing.Size(140, 20);
-            this.FirstNameTextBox.TabIndex = 4;
-            // 
-            // LastNameTextBox
-            // 
-            this.LastNameTextBox.Location = new System.Drawing.Point(137, 53);
-            this.LastNameTextBox.Name = "LastNameTextBox";
-            this.LastNameTextBox.Size = new System.Drawing.Size(140, 20);
-            this.LastNameTextBox.TabIndex = 5;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 50);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(58, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Last Name";
-            // 
-            // AddContributorButton
-            // 
-            this.AddContributorButton.Location = new System.Drawing.Point(137, 105);
-            this.AddContributorButton.Name = "AddContributorButton";
-            this.AddContributorButton.Size = new System.Drawing.Size(75, 21);
-            this.AddContributorButton.TabIndex = 7;
-            this.AddContributorButton.Text = "Add";
-            this.AddContributorButton.UseVisualStyleBackColor = true;
-            this.AddContributorButton.Click += new System.EventHandler(this.AddContributorButton_Click);
+            this.NameGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.NameGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FirstName,
+            this.LastName,
+            this.ContributorId,
+            this.ContributorLastUpdated});
+            this.NameGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.NameGridView.Location = new System.Drawing.Point(6, 27);
+            this.NameGridView.Name = "NameGridView";
+            this.NameGridView.Size = new System.Drawing.Size(407, 224);
+            this.NameGridView.TabIndex = 10;
             // 
             // FirstName
             // 
@@ -1266,14 +1146,76 @@
             // 
             // ContributorLastUpdated
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle3;
             this.ContributorLastUpdated.HeaderText = "Last Updated Date";
             this.ContributorLastUpdated.Name = "ContributorLastUpdated";
             this.ContributorLastUpdated.ReadOnly = true;
             this.ContributorLastUpdated.ToolTipText = "Last Updated Date is Read Only";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(444, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(315, 315);
+            this.tableLayoutPanel3.TabIndex = 8;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.button3);
+            this.groupBox6.Location = new System.Drawing.Point(3, 160);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(257, 152);
+            this.groupBox6.TabIndex = 7;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Global Refresh";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(17, 71);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(218, 23);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "Refresh Data";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.OpeningBalanceAddUpdateButton);
+            this.groupBox4.Controls.Add(this.OpeningBalanceTextBox);
+            this.groupBox4.Location = new System.Drawing.Point(3, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(257, 150);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Opening Balance";
+            // 
+            // OpeningBalanceAddUpdateButton
+            // 
+            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(17, 102);
+            this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
+            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(222, 23);
+            this.OpeningBalanceAddUpdateButton.TabIndex = 1;
+            this.OpeningBalanceAddUpdateButton.Text = "Add";
+            this.OpeningBalanceAddUpdateButton.UseVisualStyleBackColor = true;
+            this.OpeningBalanceAddUpdateButton.Click += new System.EventHandler(this.OpeningBalanceAddUpdateButton_Click);
+            // 
+            // OpeningBalanceTextBox
+            // 
+            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(17, 44);
+            this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
+            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
+            this.OpeningBalanceTextBox.TabIndex = 0;
             // 
             // Form1
             // 
@@ -1301,16 +1243,14 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.MiscellaneousTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.NameGridView)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.NameGridView)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1344,16 +1284,10 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TabPage MiscellaneousTab;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label FirstNameLabel;
         private System.Windows.Forms.ComboBox ContributorIdComboBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox CategoryTextBox;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox FirstNameTextBox;
-        private System.Windows.Forms.TextBox LastNameTextBox;
-        private System.Windows.Forms.Button AddContributorButton;
         private System.Windows.Forms.ComboBox SearchNameComboBox;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox SearchCategoryComboBox;
@@ -1378,7 +1312,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button OpeningBalanceAddUpdateButton;
         private System.Windows.Forms.TextBox OpeningBalanceTextBox;
         private System.Windows.Forms.GroupBox groupBox6;
@@ -1433,6 +1366,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LastName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContributorId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContributorLastUpdated;
+        private System.Windows.Forms.Button DeleteNames;
+        private System.Windows.Forms.GroupBox groupBox5;
     }
 }
 

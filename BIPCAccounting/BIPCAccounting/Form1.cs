@@ -786,53 +786,6 @@ namespace BIPCAccounting
 
         }
 
-        private void AddContributorButton_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-            MySqlConnection mySqlConn = null;
-
-            try
-            {
-                mySqlConn = new MySqlConnection(connString);
-                mySqlConn.Open();
-
-                string FirstName = FirstNameTextBox.Text;
-                string LastName = LastNameTextBox.Text;
-
-                string sql = string.Format(@"INSERT INTO contributor (
-  first_name
-  ,last_name
-  ,date_added
-) VALUES (
-  '{0}' -- first_name - IN varchar(50)
-  ,'{1}'  -- last_name - IN varchar(50)
-  ,now()  -- date_added - IN datetime
-)", FirstName, LastName);
-
-                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
-                count = cmd.ExecuteNonQuery();
-
-                if (count > 0)
-                    MessageBox.Show("New member added", "Success");
-                else
-                    MessageBox.Show("Issue adding a new member", "Failure");
-
-                this.LoadSearchNameDropDown();
-                this.LoadContributorIdComboBox();
-
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Failure");
-            }
-            finally
-            {
-                if (mySqlConn != null)
-                    mySqlConn.Close();
-            }
-
-        }
-
         private void ContributorIdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(ContributorIdComboBox.Text))
@@ -1701,30 +1654,33 @@ INSERT INTO column_value_desc(table_column_id,
 
         private void UpdateNamesTableButton_Click(object sender, EventArgs e)
         {
-
-
             int count = 0;
             MySqlConnection mySqlConn = null;
 
             try
             {
-                mySqlConn = new MySqlConnection(connString);
-                mySqlConn.Open();
+                DialogResult result = MessageBox.Show("Are you sure to Add/Update this record set?", "Confirm", MessageBoxButtons.YesNo);
 
-                foreach (DataGridViewRow NGVRow in NameGridView.Rows)
+                if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (string.IsNullOrEmpty((string)NGVRow.Cells["ContributorId"].Value))
-                    {
-                        if (string.IsNullOrEmpty((string)NGVRow.Cells["FirstName"].Value) &&
-                            (string.IsNullOrEmpty((string)NGVRow.Cells["LastName"].Value)))
-                        {
-                        }
-                        else
-                        {
-                            string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
-                            string LastName = NGVRow.Cells["LastName"].Value.ToString();
 
-                            string sql = string.Format(@"INSERT INTO contributor (
+                    mySqlConn = new MySqlConnection(connString);
+                    mySqlConn.Open();
+
+                    foreach (DataGridViewRow NGVRow in NameGridView.Rows)
+                    {
+                        if (string.IsNullOrEmpty((string)NGVRow.Cells["ContributorId"].Value))
+                        {
+                            if (string.IsNullOrEmpty((string)NGVRow.Cells["FirstName"].Value) &&
+                                (string.IsNullOrEmpty((string)NGVRow.Cells["LastName"].Value)))
+                            {
+                            }
+                            else
+                            {
+                                string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
+                                string LastName = NGVRow.Cells["LastName"].Value.ToString();
+
+                                string sql = string.Format(@"INSERT INTO contributor (
   first_name
   ,last_name
   ,date_added
@@ -1734,38 +1690,92 @@ INSERT INTO column_value_desc(table_column_id,
   ,now()  -- date_added - IN datetime
 )", FirstName, LastName);
 
-                            MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
-                            count = cmd.ExecuteNonQuery();
+                                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                count = cmd.ExecuteNonQuery();
+                            }
                         }
-                    }
-                    else
-                    {
-                        Contributor c = (Contributor)this.ContributorList.Where(s => s.Key == (string)NGVRow.Cells["ContributorId"].Value).FirstOrDefault().Value;
-
-                        string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
-                        string LastName = NGVRow.Cells["LastName"].Value.ToString();
-
-                        if (!c.FirstName.Equals(FirstName) ||
-                            !c.LastName.Equals(LastName))
+                        else
                         {
-                            string sql = string.Format(@"Update contributor 
+                            Contributor c = (Contributor)this.ContributorList.Where(s => s.Key == (string)NGVRow.Cells["ContributorId"].Value).FirstOrDefault().Value;
+
+                            string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
+                            string LastName = NGVRow.Cells["LastName"].Value.ToString();
+
+                            if (!c.FirstName.Equals(FirstName) ||
+                                !c.LastName.Equals(LastName))
+                            {
+                                string sql = string.Format(@"Update contributor 
                                                     set first_name = {0},
                                                         last_name = {1}
                                                     where contributor_id = {2}", Utils.FormatDBText(FirstName)
-                                                                               , Utils.FormatDBText(LastName)
-                                                                               , (string)NGVRow.Cells["ContributorId"].Value);
+                                                                                   , Utils.FormatDBText(LastName)
+                                                                                   , (string)NGVRow.Cells["ContributorId"].Value);
 
-                            MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
-                            count = cmd.ExecuteNonQuery();
+                                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                count = cmd.ExecuteNonQuery();
+                            }
                         }
                     }
-                }
 
-                this.LoadContributorNames();
+                    this.LoadContributorNames();
+                    this.LoadSearchNameDropDown();
+                    this.LoadContributorIdComboBox();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Failure");
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void DeleteNames_Click(object sender, EventArgs e)
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                int count = 0;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                List<string> contributorIdList = new List<string>();
+                string contributorIds = string.Empty;
+
+                if (NameGridView.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        foreach (DataGridViewRow row in NameGridView.SelectedRows)
+                        {
+                            contributorIdList.Add(row.Cells["ContributorId"].Value.ToString());
+                        }
+
+                        contributorIds = string.Join(",", contributorIdList);
+
+                        string sql = string.Format(@"UPDATE contributor
+   SET status = 0, date_changed = now()
+ WHERE contributor_id IN ({0})", contributorIds);
+
+                        MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                        count = cmd.ExecuteNonQuery();
+
+                        MessageBox.Show(string.Format("{0} name record(s) deleted.", contributorIdList.Count));
+
+                        this.LoadContributorNames();
+                        this.LoadSearchNameDropDown();
+                        this.LoadContributorIdComboBox();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No rows were selected");
+                }
             }
             finally
             {
