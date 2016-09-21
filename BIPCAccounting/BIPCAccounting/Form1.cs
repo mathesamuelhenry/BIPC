@@ -1216,6 +1216,7 @@ INSERT INTO column_value_desc(table_column_id,
                                 this.LoadOpeningBalance();
                                 this.LoadSearchResultDataGrid();
                                 this.LoadBalancesOnExpenditureTab();
+
                             }
                         }
                         else
