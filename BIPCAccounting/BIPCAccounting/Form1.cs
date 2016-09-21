@@ -186,10 +186,9 @@ namespace BIPCAccounting
     
         private void LoadOpeningBalance()
         {
-            decimal OpeningBalance = 0;
+            decimal OpeningBalance = 0M;
             List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
             OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
-
             OpeningBalanceTextBox.Text = OpeningBalance.Equals(0M) ? string.Empty : OpeningBalance.ToString();
 
             if (OpeningBalance != 0M)
@@ -1216,6 +1215,7 @@ INSERT INTO column_value_desc(table_column_id,
                                 this.LoadCVD();
                                 this.LoadOpeningBalance();
                                 this.LoadSearchResultDataGrid();
+                                this.LoadBalancesOnExpenditureTab();
                             }
                         }
                         else
@@ -1706,7 +1706,8 @@ INSERT INTO column_value_desc(table_column_id,
                             {
                                 string sql = string.Format(@"Update contributor 
                                                     set first_name = {0},
-                                                        last_name = {1}
+                                                        last_name = {1},
+                                                        date_changed = now()
                                                     where contributor_id = {2}", Utils.FormatDBText(FirstName)
                                                                                    , Utils.FormatDBText(LastName)
                                                                                    , (string)NGVRow.Cells["ContributorId"].Value);
