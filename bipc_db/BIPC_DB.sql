@@ -1,4 +1,4 @@
-USE bipc;
+USE BIPC;
 
 CREATE TABLE contributor
 (

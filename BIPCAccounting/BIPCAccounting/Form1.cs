@@ -22,7 +22,7 @@ namespace BIPCAccounting
         {
             InitializeComponent();
 
-            connString = "DataSource=localhost;Port=3306;UID=root;PWD=;Database=BIPC;";
+            connString = "DataSource=samcorp-org.crgokfekv3qi.us-east-1.rds.amazonaws.com;Port=3306;UID=samuelhenry;PWD=GodIsGreat1234;Database=BIPC;";
 
             this.LoadFormData();
         }
@@ -675,7 +675,7 @@ namespace BIPCAccounting
              (SELECT table_column_id
                 FROM table_column
                WHERE table_name = 'contribution' AND column_name = 'category' and status = 1),
-             (SELECT max(CAST(value as UNSIGNED)) + 1
+             (SELECT IFNULL(max(CAST(value as UNSIGNED)) + 1, 1)
                 FROM table_column tc
                      JOIN column_value_desc cvd
                         ON     tc.table_column_id = cvd.table_column_id
