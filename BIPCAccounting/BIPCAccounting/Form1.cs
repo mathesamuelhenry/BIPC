@@ -1272,17 +1272,27 @@ INSERT INTO column_value_desc(table_column_id,
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
                         tabControl1.SelectedTab = AddUpdateExpenditureTab;
-                        EditModeLabel.ForeColor = Color.Red;
+                        EditModeLabel.ForeColor = Color.DarkGoldenrod;
                         EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
 
-                        EditModelink.ActiveLinkColor = Color.Red;
+                        EditModelink.ActiveLinkColor = Color.DarkGoldenrod;
                         EditModelink.Text = "CANCEL EDIT MODE";
 
-                        AddUpdateFormGroup.BackColor = Color.Red;
+                        AddUpdateFormGroup.BackColor = Color.DarkGoldenrod;
 
                         AddUpdateButton.Text = "Update";
 
                         ContributionIdHidden.Text = SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString();
+
+                        foreach(DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            string ID = row.Cells["ID"].Value.ToString();
+                            if (ID.Equals(SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString()))
+                            {
+                                dataGridView1.ClearSelection();
+                                dataGridView1.Rows[row.Index].Selected = true;
+                            }
+                        }
 
                         this.PreloadEditModeFormWithValues(SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString());
 
@@ -1493,6 +1503,9 @@ INSERT INTO column_value_desc(table_column_id,
 
             Utils.ResetAllControls(GroupControl);
 
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[0].Selected = true;
+
             AddUpdateFormGroup.BackColor = Color.Transparent;
 
             AddUpdateButton.Text = "Add";
@@ -1592,13 +1605,13 @@ INSERT INTO column_value_desc(table_column_id,
                     MessageBox.Show("Multiple records cannot be selected to EDIT. Please select only one.");
                 else
                 {
-                        EditModeLabel.ForeColor = Color.Red;
+                        EditModeLabel.ForeColor = Color.DarkGoldenrod;
                         EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString());
 
-                        EditModelink.ActiveLinkColor = Color.Red;
+                        EditModelink.ActiveLinkColor = Color.DarkGoldenrod;
                         EditModelink.Text = "CANCEL EDIT MODE";
 
-                        AddUpdateFormGroup.BackColor = Color.Red;
+                        AddUpdateFormGroup.BackColor = Color.DarkGoldenrod;
 
                         AddUpdateButton.Text = "Update";
 
@@ -1657,7 +1670,8 @@ INSERT INTO column_value_desc(table_column_id,
         {
             int count = 0;
             MySqlConnection mySqlConn = null;
-
+            bool validationFlag = true;
+                
             try
             {
                 DialogResult result = MessageBox.Show("Are you sure to Add/Update this record set?", "Confirm", MessageBoxButtons.YesNo);
@@ -1678,10 +1692,16 @@ INSERT INTO column_value_desc(table_column_id,
                             }
                             else
                             {
-                                string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
-                                string LastName = NGVRow.Cells["LastName"].Value.ToString();
+                                string FirstName = (string)NGVRow.Cells["FirstName"].Value;
+                                string LastName = (string)NGVRow.Cells["LastName"].Value;
 
-                                string sql = string.Format(@"INSERT INTO contributor (
+                                if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName))
+                                {
+                                    validationFlag = false;
+                                }
+                                else
+                                {
+                                    string sql = string.Format(@"INSERT INTO contributor (
   first_name
   ,last_name
   ,date_added
@@ -1691,30 +1711,38 @@ INSERT INTO column_value_desc(table_column_id,
   ,now()  -- date_added - IN datetime
 )", FirstName, LastName);
 
-                                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
-                                count = cmd.ExecuteNonQuery();
+                                    MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                    count = cmd.ExecuteNonQuery();
+                                }
                             }
                         }
                         else
                         {
                             Contributor c = (Contributor)this.ContributorList.Where(s => s.Key == (string)NGVRow.Cells["ContributorId"].Value).FirstOrDefault().Value;
 
-                            string FirstName = NGVRow.Cells["FirstName"].Value.ToString();
-                            string LastName = NGVRow.Cells["LastName"].Value.ToString();
+                            string FirstName = (string)NGVRow.Cells["FirstName"].Value;
+                            string LastName = (string)NGVRow.Cells["LastName"].Value;
 
-                            if (!c.FirstName.Equals(FirstName) ||
-                                !c.LastName.Equals(LastName))
+                            if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName))
                             {
-                                string sql = string.Format(@"Update contributor 
+                                validationFlag = false;
+                            }
+                            else
+                            {
+                                if (!c.FirstName.Equals(FirstName) ||
+                                    !c.LastName.Equals(LastName))
+                                {
+                                    string sql = string.Format(@"Update contributor 
                                                     set first_name = {0},
                                                         last_name = {1},
                                                         date_changed = now()
                                                     where contributor_id = {2}", Utils.FormatDBText(FirstName)
-                                                                                   , Utils.FormatDBText(LastName)
-                                                                                   , (string)NGVRow.Cells["ContributorId"].Value);
+                                                                                       , Utils.FormatDBText(LastName)
+                                                                                       , (string)NGVRow.Cells["ContributorId"].Value);
 
-                                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
-                                count = cmd.ExecuteNonQuery();
+                                    MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                    count = cmd.ExecuteNonQuery();
+                                }
                             }
                         }
                     }
@@ -1722,6 +1750,9 @@ INSERT INTO column_value_desc(table_column_id,
                     this.LoadContributorNames();
                     this.LoadSearchNameDropDown();
                     this.LoadContributorIdComboBox();
+
+                    if (!validationFlag)
+                        MessageBox.Show("First Name / Last Name cannot be empty");
                 }
             }
             catch (Exception ex)
