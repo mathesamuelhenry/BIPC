@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
             this.ContributionIdHidden = new System.Windows.Forms.TextBox();
@@ -123,16 +123,16 @@
             this.label17 = new System.Windows.Forms.Label();
             this.SearchNameTextBox = new System.Windows.Forms.TextBox();
             this.MiscellaneousTab = new System.Windows.Forms.TabPage();
-            this.DeleteNames = new System.Windows.Forms.Button();
-            this.UpdateNamesTableButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.DeleteNames = new System.Windows.Forms.Button();
             this.NameGridView = new System.Windows.Forms.DataGridView();
             this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContributorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ContributorLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UpdateNamesTableButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -667,9 +667,9 @@
             // 
             // Amount
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            this.Amount.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle1;
             this.Amount.HeaderText = "Amount";
             this.Amount.Name = "Amount";
             this.Amount.ReadOnly = true;
@@ -1050,29 +1050,9 @@
             this.MiscellaneousTab.Padding = new System.Windows.Forms.Padding(3);
             this.MiscellaneousTab.Size = new System.Drawing.Size(1094, 628);
             this.MiscellaneousTab.TabIndex = 2;
-            this.MiscellaneousTab.Text = "Micellaneous";
+            this.MiscellaneousTab.Text = "Miscellaneous";
             this.MiscellaneousTab.UseVisualStyleBackColor = true;
             this.MiscellaneousTab.Click += new System.EventHandler(this.tabPage3_Click);
-            // 
-            // DeleteNames
-            // 
-            this.DeleteNames.Location = new System.Drawing.Point(220, 270);
-            this.DeleteNames.Name = "DeleteNames";
-            this.DeleteNames.Size = new System.Drawing.Size(193, 23);
-            this.DeleteNames.TabIndex = 12;
-            this.DeleteNames.Text = "Delete Selected Names";
-            this.DeleteNames.UseVisualStyleBackColor = true;
-            this.DeleteNames.Click += new System.EventHandler(this.DeleteNames_Click);
-            // 
-            // UpdateNamesTableButton
-            // 
-            this.UpdateNamesTableButton.Location = new System.Drawing.Point(6, 270);
-            this.UpdateNamesTableButton.Name = "UpdateNamesTableButton";
-            this.UpdateNamesTableButton.Size = new System.Drawing.Size(208, 23);
-            this.UpdateNamesTableButton.TabIndex = 11;
-            this.UpdateNamesTableButton.Text = "Update Names Table";
-            this.UpdateNamesTableButton.UseVisualStyleBackColor = true;
-            this.UpdateNamesTableButton.Click += new System.EventHandler(this.UpdateNamesTableButton_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -1112,6 +1092,16 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Names";
             // 
+            // DeleteNames
+            // 
+            this.DeleteNames.Location = new System.Drawing.Point(220, 270);
+            this.DeleteNames.Name = "DeleteNames";
+            this.DeleteNames.Size = new System.Drawing.Size(193, 23);
+            this.DeleteNames.TabIndex = 12;
+            this.DeleteNames.Text = "Delete Selected Names";
+            this.DeleteNames.UseVisualStyleBackColor = true;
+            this.DeleteNames.Click += new System.EventHandler(this.DeleteNames_Click);
+            // 
             // NameGridView
             // 
             this.NameGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1146,14 +1136,24 @@
             // 
             // ContributorLastUpdated
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle2;
             this.ContributorLastUpdated.HeaderText = "Last Updated Date";
             this.ContributorLastUpdated.Name = "ContributorLastUpdated";
             this.ContributorLastUpdated.ReadOnly = true;
             this.ContributorLastUpdated.ToolTipText = "Last Updated Date is Read Only";
+            // 
+            // UpdateNamesTableButton
+            // 
+            this.UpdateNamesTableButton.Location = new System.Drawing.Point(6, 270);
+            this.UpdateNamesTableButton.Name = "UpdateNamesTableButton";
+            this.UpdateNamesTableButton.Size = new System.Drawing.Size(208, 23);
+            this.UpdateNamesTableButton.TabIndex = 11;
+            this.UpdateNamesTableButton.Text = "Update Names Table";
+            this.UpdateNamesTableButton.UseVisualStyleBackColor = true;
+            this.UpdateNamesTableButton.Click += new System.EventHandler(this.UpdateNamesTableButton_Click);
             // 
             // tableLayoutPanel3
             // 
