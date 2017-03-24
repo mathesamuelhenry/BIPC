@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace BIPCAccounting
 {
@@ -85,6 +86,33 @@ namespace BIPCAccounting
         public static string FormatDBText(string value)
         {
             return string.IsNullOrEmpty(value) ? "NULL" : "'" + value.Trim() + "'";
+        }
+
+        public static  Dictionary<string, string> LoadColumnValueDescription(MySqlConnection mySqlConn, string table_name, string column_name)
+        {
+            Dictionary<string, string> CVDList = new Dictionary<string, string>();
+
+            string sql = string.Format(@"SELECT cvd.value, cvd.description
+  FROM table_column tc
+       JOIN column_value_desc cvd
+          ON     tc.table_column_id = cvd.table_column_id
+             AND tc.table_name = '{0}'
+             AND tc.column_name = '{1}'
+ WHERE tc.status = 1 AND cvd.status = 1;", table_name, column_name);
+
+            MySqlCommand cmdDataBase = new MySqlCommand(sql, mySqlConn);
+
+            MySqlDataAdapter sda = new MySqlDataAdapter();
+            sda.SelectCommand = cmdDataBase;
+            System.Data.DataTable CVDTable = new System.Data.DataTable();
+            sda.Fill(CVDTable);
+
+            foreach (DataRow cvdRow in CVDTable.Rows)
+            {
+                CVDList.Add(cvdRow["value"].ToString(), cvdRow["description"].ToString());
+            }
+
+            return CVDList;
         }
     }
 }

@@ -949,7 +949,6 @@
             this.label9.Size = new System.Drawing.Size(78, 13);
             this.label9.TabIndex = 42;
             this.label9.Text = "Check Number";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // SearchTransModeComboBox
             // 
@@ -1052,7 +1051,6 @@
             this.MiscellaneousTab.TabIndex = 2;
             this.MiscellaneousTab.Text = "Miscellaneous";
             this.MiscellaneousTab.UseVisualStyleBackColor = true;
-            this.MiscellaneousTab.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // tableLayoutPanel2
             // 

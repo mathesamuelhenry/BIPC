@@ -2,7 +2,7 @@ USE BIPC;
 
 CREATE TABLE contributor
 (
-   contributor_id   int PRIMARY KEY AUTO_INCREMENT,
+   contributor_id   int NOT NULL PRIMARY KEY,
    first_name       varchar(50) NOT NULL,
    last_name        varchar(50) DEFAULT NULL,
    family_name      varchar(50) DEFAULT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE contributor
 
 CREATE TABLE contribution
 (
-   contribution_id     int PRIMARY KEY AUTO_INCREMENT,
+   contribution_id     int NOT NULL PRIMARY KEY,
    contributor_id      int DEFAULT NULL,
    contribution_name   varchar(60) DEFAULT NULL,
    category            varchar(50) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE contribution
 
 CREATE TABLE table_column
 (
-   table_column_id   int PRIMARY KEY AUTO_INCREMENT,
+   table_column_id   int NOT NULL PRIMARY KEY,
    table_name        varchar(50) NOT NULL,
    column_name       varchar(50) NOT NULL,
    status            tinyint(4) DEFAULT 1,
@@ -41,7 +41,7 @@ CREATE TABLE table_column
 
 CREATE TABLE column_value_desc
 (
-   column_value_desc_id   int PRIMARY KEY AUTO_INCREMENT,
+   column_value_desc_id   int NOT NULL PRIMARY KEY,
    table_column_id        int NOT NULL,
    value                  varchar(50) NOT NULL,
    description            varchar(500) NOT NULL,

@@ -275,9 +275,9 @@ namespace BIPCAccounting
                 SearchNameComboBox.ValueMember = "Id";
                 SearchNameComboBox.DisplayMember = "Name";
             }
-            catch (Exception)
+            finally
             {
-
+                dt.Clear();
             }
         }
 
@@ -305,41 +305,22 @@ namespace BIPCAccounting
 
             try
             {
-                int count = 0;
                 mySqlConn = new MySqlConnection(connString);
                 mySqlConn.Open();
 
-                string sql = string.Format(@"SELECT cvd.value, cvd.description
-  FROM table_column tc
-       JOIN column_value_desc cvd
-          ON     tc.table_column_id = cvd.table_column_id
-             AND tc.table_name = 'contribution'
-             AND tc.column_name = 'category'
- WHERE tc.status = 1 AND cvd.status = 1;");
+                Dictionary<string, string> CategoryList = Utils.LoadColumnValueDescription(mySqlConn, "contribution", "category");
+                
+                CategoryCombo.Items.Clear();
 
-                MySqlCommand cmdDataBase = new MySqlCommand(sql, mySqlConn);
-
-                MySqlDataAdapter sda = new MySqlDataAdapter();
-                sda.SelectCommand = cmdDataBase;
-                System.Data.DataTable dt = new System.Data.DataTable();
-                sda.Fill(dt);
-
-                //CategoryCombo.DataSource = dt;
                 CategoryCombo.ValueMember = "Id";
                 CategoryCombo.DisplayMember = "Name";
 
-                CategoryCombo.Items.Clear();
-
                 CategoryCombo.Items.Add(new Item("", ""));
-                foreach (DataRow dRow in dt.Rows)
-                {
-                    CategoryCombo.Items.Add(new Item(dRow["description"].ToString(), dRow["value"].ToString()));
-                }
 
-            }
-            catch (Exception e)
-            {
-                
+                foreach (KeyValuePair<string, string> CategoryPair in CategoryList)
+                {
+                    CategoryCombo.Items.Add(new Item(CategoryPair.Value, CategoryPair.Key));
+                }
             }
             finally
             {
@@ -667,15 +648,20 @@ namespace BIPCAccounting
                 
                 if (int.Parse(valid) == 0)
                 {
-                    string insertSql = string.Format(@"INSERT INTO column_value_desc(table_column_id,
+                    string insertSql = string.Format(@"
+INSERT INTO column_value_desc(column_value_desc_id,
+                              table_column_id,
                               value,
                               description,
                               date_added)
    VALUES (
+             fn_get_nextid('BIPC', 'column_value_desc'),
              (SELECT table_column_id
                 FROM table_column
-               WHERE table_name = 'contribution' AND column_name = 'category' and status = 1),
-             (SELECT IFNULL(max(CAST(value as UNSIGNED)) + 1, 1)
+               WHERE     table_name = 'contribution'
+                     AND column_name = 'category'
+                     AND status = 1),
+             (SELECT IFNULL(max(CAST(value AS UNSIGNED)) + 1, 1)
                 FROM table_column tc
                      JOIN column_value_desc cvd
                         ON     tc.table_column_id = cvd.table_column_id
@@ -729,8 +715,9 @@ namespace BIPCAccounting
             {
                 mySqlConn = new MySqlConnection(connString);
                 mySqlConn.Open();
-                string sql = string.Format(@" INSERT INTO contribution (
-  contributor_id
+                string sql = string.Format(@" 
+INSERT INTO contribution (contribution_id
+  ,contributor_id
   ,contribution_name
   ,category
   ,transaction_type
@@ -741,8 +728,8 @@ namespace BIPCAccounting
   ,note
   ,status
   ,date_added
-) VALUES (
-  {0}   -- contributor_id - IN int(11)
+) VALUES (fn_get_nextid('BIPC', 'contribution')
+  ,{0}   -- contributor_id - IN int(11)
   ,{1}  -- contribution_name - IN varchar(60)
   ,{2}  -- category - IN varchar(50)
   ,{3}   -- transaction_type - IN int(11)
@@ -778,13 +765,7 @@ namespace BIPCAccounting
 
             return count;
         }
-
-
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void ContributorIdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(ContributorIdComboBox.Text))
@@ -849,13 +830,7 @@ namespace BIPCAccounting
                 CategoryCombo.Enabled = true;
             }
         }
-
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void button3_Click(object sender, EventArgs e)
         {
             Control.ControlCollection collection = this.tabControl1.SelectedTab.Controls;
@@ -900,13 +875,6 @@ namespace BIPCAccounting
                 }
                 
                 SearchResultsDataGridView.AutoResizeRows();
-
-                /*BindingSource bs = new BindingSource();
-
-                bs.DataSource = dt;
-                SearchResultsDataGridView.DataSource = bs;
-                SearchResultsDataGridView.Visible = true;
-                SearchResultsDataGridView.AutoResizeRows();*/
             }
             finally
             {
@@ -1178,11 +1146,13 @@ CREATE TEMPORARY TABLE t_OB(table_name varchar(30), column_name varchar(30));
 INSERT INTO t_OB
 VALUES ('TEMP', 'opening_balance');
 
-INSERT INTO table_column(table_name,
+INSERT INTO table_column(table_column_id,
+                         table_name,
                          column_name,
                          status,
                          date_added)
-   SELECT t.table_name,
+   SELECT fn_get_nextid('BIPC', 'table_column'),
+          t.table_name,
           t.column_name,
           1,
           now()
@@ -1192,11 +1162,12 @@ INSERT INTO table_column(table_name,
                 AND tc.column_name = t.column_name
     WHERE tc.table_column_id IS NULL;
 
-INSERT INTO column_value_desc(table_column_id,
+INSERT INTO column_value_desc(column_value_desc_id,
+                              table_column_id,
                               value,
                               description,
                               date_added)
-   VALUES (
+   VALUES (  fn_get_nextid('BIPC', 'column_value_desc'),
              (SELECT table_column_id
                 FROM table_column
                WHERE table_name = 'TEMP' AND column_name = 'opening_balance' and status = 1),
@@ -1701,12 +1672,15 @@ INSERT INTO column_value_desc(table_column_id,
                                 }
                                 else
                                 {
-                                    string sql = string.Format(@"INSERT INTO contributor (
-  first_name
+                                    string sql = string.Format(@"
+INSERT INTO contributor (
+   contributor_id
+  ,first_name
   ,last_name
   ,date_added
 ) VALUES (
-  '{0}' -- first_name - IN varchar(50)
+  fn_get_nextid('BIPC', 'contributor')
+  ,'{0}' -- first_name - IN varchar(50)
   ,'{1}'  -- last_name - IN varchar(50)
   ,now()  -- date_added - IN datetime
 )", FirstName, LastName);
