@@ -519,9 +519,10 @@ namespace BIPCAccounting
                 bool isTMChecked = CashRadionButton.Checked;
                 if (isTMChecked)
                     transactionMode = CashRadionButton.Text;
-                else
+                else if (CheckRadionButton.Checked)
                     transactionMode = CheckRadionButton.Text;
-
+                else
+                    transactionMode = OnlineRadioButton.Text;
                 
                 transactionMode = this.cvd.GetCVD("contribution", "transaction_mode", transactionMode);
 

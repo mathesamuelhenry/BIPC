@@ -153,6 +153,22 @@ insert into column_value_desc (
   ,now()  -- date_added - IN datetime
 );
 
+insert into column_value_desc (
+  column_value_desc_id
+  ,table_column_id
+  ,value
+  ,description
+  ,status
+  ,date_added
+) VALUES (
+  fn_get_nextid('BIPC', 'column_value_desc')
+  ,(select table_column_id from table_column where status = 1 and table_name = 'contribution' and column_name = 'transaction_mode')
+  ,'3' -- value - IN varchar(50)
+  ,'Online' -- description - IN varchar(500)
+  ,1   -- status - IN tinyint(4)
+  ,now()  -- date_added - IN datetime
+);
+
 insert into table_column (
   table_column_id
   ,table_name

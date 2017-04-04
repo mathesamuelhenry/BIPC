@@ -143,6 +143,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.OnlineRadioButton = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -486,6 +487,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.OnlineRadioButton);
             this.groupBox2.Controls.Add(this.CheckRadionButton);
             this.groupBox2.Controls.Add(this.CashRadionButton);
             this.groupBox2.Location = new System.Drawing.Point(117, 229);
@@ -497,7 +499,7 @@
             // CheckRadionButton
             // 
             this.CheckRadionButton.AutoSize = true;
-            this.CheckRadionButton.Location = new System.Drawing.Point(106, 19);
+            this.CheckRadionButton.Location = new System.Drawing.Point(72, 19);
             this.CheckRadionButton.Name = "CheckRadionButton";
             this.CheckRadionButton.Size = new System.Drawing.Size(56, 17);
             this.CheckRadionButton.TabIndex = 9;
@@ -1216,6 +1218,17 @@
             this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
             this.OpeningBalanceTextBox.TabIndex = 0;
             // 
+            // OnlineRadioButton
+            // 
+            this.OnlineRadioButton.AutoSize = true;
+            this.OnlineRadioButton.Location = new System.Drawing.Point(134, 19);
+            this.OnlineRadioButton.Name = "OnlineRadioButton";
+            this.OnlineRadioButton.Size = new System.Drawing.Size(55, 17);
+            this.OnlineRadioButton.TabIndex = 10;
+            this.OnlineRadioButton.TabStop = true;
+            this.OnlineRadioButton.Text = "Online";
+            this.OnlineRadioButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1368,6 +1381,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ContributorLastUpdated;
         private System.Windows.Forms.Button DeleteNames;
         private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton OnlineRadioButton;
     }
 }
 
