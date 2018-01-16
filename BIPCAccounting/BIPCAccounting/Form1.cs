@@ -22,7 +22,8 @@ namespace BIPCAccounting
         {
             InitializeComponent();
 
-            connString = "DataSource=samcorp-org.crgokfekv3qi.us-east-1.rds.amazonaws.com;Port=3306;UID=samuelhenry;PWD=GodIsGreat1234;Database=BIPC;";
+            //connString = "DataSource=samcorp-org.crgokfekv3qi.us-east-1.rds.amazonaws.com;Port=3306;UID=samuelhenry;PWD=GodIsGreat1234;Database=BIPC;";
+            connString = "DataSource=localhost;Port=3306;UID=root;PWD=;Database=BIPC;";
 
             this.LoadFormData();
         }
@@ -846,6 +847,8 @@ INSERT INTO contribution (contribution_id
             MySqlConnection mySqlConn = new MySqlConnection(connString);
             mySqlConn.Open();
 
+            decimal SearchAmount = 0;
+
             try
             {
                 System.Data.DataTable dt = new System.Data.DataTable();
@@ -870,12 +873,18 @@ INSERT INTO contribution (contribution_id
                         SearchResultsDataGridView.Rows[n].Cells["TransDtSearch"].Value = dRow["Trans DT"].ToString();
                         SearchResultsDataGridView.Rows[n].Cells["NoteSearch"].Value = dRow["Note"].ToString();
                         SearchResultsDataGridView.Rows[n].Cells["DateAddedSearch"].Value = dRow["Date Added"].ToString();
+
+                        if (dRow["Type"].ToString().Equals("Debit", StringComparison.InvariantCultureIgnoreCase))
+                            SearchAmount = SearchAmount - decimal.Parse(dRow["Amount"].ToString());
+                        else
+                            SearchAmount = SearchAmount + decimal.Parse(dRow["Amount"].ToString());
                     }
 
                     SearchResultsDataGridView.Rows[0].Selected = true;
                 }
                 
                 SearchResultsDataGridView.AutoResizeRows();
+                SearchAmountValue.Text = SearchAmount.ToString();
             }
             finally
             {
@@ -1790,6 +1799,11 @@ INSERT INTO contributor (
                 if (mySqlConn != null)
                     mySqlConn.Close();
             }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

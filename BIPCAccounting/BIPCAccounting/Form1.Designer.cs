@@ -63,6 +63,7 @@
             this.AddUpdateButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.OnlineRadioButton = new System.Windows.Forms.RadioButton();
             this.CheckRadionButton = new System.Windows.Forms.RadioButton();
             this.CashRadionButton = new System.Windows.Forms.RadioButton();
             this.label8 = new System.Windows.Forms.Label();
@@ -143,7 +144,8 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.OnlineRadioButton = new System.Windows.Forms.RadioButton();
+            this.SearchTotalAmount = new System.Windows.Forms.Label();
+            this.SearchAmountValue = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -496,6 +498,17 @@
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             // 
+            // OnlineRadioButton
+            // 
+            this.OnlineRadioButton.AutoSize = true;
+            this.OnlineRadioButton.Location = new System.Drawing.Point(134, 19);
+            this.OnlineRadioButton.Name = "OnlineRadioButton";
+            this.OnlineRadioButton.Size = new System.Drawing.Size(55, 17);
+            this.OnlineRadioButton.TabIndex = 10;
+            this.OnlineRadioButton.TabStop = true;
+            this.OnlineRadioButton.Text = "Online";
+            this.OnlineRadioButton.UseVisualStyleBackColor = true;
+            // 
             // CheckRadionButton
             // 
             this.CheckRadionButton.AutoSize = true;
@@ -697,6 +710,8 @@
             // 
             // SearchExpendituresTab
             // 
+            this.SearchExpendituresTab.Controls.Add(this.SearchAmountValue);
+            this.SearchExpendituresTab.Controls.Add(this.SearchTotalAmount);
             this.SearchExpendituresTab.Controls.Add(this.DeselectAll);
             this.SearchExpendituresTab.Controls.Add(this.SelectAll);
             this.SearchExpendituresTab.Controls.Add(this.DeleteSearchRow);
@@ -1218,16 +1233,24 @@
             this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
             this.OpeningBalanceTextBox.TabIndex = 0;
             // 
-            // OnlineRadioButton
+            // SearchTotalAmount
             // 
-            this.OnlineRadioButton.AutoSize = true;
-            this.OnlineRadioButton.Location = new System.Drawing.Point(134, 19);
-            this.OnlineRadioButton.Name = "OnlineRadioButton";
-            this.OnlineRadioButton.Size = new System.Drawing.Size(55, 17);
-            this.OnlineRadioButton.TabIndex = 10;
-            this.OnlineRadioButton.TabStop = true;
-            this.OnlineRadioButton.Text = "Online";
-            this.OnlineRadioButton.UseVisualStyleBackColor = true;
+            this.SearchTotalAmount.AutoSize = true;
+            this.SearchTotalAmount.Location = new System.Drawing.Point(14, 578);
+            this.SearchTotalAmount.Name = "SearchTotalAmount";
+            this.SearchTotalAmount.Size = new System.Drawing.Size(116, 13);
+            this.SearchTotalAmount.TabIndex = 15;
+            this.SearchTotalAmount.Text = "Search Total Amount : ";
+            this.SearchTotalAmount.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // SearchAmountValue
+            // 
+            this.SearchAmountValue.AutoSize = true;
+            this.SearchAmountValue.Location = new System.Drawing.Point(139, 578);
+            this.SearchAmountValue.Name = "SearchAmountValue";
+            this.SearchAmountValue.Size = new System.Drawing.Size(22, 13);
+            this.SearchAmountValue.TabIndex = 16;
+            this.SearchAmountValue.Text = "0.0";
             // 
             // Form1
             // 
@@ -1382,6 +1405,8 @@
         private System.Windows.Forms.Button DeleteNames;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RadioButton OnlineRadioButton;
+        private System.Windows.Forms.Label SearchTotalAmount;
+        private System.Windows.Forms.Label SearchAmountValue;
     }
 }
 
