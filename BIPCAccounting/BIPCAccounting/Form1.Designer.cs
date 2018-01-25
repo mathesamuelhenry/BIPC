@@ -63,6 +63,7 @@
             this.AddUpdateButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.CardRadioButton = new System.Windows.Forms.RadioButton();
             this.OnlineRadioButton = new System.Windows.Forms.RadioButton();
             this.CheckRadionButton = new System.Windows.Forms.RadioButton();
             this.CashRadionButton = new System.Windows.Forms.RadioButton();
@@ -88,6 +89,10 @@
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SearchExpendituresTab = new System.Windows.Forms.TabPage();
+            this.CurrentSearchBalance = new System.Windows.Forms.Label();
+            this.CurrentSearchBalanceLabel = new System.Windows.Forms.Label();
+            this.SearchAmountValue = new System.Windows.Forms.Label();
+            this.SearchTotalAmount = new System.Windows.Forms.Label();
             this.DeselectAll = new System.Windows.Forms.Button();
             this.SelectAll = new System.Windows.Forms.Button();
             this.DeleteSearchRow = new System.Windows.Forms.Button();
@@ -144,8 +149,9 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.SearchTotalAmount = new System.Windows.Forms.Label();
-            this.SearchAmountValue = new System.Windows.Forms.Label();
+            this.SearchBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.SearchTabOpeningBalanceLabel = new System.Windows.Forms.Label();
+            this.SearchTabOpeningBalanceValue = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -250,10 +256,10 @@
             // 
             this.tableLayoutPanel5.ColumnCount = 6;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 185F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 216F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
             this.tableLayoutPanel5.Controls.Add(this.OpeningBalanceValue, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.OpeningBalanceLabel, 0, 0);
@@ -296,16 +302,16 @@
             // TotalBalanceByOpeningLabel
             // 
             this.TotalBalanceByOpeningLabel.AutoSize = true;
-            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(549, 0);
+            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(510, 0);
             this.TotalBalanceByOpeningLabel.Name = "TotalBalanceByOpeningLabel";
-            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(79, 13);
+            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(116, 13);
             this.TotalBalanceByOpeningLabel.TabIndex = 36;
-            this.TotalBalanceByOpeningLabel.Text = "Total Balance :";
+            this.TotalBalanceByOpeningLabel.Text = "Total Current Balance :";
             // 
             // TotalLabel
             // 
             this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(333, 0);
+            this.TotalLabel.Location = new System.Drawing.Point(350, 0);
             this.TotalLabel.Name = "TotalLabel";
             this.TotalLabel.Size = new System.Drawing.Size(0, 13);
             this.TotalLabel.TabIndex = 37;
@@ -314,11 +320,11 @@
             // 
             this.label24.AutoSize = true;
             this.label24.BackColor = System.Drawing.Color.Transparent;
-            this.label24.Location = new System.Drawing.Point(290, 0);
+            this.label24.Location = new System.Drawing.Point(246, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(37, 13);
+            this.label24.Size = new System.Drawing.Size(96, 13);
             this.label24.TabIndex = 35;
-            this.label24.Text = "Total : ";
+            this.label24.Text = "Transaction Total : ";
             // 
             // EditModeHidden
             // 
@@ -353,7 +359,7 @@
             this.AddUpdateFormGroup.Controls.Add(this.TransactionDateTimePicker);
             this.AddUpdateFormGroup.Location = new System.Drawing.Point(6, 33);
             this.AddUpdateFormGroup.Name = "AddUpdateFormGroup";
-            this.AddUpdateFormGroup.Size = new System.Drawing.Size(344, 549);
+            this.AddUpdateFormGroup.Size = new System.Drawing.Size(344, 589);
             this.AddUpdateFormGroup.TabIndex = 32;
             this.AddUpdateFormGroup.TabStop = false;
             // 
@@ -453,7 +459,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 292);
+            this.label5.Location = new System.Drawing.Point(18, 334);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 13);
             this.label5.TabIndex = 10;
@@ -462,7 +468,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 327);
+            this.label6.Location = new System.Drawing.Point(18, 369);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(43, 13);
             this.label6.TabIndex = 11;
@@ -470,7 +476,7 @@
             // 
             // AddUpdateButton
             // 
-            this.AddUpdateButton.Location = new System.Drawing.Point(117, 505);
+            this.AddUpdateButton.Location = new System.Drawing.Point(117, 547);
             this.AddUpdateButton.Name = "AddUpdateButton";
             this.AddUpdateButton.Size = new System.Drawing.Size(75, 23);
             this.AddUpdateButton.TabIndex = 23;
@@ -481,7 +487,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(18, 362);
+            this.label7.Location = new System.Drawing.Point(18, 404);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 12;
@@ -489,19 +495,31 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.CardRadioButton);
             this.groupBox2.Controls.Add(this.OnlineRadioButton);
             this.groupBox2.Controls.Add(this.CheckRadionButton);
             this.groupBox2.Controls.Add(this.CashRadionButton);
             this.groupBox2.Location = new System.Drawing.Point(117, 229);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 49);
+            this.groupBox2.Size = new System.Drawing.Size(200, 99);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
+            // 
+            // CardRadioButton
+            // 
+            this.CardRadioButton.AutoSize = true;
+            this.CardRadioButton.Location = new System.Drawing.Point(108, 60);
+            this.CardRadioButton.Name = "CardRadioButton";
+            this.CardRadioButton.Size = new System.Drawing.Size(47, 17);
+            this.CardRadioButton.TabIndex = 11;
+            this.CardRadioButton.TabStop = true;
+            this.CardRadioButton.Text = "Card";
+            this.CardRadioButton.UseVisualStyleBackColor = true;
             // 
             // OnlineRadioButton
             // 
             this.OnlineRadioButton.AutoSize = true;
-            this.OnlineRadioButton.Location = new System.Drawing.Point(134, 19);
+            this.OnlineRadioButton.Location = new System.Drawing.Point(17, 60);
             this.OnlineRadioButton.Name = "OnlineRadioButton";
             this.OnlineRadioButton.Size = new System.Drawing.Size(55, 17);
             this.OnlineRadioButton.TabIndex = 10;
@@ -512,7 +530,7 @@
             // CheckRadionButton
             // 
             this.CheckRadionButton.AutoSize = true;
-            this.CheckRadionButton.Location = new System.Drawing.Point(72, 19);
+            this.CheckRadionButton.Location = new System.Drawing.Point(108, 19);
             this.CheckRadionButton.Name = "CheckRadionButton";
             this.CheckRadionButton.Size = new System.Drawing.Size(56, 17);
             this.CheckRadionButton.TabIndex = 9;
@@ -534,7 +552,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 395);
+            this.label8.Location = new System.Drawing.Point(18, 437);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 13;
@@ -575,14 +593,14 @@
             // 
             // CheckTextBox
             // 
-            this.CheckTextBox.Location = new System.Drawing.Point(117, 292);
+            this.CheckTextBox.Location = new System.Drawing.Point(117, 334);
             this.CheckTextBox.Name = "CheckTextBox";
             this.CheckTextBox.Size = new System.Drawing.Size(121, 20);
             this.CheckTextBox.TabIndex = 14;
             // 
             // NoteTextBox
             // 
-            this.NoteTextBox.Location = new System.Drawing.Point(117, 395);
+            this.NoteTextBox.Location = new System.Drawing.Point(117, 437);
             this.NoteTextBox.Multiline = true;
             this.NoteTextBox.Name = "NoteTextBox";
             this.NoteTextBox.Size = new System.Drawing.Size(200, 87);
@@ -590,14 +608,14 @@
             // 
             // AmountTextBox
             // 
-            this.AmountTextBox.Location = new System.Drawing.Point(117, 327);
+            this.AmountTextBox.Location = new System.Drawing.Point(117, 369);
             this.AmountTextBox.Name = "AmountTextBox";
             this.AmountTextBox.Size = new System.Drawing.Size(121, 20);
             this.AmountTextBox.TabIndex = 15;
             // 
             // TransactionDateTimePicker
             // 
-            this.TransactionDateTimePicker.Location = new System.Drawing.Point(117, 362);
+            this.TransactionDateTimePicker.Location = new System.Drawing.Point(117, 404);
             this.TransactionDateTimePicker.Name = "TransactionDateTimePicker";
             this.TransactionDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.TransactionDateTimePicker.TabIndex = 18;
@@ -639,7 +657,7 @@
             this.DateAdded});
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.dataGridView1.Location = new System.Drawing.Point(366, 45);
+            this.dataGridView1.Location = new System.Drawing.Point(366, 42);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(706, 453);
             this.dataGridView1.TabIndex = 24;
@@ -710,6 +728,10 @@
             // 
             // SearchExpendituresTab
             // 
+            this.SearchExpendituresTab.Controls.Add(this.SearchTabOpeningBalanceValue);
+            this.SearchExpendituresTab.Controls.Add(this.SearchTabOpeningBalanceLabel);
+            this.SearchExpendituresTab.Controls.Add(this.CurrentSearchBalance);
+            this.SearchExpendituresTab.Controls.Add(this.CurrentSearchBalanceLabel);
             this.SearchExpendituresTab.Controls.Add(this.SearchAmountValue);
             this.SearchExpendituresTab.Controls.Add(this.SearchTotalAmount);
             this.SearchExpendituresTab.Controls.Add(this.DeselectAll);
@@ -728,6 +750,43 @@
             this.SearchExpendituresTab.Tag = "";
             this.SearchExpendituresTab.Text = "Search Expenditures";
             this.SearchExpendituresTab.UseVisualStyleBackColor = true;
+            // 
+            // CurrentSearchBalance
+            // 
+            this.CurrentSearchBalance.AutoSize = true;
+            this.CurrentSearchBalance.Location = new System.Drawing.Point(564, 578);
+            this.CurrentSearchBalance.Name = "CurrentSearchBalance";
+            this.CurrentSearchBalance.Size = new System.Drawing.Size(22, 13);
+            this.CurrentSearchBalance.TabIndex = 18;
+            this.CurrentSearchBalance.Text = "0.0";
+            // 
+            // CurrentSearchBalanceLabel
+            // 
+            this.CurrentSearchBalanceLabel.AutoSize = true;
+            this.CurrentSearchBalanceLabel.Location = new System.Drawing.Point(426, 578);
+            this.CurrentSearchBalanceLabel.Name = "CurrentSearchBalanceLabel";
+            this.CurrentSearchBalanceLabel.Size = new System.Drawing.Size(132, 13);
+            this.CurrentSearchBalanceLabel.TabIndex = 17;
+            this.CurrentSearchBalanceLabel.Text = "Current Search Balance  : ";
+            // 
+            // SearchAmountValue
+            // 
+            this.SearchAmountValue.AutoSize = true;
+            this.SearchAmountValue.Location = new System.Drawing.Point(136, 578);
+            this.SearchAmountValue.Name = "SearchAmountValue";
+            this.SearchAmountValue.Size = new System.Drawing.Size(22, 13);
+            this.SearchAmountValue.TabIndex = 16;
+            this.SearchAmountValue.Text = "0.0";
+            // 
+            // SearchTotalAmount
+            // 
+            this.SearchTotalAmount.AutoSize = true;
+            this.SearchTotalAmount.Location = new System.Drawing.Point(14, 578);
+            this.SearchTotalAmount.Name = "SearchTotalAmount";
+            this.SearchTotalAmount.Size = new System.Drawing.Size(116, 13);
+            this.SearchTotalAmount.TabIndex = 15;
+            this.SearchTotalAmount.Text = "Search Total Amount : ";
+            this.SearchTotalAmount.Click += new System.EventHandler(this.label10_Click);
             // 
             // DeselectAll
             // 
@@ -1233,24 +1292,23 @@
             this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
             this.OpeningBalanceTextBox.TabIndex = 0;
             // 
-            // SearchTotalAmount
+            // SearchTabOpeningBalanceLabel
             // 
-            this.SearchTotalAmount.AutoSize = true;
-            this.SearchTotalAmount.Location = new System.Drawing.Point(14, 578);
-            this.SearchTotalAmount.Name = "SearchTotalAmount";
-            this.SearchTotalAmount.Size = new System.Drawing.Size(116, 13);
-            this.SearchTotalAmount.TabIndex = 15;
-            this.SearchTotalAmount.Text = "Search Total Amount : ";
-            this.SearchTotalAmount.Click += new System.EventHandler(this.label10_Click);
+            this.SearchTabOpeningBalanceLabel.AutoSize = true;
+            this.SearchTabOpeningBalanceLabel.Location = new System.Drawing.Point(891, 578);
+            this.SearchTabOpeningBalanceLabel.Name = "SearchTabOpeningBalanceLabel";
+            this.SearchTabOpeningBalanceLabel.Size = new System.Drawing.Size(101, 13);
+            this.SearchTabOpeningBalanceLabel.TabIndex = 19;
+            this.SearchTabOpeningBalanceLabel.Text = "Opening Balance  : ";
             // 
-            // SearchAmountValue
+            // SearchTabOpeningBalanceValue
             // 
-            this.SearchAmountValue.AutoSize = true;
-            this.SearchAmountValue.Location = new System.Drawing.Point(139, 578);
-            this.SearchAmountValue.Name = "SearchAmountValue";
-            this.SearchAmountValue.Size = new System.Drawing.Size(22, 13);
-            this.SearchAmountValue.TabIndex = 16;
-            this.SearchAmountValue.Text = "0.0";
+            this.SearchTabOpeningBalanceValue.AutoSize = true;
+            this.SearchTabOpeningBalanceValue.Location = new System.Drawing.Point(998, 578);
+            this.SearchTabOpeningBalanceValue.Name = "SearchTabOpeningBalanceValue";
+            this.SearchTabOpeningBalanceValue.Size = new System.Drawing.Size(22, 13);
+            this.SearchTabOpeningBalanceValue.TabIndex = 20;
+            this.SearchTabOpeningBalanceValue.Text = "0.0";
             // 
             // Form1
             // 
@@ -1407,6 +1465,12 @@
         private System.Windows.Forms.RadioButton OnlineRadioButton;
         private System.Windows.Forms.Label SearchTotalAmount;
         private System.Windows.Forms.Label SearchAmountValue;
+        private System.Windows.Forms.RadioButton CardRadioButton;
+        private System.Windows.Forms.Label CurrentSearchBalance;
+        private System.Windows.Forms.Label CurrentSearchBalanceLabel;
+        private System.Windows.Forms.ToolTip SearchBalanceToolTip;
+        private System.Windows.Forms.Label SearchTabOpeningBalanceValue;
+        private System.Windows.Forms.Label SearchTabOpeningBalanceLabel;
     }
 }
 

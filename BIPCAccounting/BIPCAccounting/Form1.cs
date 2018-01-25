@@ -52,6 +52,9 @@ namespace BIPCAccounting
 
             TotalBalanceFromOpeningBalanceToolTip.SetToolTip(TotalBalanceByOpeningLabel, "Total Balance on the Account.");
             this.SetToolTipProp(TotalBalanceFromOpeningBalanceToolTip);
+
+            SearchBalanceToolTip.SetToolTip(CurrentSearchBalanceLabel, "Display Opening Balance + Search Balance");
+            this.SetToolTipProp(SearchBalanceToolTip);
         }
 
         private void LoadContributorNames()
@@ -522,8 +525,10 @@ namespace BIPCAccounting
                     transactionMode = CashRadionButton.Text;
                 else if (CheckRadionButton.Checked)
                     transactionMode = CheckRadionButton.Text;
-                else
+                else if (OnlineRadioButton.Checked)
                     transactionMode = OnlineRadioButton.Text;
+                else
+                    transactionMode = CardRadioButton.Text;
                 
                 transactionMode = this.cvd.GetCVD("contribution", "transaction_mode", transactionMode);
 
@@ -848,9 +853,13 @@ INSERT INTO contribution (contribution_id
             mySqlConn.Open();
 
             decimal SearchAmount = 0;
+            decimal OpeningBalance = 0;
 
             try
             {
+                List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
+                OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
+                
                 System.Data.DataTable dt = new System.Data.DataTable();
 
                 dt = Utils.GetDataTable(mySqlConn, searchSQL);
@@ -885,6 +894,9 @@ INSERT INTO contribution (contribution_id
                 
                 SearchResultsDataGridView.AutoResizeRows();
                 SearchAmountValue.Text = SearchAmount.ToString();
+
+                SearchTabOpeningBalanceValue.Text = OpeningBalance.ToString();
+                CurrentSearchBalance.Text = (OpeningBalance + SearchAmount).ToString();
             }
             finally
             {
