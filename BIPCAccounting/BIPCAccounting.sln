@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIPCAccounting", "BIPCAccounting\BIPCAccounting.csproj", "{6F1AB104-F2FC-4885-81FB-A9B88C46F740}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BIPCAccountingSetup", "BIPCAccountingSetup\BIPCAccountingSetup.vdproj", "{B262DC82-AF96-428B-BD0B-F6E0644B0381}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BIPCAccountingSetup", "BIPCAccountingSetup\BIPCAccountingSetup.vdproj", "{30B8BF29-8803-4DEE-8B64-D474948E58EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B262DC82-AF96-428B-BD0B-F6E0644B0381}.Debug|Any CPU.ActiveCfg = Debug
-		{B262DC82-AF96-428B-BD0B-F6E0644B0381}.Release|Any CPU.ActiveCfg = Release
+		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Debug|Any CPU.ActiveCfg = Debug
+		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

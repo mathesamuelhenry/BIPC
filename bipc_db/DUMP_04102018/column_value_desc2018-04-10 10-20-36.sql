@@ -1,0 +1,23 @@
+USE bipc;
+
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (51,31,'1','Credit',1,'2017-07-24 18:07:37',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (61,31,'2','Debit',1,'2017-07-24 18:07:38',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (71,41,'1','Cash',1,'2017-07-24 18:07:38',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (81,41,'2','Check',1,'2017-07-24 18:07:38',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (91,41,'3','Online',1,'2017-07-24 18:07:38',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (101,51,'75456.13','75456.13',1,'2017-07-24 18:11:22','2018-01-20 19:18:15');
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (111,21,'1','CASH OFFERING',1,'2018-01-09 11:28:44',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (121,21,'2','CHECK',1,'2018-01-09 11:30:17',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (131,21,'3','CHURCH RENT',1,'2018-01-09 12:18:36',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (141,21,'4','MINISTRY',1,'2018-01-09 12:19:25',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (151,21,'5','OTHER DEBIT CARD PURCHASES',1,'2018-01-09 12:21:10',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (161,21,'6','FOOD',1,'2018-01-09 15:25:53',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (171,21,'7','OTHER',1,'2018-01-16 11:40:25',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (181,21,'8','VBS',1,'2018-01-18 22:09:23',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (191,41,'4','Card',1,'2018-01-19 10:07:10',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (201,21,'9','CONDO',1,'2018-01-20 13:30:34',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (211,21,'10','CD ACCOUNT',1,'2018-01-20 13:37:52',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (221,21,'11','PYFF',1,'2018-01-20 13:40:21',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (231,21,'12','THANKSGIVING',1,'2018-01-20 13:46:38',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (241,21,'13','SUNDAY SCHOOL',1,'2018-01-20 15:43:23',null);
+insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (251,21,'14','SALARY',1,'2018-01-20 15:49:47',null);
