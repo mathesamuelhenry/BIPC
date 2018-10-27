@@ -1,5 +1,3 @@
-USE bipc;
-
 insert into `contribution`(`contribution_id`,`contributor_id`,`contribution_name`,`category`,`transaction_type`,`transaction_mode`,`amount`,`check_number`,`transaction_date`,`note`,`status`,`date_added`,`date_changed`) values (21,null,'CASH','1',1,1,72.00,null,'2017-01-01 00:00:00','Cash Offering',1,'2018-01-09 11:28:44',null);
 insert into `contribution`(`contribution_id`,`contributor_id`,`contribution_name`,`category`,`transaction_type`,`transaction_mode`,`amount`,`check_number`,`transaction_date`,`note`,`status`,`date_added`,`date_changed`) values (31,31,null,'2',1,2,250.00,'787','2017-01-01 00:00:00','CHECK',1,'2018-01-09 11:30:17',null);
 insert into `contribution`(`contribution_id`,`contributor_id`,`contribution_name`,`category`,`transaction_type`,`transaction_mode`,`amount`,`check_number`,`transaction_date`,`note`,`status`,`date_added`,`date_changed`) values (41,61,null,'2',1,2,300.00,'2188','2017-01-01 00:00:00','CHECK',1,'2018-01-09 11:31:06',null);

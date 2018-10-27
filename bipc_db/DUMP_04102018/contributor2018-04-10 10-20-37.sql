@@ -1,5 +1,3 @@
-USE bipc;
-
 insert into `contributor`(`contributor_id`,`first_name`,`last_name`,`family_name`,`status`,`date_added`,`date_changed`) values (21,'SAMUEL','MATHE',null,1,'2017-07-24 18:11:14','2018-01-09 11:21:36');
 insert into `contributor`(`contributor_id`,`first_name`,`last_name`,`family_name`,`status`,`date_added`,`date_changed`) values (31,'BIJU','VARGHESE',null,1,'2018-01-09 11:21:52',null);
 insert into `contributor`(`contributor_id`,`first_name`,`last_name`,`family_name`,`status`,`date_added`,`date_changed`) values (41,'DANIEL','KULANGARA',null,1,'2018-01-09 11:22:11',null);

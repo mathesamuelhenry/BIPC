@@ -1,5 +1,3 @@
-USE bipc;
-
 insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (51,31,'1','Credit',1,'2017-07-24 18:07:37',null);
 insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (61,31,'2','Debit',1,'2017-07-24 18:07:38',null);
 insert into `column_value_desc`(`column_value_desc_id`,`table_column_id`,`value`,`description`,`status`,`date_added`,`date_changed`) values (71,41,'1','Cash',1,'2017-07-24 18:07:38',null);
