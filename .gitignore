@@ -5,3 +5,4 @@ BIPCAccounting/.vs/
 BIPCAccounting/BIPCAccounting/bin/
 !BIPCAccounting/BIPCAccounting/bin/Debug/MySqlData.dll
 !BIPCAccounting/BIPCAccounting/bin/Debug/BIPCAccounting.exe
+/BIPCAccounting/BIPCAccounting/bin/Debug/BIPCAccounting.exe
