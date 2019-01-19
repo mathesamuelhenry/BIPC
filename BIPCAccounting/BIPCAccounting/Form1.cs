@@ -1362,9 +1362,17 @@ INSERT INTO column_value_desc(column_value_desc_id,
                         {
                             CashRadionButton.Checked = true;
                         }
-                        else
+                        else if (this.cvd.GetCVDDescription("contribution", "transaction_mode", dRow["transaction_mode"].ToString()).Equals("Check", StringComparison.InvariantCultureIgnoreCase))
                         {
                             CheckRadionButton.Checked = true;
+                        }
+                        else if(this.cvd.GetCVDDescription("contribution", "transaction_mode", dRow["transaction_mode"].ToString()).Equals("Online", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            OnlineRadioButton.Checked = true;
+                        }
+                        else
+                        {
+                            CardRadioButton.Checked = true;
                         }
 
                         AmountTextBox.Text = dRow["amount"].ToString();
