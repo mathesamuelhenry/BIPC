@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
@@ -89,6 +90,8 @@
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SearchExpendituresTab = new System.Windows.Forms.TabPage();
+            this.SearchTabOpeningBalanceValue = new System.Windows.Forms.Label();
+            this.SearchTabOpeningBalanceLabel = new System.Windows.Forms.Label();
             this.CurrentSearchBalance = new System.Windows.Forms.Label();
             this.CurrentSearchBalanceLabel = new System.Windows.Forms.Label();
             this.SearchAmountValue = new System.Windows.Forms.Label();
@@ -146,12 +149,40 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.OpeningBalanceAddUpdateButton = new System.Windows.Forms.Button();
             this.OpeningBalanceTextBox = new System.Windows.Forms.TextBox();
+            this.loanTab = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.DeleteLoanContrubutorButton = new System.Windows.Forms.Button();
+            this.AddUpdateLoanContributorButtonGrid = new System.Windows.Forms.Button();
+            this.loanContributorDataGridView = new System.Windows.Forms.DataGridView();
+            this.ContributorLoanId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorIdNotVisible = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanFirstLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanAmountGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.RemainingLoanAmountLabel = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.LoanTransactionsGridView = new System.Windows.Forms.DataGridView();
+            this.LoanTransactionsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsCheckNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsTransDt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsNote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label11 = new System.Windows.Forms.Label();
+            this.LoanLookupTransComboBox = new System.Windows.Forms.ComboBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.AddLoanButton = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.loanAmountTextBox = new System.Windows.Forms.TextBox();
+            this.loanComboBox = new System.Windows.Forms.ComboBox();
+            this.LoanAmount = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SearchBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.SearchTabOpeningBalanceLabel = new System.Windows.Forms.Label();
-            this.SearchTabOpeningBalanceValue = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -170,6 +201,12 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.loanTab.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loanContributorDataGridView)).BeginInit();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LoanTransactionsGridView)).BeginInit();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -177,10 +214,12 @@
             this.tabControl1.Controls.Add(this.AddUpdateExpenditureTab);
             this.tabControl1.Controls.Add(this.SearchExpendituresTab);
             this.tabControl1.Controls.Add(this.MiscellaneousTab);
-            this.tabControl1.Location = new System.Drawing.Point(12, 22);
+            this.tabControl1.Controls.Add(this.loanTab);
+            this.tabControl1.Location = new System.Drawing.Point(16, 27);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1102, 654);
+            this.tabControl1.Size = new System.Drawing.Size(1469, 805);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
@@ -197,26 +236,29 @@
             this.AddUpdateExpenditureTab.Controls.Add(this.EditModelink);
             this.AddUpdateExpenditureTab.Controls.Add(this.EditModeLabel);
             this.AddUpdateExpenditureTab.Controls.Add(this.dataGridView1);
-            this.AddUpdateExpenditureTab.Location = new System.Drawing.Point(4, 22);
+            this.AddUpdateExpenditureTab.Location = new System.Drawing.Point(4, 25);
+            this.AddUpdateExpenditureTab.Margin = new System.Windows.Forms.Padding(4);
             this.AddUpdateExpenditureTab.Name = "AddUpdateExpenditureTab";
-            this.AddUpdateExpenditureTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AddUpdateExpenditureTab.Size = new System.Drawing.Size(1094, 628);
+            this.AddUpdateExpenditureTab.Padding = new System.Windows.Forms.Padding(4);
+            this.AddUpdateExpenditureTab.Size = new System.Drawing.Size(1461, 776);
             this.AddUpdateExpenditureTab.TabIndex = 0;
             this.AddUpdateExpenditureTab.Text = "Add Expenditure";
             this.AddUpdateExpenditureTab.UseVisualStyleBackColor = true;
             // 
             // ContributionIdHidden
             // 
-            this.ContributionIdHidden.Location = new System.Drawing.Point(29, 589);
+            this.ContributionIdHidden.Location = new System.Drawing.Point(39, 725);
+            this.ContributionIdHidden.Margin = new System.Windows.Forms.Padding(4);
             this.ContributionIdHidden.Name = "ContributionIdHidden";
-            this.ContributionIdHidden.Size = new System.Drawing.Size(0, 20);
+            this.ContributionIdHidden.Size = new System.Drawing.Size(0, 22);
             this.ContributionIdHidden.TabIndex = 45;
             // 
             // DeSelectAllOnAddUpdatePage
             // 
-            this.DeSelectAllOnAddUpdatePage.Location = new System.Drawing.Point(782, 518);
+            this.DeSelectAllOnAddUpdatePage.Location = new System.Drawing.Point(1043, 638);
+            this.DeSelectAllOnAddUpdatePage.Margin = new System.Windows.Forms.Padding(4);
             this.DeSelectAllOnAddUpdatePage.Name = "DeSelectAllOnAddUpdatePage";
-            this.DeSelectAllOnAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.DeSelectAllOnAddUpdatePage.Size = new System.Drawing.Size(100, 28);
             this.DeSelectAllOnAddUpdatePage.TabIndex = 44;
             this.DeSelectAllOnAddUpdatePage.Text = "Deselect All";
             this.DeSelectAllOnAddUpdatePage.UseVisualStyleBackColor = true;
@@ -224,9 +266,10 @@
             // 
             // SelectAllOnAddUpdatePage
             // 
-            this.SelectAllOnAddUpdatePage.Location = new System.Drawing.Point(671, 518);
+            this.SelectAllOnAddUpdatePage.Location = new System.Drawing.Point(895, 638);
+            this.SelectAllOnAddUpdatePage.Margin = new System.Windows.Forms.Padding(4);
             this.SelectAllOnAddUpdatePage.Name = "SelectAllOnAddUpdatePage";
-            this.SelectAllOnAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.SelectAllOnAddUpdatePage.Size = new System.Drawing.Size(100, 28);
             this.SelectAllOnAddUpdatePage.TabIndex = 43;
             this.SelectAllOnAddUpdatePage.Text = "Select All";
             this.SelectAllOnAddUpdatePage.UseVisualStyleBackColor = true;
@@ -234,9 +277,10 @@
             // 
             // DeleteInAddUpdatePage
             // 
-            this.DeleteInAddUpdatePage.Location = new System.Drawing.Point(892, 518);
+            this.DeleteInAddUpdatePage.Location = new System.Drawing.Point(1189, 638);
+            this.DeleteInAddUpdatePage.Margin = new System.Windows.Forms.Padding(4);
             this.DeleteInAddUpdatePage.Name = "DeleteInAddUpdatePage";
-            this.DeleteInAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.DeleteInAddUpdatePage.Size = new System.Drawing.Size(100, 28);
             this.DeleteInAddUpdatePage.TabIndex = 42;
             this.DeleteInAddUpdatePage.Text = "Delete";
             this.DeleteInAddUpdatePage.UseVisualStyleBackColor = true;
@@ -244,9 +288,10 @@
             // 
             // EditInAddUpdatePage
             // 
-            this.EditInAddUpdatePage.Location = new System.Drawing.Point(997, 518);
+            this.EditInAddUpdatePage.Location = new System.Drawing.Point(1329, 638);
+            this.EditInAddUpdatePage.Margin = new System.Windows.Forms.Padding(4);
             this.EditInAddUpdatePage.Name = "EditInAddUpdatePage";
-            this.EditInAddUpdatePage.Size = new System.Drawing.Size(75, 23);
+            this.EditInAddUpdatePage.Size = new System.Drawing.Size(100, 28);
             this.EditInAddUpdatePage.TabIndex = 41;
             this.EditInAddUpdatePage.Text = "Edit Row";
             this.EditInAddUpdatePage.UseVisualStyleBackColor = true;
@@ -256,81 +301,89 @@
             // 
             this.tableLayoutPanel5.ColumnCount = 6;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 74F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 188F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 139F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 213F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.tableLayoutPanel5.Controls.Add(this.OpeningBalanceValue, 1, 0);
             this.tableLayoutPanel5.Controls.Add(this.OpeningBalanceLabel, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.TotalBalanceLabel, 5, 0);
             this.tableLayoutPanel5.Controls.Add(this.TotalBalanceByOpeningLabel, 4, 0);
             this.tableLayoutPanel5.Controls.Add(this.TotalLabel, 3, 0);
             this.tableLayoutPanel5.Controls.Add(this.label24, 2, 0);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(366, 566);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(488, 697);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(706, 39);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(941, 48);
             this.tableLayoutPanel5.TabIndex = 40;
             // 
             // OpeningBalanceValue
             // 
             this.OpeningBalanceValue.AutoSize = true;
-            this.OpeningBalanceValue.Location = new System.Drawing.Point(105, 0);
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(139, 0);
+            this.OpeningBalanceValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.OpeningBalanceValue.Name = "OpeningBalanceValue";
-            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
+            this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 17);
             this.OpeningBalanceValue.TabIndex = 34;
             // 
             // OpeningBalanceLabel
             // 
             this.OpeningBalanceLabel.AutoSize = true;
-            this.OpeningBalanceLabel.Location = new System.Drawing.Point(3, 0);
+            this.OpeningBalanceLabel.Location = new System.Drawing.Point(4, 0);
+            this.OpeningBalanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.OpeningBalanceLabel.Name = "OpeningBalanceLabel";
-            this.OpeningBalanceLabel.Size = new System.Drawing.Size(95, 13);
+            this.OpeningBalanceLabel.Size = new System.Drawing.Size(125, 17);
             this.OpeningBalanceLabel.TabIndex = 33;
             this.OpeningBalanceLabel.Text = "Opening Balance :";
             // 
             // TotalBalanceLabel
             // 
             this.TotalBalanceLabel.AutoSize = true;
-            this.TotalBalanceLabel.Location = new System.Drawing.Point(635, 0);
+            this.TotalBalanceLabel.Location = new System.Drawing.Point(846, 0);
+            this.TotalBalanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TotalBalanceLabel.Name = "TotalBalanceLabel";
-            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 17);
             this.TotalBalanceLabel.TabIndex = 38;
             // 
             // TotalBalanceByOpeningLabel
             // 
             this.TotalBalanceByOpeningLabel.AutoSize = true;
-            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(510, 0);
+            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(679, 0);
+            this.TotalBalanceByOpeningLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TotalBalanceByOpeningLabel.Name = "TotalBalanceByOpeningLabel";
-            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(116, 13);
+            this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(154, 17);
             this.TotalBalanceByOpeningLabel.TabIndex = 36;
             this.TotalBalanceByOpeningLabel.Text = "Total Current Balance :";
             // 
             // TotalLabel
             // 
             this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(350, 0);
+            this.TotalLabel.Location = new System.Drawing.Point(466, 0);
+            this.TotalLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TotalLabel.Name = "TotalLabel";
-            this.TotalLabel.Size = new System.Drawing.Size(0, 13);
+            this.TotalLabel.Size = new System.Drawing.Size(0, 17);
             this.TotalLabel.TabIndex = 37;
             // 
             // label24
             // 
             this.label24.AutoSize = true;
             this.label24.BackColor = System.Drawing.Color.Transparent;
-            this.label24.Location = new System.Drawing.Point(246, 0);
+            this.label24.Location = new System.Drawing.Point(327, 0);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(96, 13);
+            this.label24.Size = new System.Drawing.Size(131, 17);
             this.label24.TabIndex = 35;
             this.label24.Text = "Transaction Total : ";
             // 
             // EditModeHidden
             // 
-            this.EditModeHidden.Location = new System.Drawing.Point(357, 585);
+            this.EditModeHidden.Location = new System.Drawing.Point(476, 720);
+            this.EditModeHidden.Margin = new System.Windows.Forms.Padding(4);
             this.EditModeHidden.Name = "EditModeHidden";
-            this.EditModeHidden.Size = new System.Drawing.Size(0, 20);
+            this.EditModeHidden.Size = new System.Drawing.Size(0, 22);
             this.EditModeHidden.TabIndex = 39;
             // 
             // AddUpdateFormGroup
@@ -357,26 +410,30 @@
             this.AddUpdateFormGroup.Controls.Add(this.NoteTextBox);
             this.AddUpdateFormGroup.Controls.Add(this.AmountTextBox);
             this.AddUpdateFormGroup.Controls.Add(this.TransactionDateTimePicker);
-            this.AddUpdateFormGroup.Location = new System.Drawing.Point(6, 33);
+            this.AddUpdateFormGroup.Location = new System.Drawing.Point(8, 41);
+            this.AddUpdateFormGroup.Margin = new System.Windows.Forms.Padding(4);
             this.AddUpdateFormGroup.Name = "AddUpdateFormGroup";
-            this.AddUpdateFormGroup.Size = new System.Drawing.Size(344, 589);
+            this.AddUpdateFormGroup.Padding = new System.Windows.Forms.Padding(4);
+            this.AddUpdateFormGroup.Size = new System.Drawing.Size(459, 725);
             this.AddUpdateFormGroup.TabIndex = 32;
             this.AddUpdateFormGroup.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 29);
+            this.label1.Location = new System.Drawing.Point(24, 36);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(45, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Name";
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Location = new System.Drawing.Point(117, 29);
+            this.NameTextBox.Location = new System.Drawing.Point(156, 36);
+            this.NameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(121, 20);
+            this.NameTextBox.Size = new System.Drawing.Size(160, 22);
             this.NameTextBox.TabIndex = 0;
             this.NameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NameTextBox_KeyUp);
             this.NameTextBox.Leave += new System.EventHandler(this.NameTextBox_Leave);
@@ -384,45 +441,50 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 104);
+            this.label2.Location = new System.Drawing.Point(24, 128);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.Size = new System.Drawing.Size(65, 17);
             this.label2.TabIndex = 2;
             this.label2.Text = "Category";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // CategoryTextBox
             // 
-            this.CategoryTextBox.Location = new System.Drawing.Point(117, 144);
+            this.CategoryTextBox.Location = new System.Drawing.Point(156, 177);
+            this.CategoryTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.CategoryTextBox.Name = "CategoryTextBox";
-            this.CategoryTextBox.Size = new System.Drawing.Size(121, 20);
+            this.CategoryTextBox.Size = new System.Drawing.Size(160, 22);
             this.CategoryTextBox.TabIndex = 29;
             this.CategoryTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CategoryTextBox_KeyUp);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 194);
+            this.label3.Location = new System.Drawing.Point(24, 239);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 13);
+            this.label3.Size = new System.Drawing.Size(119, 17);
             this.label3.TabIndex = 3;
             this.label3.Text = "Transaction Type";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(114, 128);
+            this.label15.Location = new System.Drawing.Point(152, 158);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(148, 13);
+            this.label15.Size = new System.Drawing.Size(196, 17);
             this.label15.TabIndex = 28;
             this.label15.Text = "(If new Category, enter below)";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 248);
+            this.label4.Location = new System.Drawing.Point(24, 305);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 13);
+            this.label4.Size = new System.Drawing.Size(122, 17);
             this.label4.TabIndex = 4;
             this.label4.Text = "Transaction Mode";
             // 
@@ -430,9 +492,10 @@
             // 
             this.ContributorIdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ContributorIdComboBox.FormattingEnabled = true;
-            this.ContributorIdComboBox.Location = new System.Drawing.Point(117, 66);
+            this.ContributorIdComboBox.Location = new System.Drawing.Point(156, 81);
+            this.ContributorIdComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ContributorIdComboBox.Name = "ContributorIdComboBox";
-            this.ContributorIdComboBox.Size = new System.Drawing.Size(121, 21);
+            this.ContributorIdComboBox.Size = new System.Drawing.Size(160, 24);
             this.ContributorIdComboBox.TabIndex = 26;
             this.ContributorIdComboBox.SelectedIndexChanged += new System.EventHandler(this.ContributorIdComboBox_SelectedIndexChanged);
             // 
@@ -440,9 +503,10 @@
             // 
             this.CategoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CategoryCombo.FormattingEnabled = true;
-            this.CategoryCombo.Location = new System.Drawing.Point(117, 104);
+            this.CategoryCombo.Location = new System.Drawing.Point(156, 128);
+            this.CategoryCombo.Margin = new System.Windows.Forms.Padding(4);
             this.CategoryCombo.Name = "CategoryCombo";
-            this.CategoryCombo.Size = new System.Drawing.Size(121, 21);
+            this.CategoryCombo.Size = new System.Drawing.Size(160, 24);
             this.CategoryCombo.TabIndex = 5;
             this.CategoryCombo.SelectedIndexChanged += new System.EventHandler(this.CategoryCombo_SelectedIndexChanged);
             // 
@@ -450,35 +514,39 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(157, 52);
+            this.label13.Location = new System.Drawing.Point(209, 64);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(25, 12);
+            this.label13.Size = new System.Drawing.Size(33, 15);
             this.label13.TabIndex = 25;
             this.label13.Text = "(OR)";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 334);
+            this.label5.Location = new System.Drawing.Point(24, 411);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(78, 13);
+            this.label5.Size = new System.Drawing.Size(101, 17);
             this.label5.TabIndex = 10;
             this.label5.Text = "Check Number";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 369);
+            this.label6.Location = new System.Drawing.Point(24, 454);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.Size = new System.Drawing.Size(56, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Amount";
             // 
             // AddUpdateButton
             // 
-            this.AddUpdateButton.Location = new System.Drawing.Point(117, 547);
+            this.AddUpdateButton.Location = new System.Drawing.Point(156, 673);
+            this.AddUpdateButton.Margin = new System.Windows.Forms.Padding(4);
             this.AddUpdateButton.Name = "AddUpdateButton";
-            this.AddUpdateButton.Size = new System.Drawing.Size(75, 23);
+            this.AddUpdateButton.Size = new System.Drawing.Size(100, 28);
             this.AddUpdateButton.TabIndex = 23;
             this.AddUpdateButton.Text = "Add";
             this.AddUpdateButton.UseVisualStyleBackColor = true;
@@ -487,9 +555,10 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(18, 404);
+            this.label7.Location = new System.Drawing.Point(24, 497);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.Size = new System.Drawing.Size(117, 17);
             this.label7.TabIndex = 12;
             this.label7.Text = "Transaction Date";
             // 
@@ -499,18 +568,21 @@
             this.groupBox2.Controls.Add(this.OnlineRadioButton);
             this.groupBox2.Controls.Add(this.CheckRadionButton);
             this.groupBox2.Controls.Add(this.CashRadionButton);
-            this.groupBox2.Location = new System.Drawing.Point(117, 229);
+            this.groupBox2.Location = new System.Drawing.Point(156, 282);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 99);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Size = new System.Drawing.Size(267, 122);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             // 
             // CardRadioButton
             // 
             this.CardRadioButton.AutoSize = true;
-            this.CardRadioButton.Location = new System.Drawing.Point(108, 60);
+            this.CardRadioButton.Location = new System.Drawing.Point(144, 74);
+            this.CardRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.CardRadioButton.Name = "CardRadioButton";
-            this.CardRadioButton.Size = new System.Drawing.Size(47, 17);
+            this.CardRadioButton.Size = new System.Drawing.Size(59, 21);
             this.CardRadioButton.TabIndex = 11;
             this.CardRadioButton.TabStop = true;
             this.CardRadioButton.Text = "Card";
@@ -519,9 +591,10 @@
             // OnlineRadioButton
             // 
             this.OnlineRadioButton.AutoSize = true;
-            this.OnlineRadioButton.Location = new System.Drawing.Point(17, 60);
+            this.OnlineRadioButton.Location = new System.Drawing.Point(23, 74);
+            this.OnlineRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.OnlineRadioButton.Name = "OnlineRadioButton";
-            this.OnlineRadioButton.Size = new System.Drawing.Size(55, 17);
+            this.OnlineRadioButton.Size = new System.Drawing.Size(70, 21);
             this.OnlineRadioButton.TabIndex = 10;
             this.OnlineRadioButton.TabStop = true;
             this.OnlineRadioButton.Text = "Online";
@@ -530,9 +603,10 @@
             // CheckRadionButton
             // 
             this.CheckRadionButton.AutoSize = true;
-            this.CheckRadionButton.Location = new System.Drawing.Point(108, 19);
+            this.CheckRadionButton.Location = new System.Drawing.Point(144, 23);
+            this.CheckRadionButton.Margin = new System.Windows.Forms.Padding(4);
             this.CheckRadionButton.Name = "CheckRadionButton";
-            this.CheckRadionButton.Size = new System.Drawing.Size(56, 17);
+            this.CheckRadionButton.Size = new System.Drawing.Size(68, 21);
             this.CheckRadionButton.TabIndex = 9;
             this.CheckRadionButton.Text = "Check";
             this.CheckRadionButton.UseVisualStyleBackColor = true;
@@ -541,9 +615,10 @@
             // 
             this.CashRadionButton.AutoSize = true;
             this.CashRadionButton.Checked = true;
-            this.CashRadionButton.Location = new System.Drawing.Point(17, 19);
+            this.CashRadionButton.Location = new System.Drawing.Point(23, 23);
+            this.CashRadionButton.Margin = new System.Windows.Forms.Padding(4);
             this.CashRadionButton.Name = "CashRadionButton";
-            this.CashRadionButton.Size = new System.Drawing.Size(49, 17);
+            this.CashRadionButton.Size = new System.Drawing.Size(61, 21);
             this.CashRadionButton.TabIndex = 8;
             this.CashRadionButton.TabStop = true;
             this.CashRadionButton.Text = "Cash";
@@ -552,9 +627,10 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 437);
+            this.label8.Location = new System.Drawing.Point(24, 538);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(30, 13);
+            this.label8.Size = new System.Drawing.Size(38, 17);
             this.label8.TabIndex = 13;
             this.label8.Text = "Note";
             this.label8.Click += new System.EventHandler(this.label8_Click);
@@ -563,18 +639,21 @@
             // 
             this.groupBox1.Controls.Add(this.DebitRadionButton);
             this.groupBox1.Controls.Add(this.CreditRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(117, 175);
+            this.groupBox1.Location = new System.Drawing.Point(156, 215);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 48);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(267, 59);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             // 
             // DebitRadionButton
             // 
             this.DebitRadionButton.AutoSize = true;
-            this.DebitRadionButton.Location = new System.Drawing.Point(108, 19);
+            this.DebitRadionButton.Location = new System.Drawing.Point(144, 23);
+            this.DebitRadionButton.Margin = new System.Windows.Forms.Padding(4);
             this.DebitRadionButton.Name = "DebitRadionButton";
-            this.DebitRadionButton.Size = new System.Drawing.Size(50, 17);
+            this.DebitRadionButton.Size = new System.Drawing.Size(62, 21);
             this.DebitRadionButton.TabIndex = 7;
             this.DebitRadionButton.Text = "Debit";
             this.DebitRadionButton.UseVisualStyleBackColor = true;
@@ -583,9 +662,10 @@
             // 
             this.CreditRadioButton.AutoSize = true;
             this.CreditRadioButton.Checked = true;
-            this.CreditRadioButton.Location = new System.Drawing.Point(17, 19);
+            this.CreditRadioButton.Location = new System.Drawing.Point(23, 23);
+            this.CreditRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.CreditRadioButton.Name = "CreditRadioButton";
-            this.CreditRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.CreditRadioButton.Size = new System.Drawing.Size(66, 21);
             this.CreditRadioButton.TabIndex = 6;
             this.CreditRadioButton.TabStop = true;
             this.CreditRadioButton.Text = "Credit";
@@ -593,39 +673,44 @@
             // 
             // CheckTextBox
             // 
-            this.CheckTextBox.Location = new System.Drawing.Point(117, 334);
+            this.CheckTextBox.Location = new System.Drawing.Point(156, 411);
+            this.CheckTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.CheckTextBox.Name = "CheckTextBox";
-            this.CheckTextBox.Size = new System.Drawing.Size(121, 20);
+            this.CheckTextBox.Size = new System.Drawing.Size(160, 22);
             this.CheckTextBox.TabIndex = 14;
             // 
             // NoteTextBox
             // 
-            this.NoteTextBox.Location = new System.Drawing.Point(117, 437);
+            this.NoteTextBox.Location = new System.Drawing.Point(156, 538);
+            this.NoteTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.NoteTextBox.Multiline = true;
             this.NoteTextBox.Name = "NoteTextBox";
-            this.NoteTextBox.Size = new System.Drawing.Size(200, 87);
+            this.NoteTextBox.Size = new System.Drawing.Size(265, 106);
             this.NoteTextBox.TabIndex = 19;
             // 
             // AmountTextBox
             // 
-            this.AmountTextBox.Location = new System.Drawing.Point(117, 369);
+            this.AmountTextBox.Location = new System.Drawing.Point(156, 454);
+            this.AmountTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.AmountTextBox.Name = "AmountTextBox";
-            this.AmountTextBox.Size = new System.Drawing.Size(121, 20);
+            this.AmountTextBox.Size = new System.Drawing.Size(160, 22);
             this.AmountTextBox.TabIndex = 15;
             // 
             // TransactionDateTimePicker
             // 
-            this.TransactionDateTimePicker.Location = new System.Drawing.Point(117, 404);
+            this.TransactionDateTimePicker.Location = new System.Drawing.Point(156, 497);
+            this.TransactionDateTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.TransactionDateTimePicker.Name = "TransactionDateTimePicker";
-            this.TransactionDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.TransactionDateTimePicker.Size = new System.Drawing.Size(265, 22);
             this.TransactionDateTimePicker.TabIndex = 18;
             // 
             // EditModelink
             // 
             this.EditModelink.AutoSize = true;
-            this.EditModelink.Location = new System.Drawing.Point(26, 17);
+            this.EditModelink.Location = new System.Drawing.Point(35, 21);
+            this.EditModelink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EditModelink.Name = "EditModelink";
-            this.EditModelink.Size = new System.Drawing.Size(0, 13);
+            this.EditModelink.Size = new System.Drawing.Size(0, 17);
             this.EditModelink.TabIndex = 31;
             this.EditModelink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.EditModelink_LinkClicked);
             // 
@@ -633,9 +718,10 @@
             // 
             this.EditModeLabel.AutoSize = true;
             this.EditModeLabel.ForeColor = System.Drawing.Color.Green;
-            this.EditModeLabel.Location = new System.Drawing.Point(166, 17);
+            this.EditModeLabel.Location = new System.Drawing.Point(221, 21);
+            this.EditModeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EditModeLabel.Name = "EditModeLabel";
-            this.EditModeLabel.Size = new System.Drawing.Size(0, 13);
+            this.EditModeLabel.Size = new System.Drawing.Size(0, 17);
             this.EditModeLabel.TabIndex = 30;
             // 
             // dataGridView1
@@ -657,9 +743,10 @@
             this.DateAdded});
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.dataGridView1.Location = new System.Drawing.Point(366, 42);
+            this.dataGridView1.Location = new System.Drawing.Point(488, 52);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(706, 453);
+            this.dataGridView1.Size = new System.Drawing.Size(941, 558);
             this.dataGridView1.TabIndex = 24;
             this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
             // 
@@ -742,57 +829,83 @@
             this.SearchExpendituresTab.Controls.Add(this.label22);
             this.SearchExpendituresTab.Controls.Add(this.SearchResultsDataGridView);
             this.SearchExpendituresTab.Controls.Add(this.groupBox3);
-            this.SearchExpendituresTab.Location = new System.Drawing.Point(4, 22);
+            this.SearchExpendituresTab.Location = new System.Drawing.Point(4, 25);
+            this.SearchExpendituresTab.Margin = new System.Windows.Forms.Padding(4);
             this.SearchExpendituresTab.Name = "SearchExpendituresTab";
-            this.SearchExpendituresTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SearchExpendituresTab.Size = new System.Drawing.Size(1094, 628);
+            this.SearchExpendituresTab.Padding = new System.Windows.Forms.Padding(4);
+            this.SearchExpendituresTab.Size = new System.Drawing.Size(1461, 776);
             this.SearchExpendituresTab.TabIndex = 1;
             this.SearchExpendituresTab.Tag = "";
             this.SearchExpendituresTab.Text = "Search Expenditures";
             this.SearchExpendituresTab.UseVisualStyleBackColor = true;
             // 
+            // SearchTabOpeningBalanceValue
+            // 
+            this.SearchTabOpeningBalanceValue.AutoSize = true;
+            this.SearchTabOpeningBalanceValue.Location = new System.Drawing.Point(1331, 711);
+            this.SearchTabOpeningBalanceValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.SearchTabOpeningBalanceValue.Name = "SearchTabOpeningBalanceValue";
+            this.SearchTabOpeningBalanceValue.Size = new System.Drawing.Size(28, 17);
+            this.SearchTabOpeningBalanceValue.TabIndex = 20;
+            this.SearchTabOpeningBalanceValue.Text = "0.0";
+            // 
+            // SearchTabOpeningBalanceLabel
+            // 
+            this.SearchTabOpeningBalanceLabel.AutoSize = true;
+            this.SearchTabOpeningBalanceLabel.Location = new System.Drawing.Point(1188, 711);
+            this.SearchTabOpeningBalanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.SearchTabOpeningBalanceLabel.Name = "SearchTabOpeningBalanceLabel";
+            this.SearchTabOpeningBalanceLabel.Size = new System.Drawing.Size(133, 17);
+            this.SearchTabOpeningBalanceLabel.TabIndex = 19;
+            this.SearchTabOpeningBalanceLabel.Text = "Opening Balance  : ";
+            // 
             // CurrentSearchBalance
             // 
             this.CurrentSearchBalance.AutoSize = true;
-            this.CurrentSearchBalance.Location = new System.Drawing.Point(564, 578);
+            this.CurrentSearchBalance.Location = new System.Drawing.Point(752, 711);
+            this.CurrentSearchBalance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.CurrentSearchBalance.Name = "CurrentSearchBalance";
-            this.CurrentSearchBalance.Size = new System.Drawing.Size(22, 13);
+            this.CurrentSearchBalance.Size = new System.Drawing.Size(28, 17);
             this.CurrentSearchBalance.TabIndex = 18;
             this.CurrentSearchBalance.Text = "0.0";
             // 
             // CurrentSearchBalanceLabel
             // 
             this.CurrentSearchBalanceLabel.AutoSize = true;
-            this.CurrentSearchBalanceLabel.Location = new System.Drawing.Point(426, 578);
+            this.CurrentSearchBalanceLabel.Location = new System.Drawing.Point(568, 711);
+            this.CurrentSearchBalanceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.CurrentSearchBalanceLabel.Name = "CurrentSearchBalanceLabel";
-            this.CurrentSearchBalanceLabel.Size = new System.Drawing.Size(132, 13);
+            this.CurrentSearchBalanceLabel.Size = new System.Drawing.Size(175, 17);
             this.CurrentSearchBalanceLabel.TabIndex = 17;
             this.CurrentSearchBalanceLabel.Text = "Current Search Balance  : ";
             // 
             // SearchAmountValue
             // 
             this.SearchAmountValue.AutoSize = true;
-            this.SearchAmountValue.Location = new System.Drawing.Point(136, 578);
+            this.SearchAmountValue.Location = new System.Drawing.Point(181, 711);
+            this.SearchAmountValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.SearchAmountValue.Name = "SearchAmountValue";
-            this.SearchAmountValue.Size = new System.Drawing.Size(22, 13);
+            this.SearchAmountValue.Size = new System.Drawing.Size(28, 17);
             this.SearchAmountValue.TabIndex = 16;
             this.SearchAmountValue.Text = "0.0";
             // 
             // SearchTotalAmount
             // 
             this.SearchTotalAmount.AutoSize = true;
-            this.SearchTotalAmount.Location = new System.Drawing.Point(14, 578);
+            this.SearchTotalAmount.Location = new System.Drawing.Point(19, 711);
+            this.SearchTotalAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.SearchTotalAmount.Name = "SearchTotalAmount";
-            this.SearchTotalAmount.Size = new System.Drawing.Size(116, 13);
+            this.SearchTotalAmount.Size = new System.Drawing.Size(153, 17);
             this.SearchTotalAmount.TabIndex = 15;
             this.SearchTotalAmount.Text = "Search Total Amount : ";
             this.SearchTotalAmount.Click += new System.EventHandler(this.label10_Click);
             // 
             // DeselectAll
             // 
-            this.DeselectAll.Location = new System.Drawing.Point(668, 203);
+            this.DeselectAll.Location = new System.Drawing.Point(891, 250);
+            this.DeselectAll.Margin = new System.Windows.Forms.Padding(4);
             this.DeselectAll.Name = "DeselectAll";
-            this.DeselectAll.Size = new System.Drawing.Size(75, 23);
+            this.DeselectAll.Size = new System.Drawing.Size(100, 28);
             this.DeselectAll.TabIndex = 14;
             this.DeselectAll.Text = "Deselect All";
             this.DeselectAll.UseVisualStyleBackColor = true;
@@ -800,9 +913,10 @@
             // 
             // SelectAll
             // 
-            this.SelectAll.Location = new System.Drawing.Point(557, 203);
+            this.SelectAll.Location = new System.Drawing.Point(743, 250);
+            this.SelectAll.Margin = new System.Windows.Forms.Padding(4);
             this.SelectAll.Name = "SelectAll";
-            this.SelectAll.Size = new System.Drawing.Size(75, 23);
+            this.SelectAll.Size = new System.Drawing.Size(100, 28);
             this.SelectAll.TabIndex = 13;
             this.SelectAll.Text = "Select All";
             this.SelectAll.UseVisualStyleBackColor = true;
@@ -810,9 +924,10 @@
             // 
             // DeleteSearchRow
             // 
-            this.DeleteSearchRow.Location = new System.Drawing.Point(778, 203);
+            this.DeleteSearchRow.Location = new System.Drawing.Point(1037, 250);
+            this.DeleteSearchRow.Margin = new System.Windows.Forms.Padding(4);
             this.DeleteSearchRow.Name = "DeleteSearchRow";
-            this.DeleteSearchRow.Size = new System.Drawing.Size(75, 23);
+            this.DeleteSearchRow.Size = new System.Drawing.Size(100, 28);
             this.DeleteSearchRow.TabIndex = 12;
             this.DeleteSearchRow.Text = "Delete";
             this.DeleteSearchRow.UseVisualStyleBackColor = true;
@@ -820,9 +935,10 @@
             // 
             // EditSearchRow
             // 
-            this.EditSearchRow.Location = new System.Drawing.Point(883, 203);
+            this.EditSearchRow.Location = new System.Drawing.Point(1177, 250);
+            this.EditSearchRow.Margin = new System.Windows.Forms.Padding(4);
             this.EditSearchRow.Name = "EditSearchRow";
-            this.EditSearchRow.Size = new System.Drawing.Size(75, 23);
+            this.EditSearchRow.Size = new System.Drawing.Size(100, 28);
             this.EditSearchRow.TabIndex = 11;
             this.EditSearchRow.Text = "Edit Row";
             this.EditSearchRow.UseVisualStyleBackColor = true;
@@ -830,9 +946,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(986, 203);
+            this.button2.Location = new System.Drawing.Point(1315, 250);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(100, 28);
             this.button2.TabIndex = 3;
             this.button2.Text = "Export";
             this.button2.UseVisualStyleBackColor = true;
@@ -842,9 +959,10 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(14, 210);
+            this.label22.Location = new System.Drawing.Point(19, 258);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(120, 16);
+            this.label22.Size = new System.Drawing.Size(150, 20);
             this.label22.TabIndex = 2;
             this.label22.Text = "Expenditure Result";
             // 
@@ -866,9 +984,10 @@
             this.NoteSearch,
             this.DateAddedSearch});
             this.SearchResultsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.SearchResultsDataGridView.Location = new System.Drawing.Point(17, 246);
+            this.SearchResultsDataGridView.Location = new System.Drawing.Point(23, 303);
+            this.SearchResultsDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.SearchResultsDataGridView.Name = "SearchResultsDataGridView";
-            this.SearchResultsDataGridView.Size = new System.Drawing.Size(1044, 308);
+            this.SearchResultsDataGridView.Size = new System.Drawing.Size(1392, 379);
             this.SearchResultsDataGridView.TabIndex = 1;
             // 
             // CNameSearch
@@ -953,17 +1072,20 @@
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.SearchNameTextBox);
-            this.groupBox3.Location = new System.Drawing.Point(17, 19);
+            this.groupBox3.Location = new System.Drawing.Point(23, 23);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1044, 158);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Size = new System.Drawing.Size(1392, 194);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(836, 103);
+            this.ResetButton.Location = new System.Drawing.Point(1115, 127);
+            this.ResetButton.Margin = new System.Windows.Forms.Padding(4);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(151, 23);
+            this.ResetButton.Size = new System.Drawing.Size(201, 28);
             this.ResetButton.TabIndex = 49;
             this.ResetButton.Text = "Reset";
             this.ResetButton.UseVisualStyleBackColor = true;
@@ -971,9 +1093,10 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(662, 104);
+            this.SearchButton.Location = new System.Drawing.Point(883, 128);
+            this.SearchButton.Margin = new System.Windows.Forms.Padding(4);
             this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(151, 23);
+            this.SearchButton.Size = new System.Drawing.Size(201, 28);
             this.SearchButton.TabIndex = 48;
             this.SearchButton.Text = "Search";
             this.SearchButton.UseVisualStyleBackColor = true;
@@ -981,49 +1104,55 @@
             // 
             // SearchToDateTimePicker
             // 
-            this.SearchToDateTimePicker.Location = new System.Drawing.Point(787, 68);
+            this.SearchToDateTimePicker.Location = new System.Drawing.Point(1049, 84);
+            this.SearchToDateTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.SearchToDateTimePicker.Name = "SearchToDateTimePicker";
-            this.SearchToDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.SearchToDateTimePicker.Size = new System.Drawing.Size(265, 22);
             this.SearchToDateTimePicker.TabIndex = 47;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(659, 71);
+            this.label21.Location = new System.Drawing.Point(879, 87);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(111, 13);
+            this.label21.Size = new System.Drawing.Size(148, 17);
             this.label21.TabIndex = 46;
             this.label21.Text = "Transaction Date (To)";
             // 
             // SearchFromDateTimePicker
             // 
-            this.SearchFromDateTimePicker.Location = new System.Drawing.Point(787, 28);
+            this.SearchFromDateTimePicker.Location = new System.Drawing.Point(1049, 34);
+            this.SearchFromDateTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.SearchFromDateTimePicker.Name = "SearchFromDateTimePicker";
-            this.SearchFromDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.SearchFromDateTimePicker.Size = new System.Drawing.Size(265, 22);
             this.SearchFromDateTimePicker.TabIndex = 45;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(659, 31);
+            this.label20.Location = new System.Drawing.Point(879, 38);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(121, 13);
+            this.label20.Size = new System.Drawing.Size(163, 17);
             this.label20.TabIndex = 44;
             this.label20.Text = "Transaction Date (From)";
             // 
             // SearchCheckTextBox
             // 
-            this.SearchCheckTextBox.Location = new System.Drawing.Point(448, 104);
+            this.SearchCheckTextBox.Location = new System.Drawing.Point(597, 128);
+            this.SearchCheckTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.SearchCheckTextBox.Name = "SearchCheckTextBox";
-            this.SearchCheckTextBox.Size = new System.Drawing.Size(121, 20);
+            this.SearchCheckTextBox.Size = new System.Drawing.Size(160, 22);
             this.SearchCheckTextBox.TabIndex = 43;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(328, 104);
+            this.label9.Location = new System.Drawing.Point(437, 128);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(78, 13);
+            this.label9.Size = new System.Drawing.Size(101, 17);
             this.label9.TabIndex = 42;
             this.label9.Text = "Check Number";
             // 
@@ -1031,35 +1160,39 @@
             // 
             this.SearchTransModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchTransModeComboBox.FormattingEnabled = true;
-            this.SearchTransModeComboBox.Location = new System.Drawing.Point(448, 65);
+            this.SearchTransModeComboBox.Location = new System.Drawing.Point(597, 80);
+            this.SearchTransModeComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.SearchTransModeComboBox.Name = "SearchTransModeComboBox";
-            this.SearchTransModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchTransModeComboBox.Size = new System.Drawing.Size(160, 24);
             this.SearchTransModeComboBox.TabIndex = 41;
             // 
             // SearchTransTypeComboBox
             // 
             this.SearchTransTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchTransTypeComboBox.FormattingEnabled = true;
-            this.SearchTransTypeComboBox.Location = new System.Drawing.Point(448, 28);
+            this.SearchTransTypeComboBox.Location = new System.Drawing.Point(597, 34);
+            this.SearchTransTypeComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.SearchTransTypeComboBox.Name = "SearchTransTypeComboBox";
-            this.SearchTransTypeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchTransTypeComboBox.Size = new System.Drawing.Size(160, 24);
             this.SearchTransTypeComboBox.TabIndex = 40;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(326, 68);
+            this.label18.Location = new System.Drawing.Point(435, 84);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(93, 13);
+            this.label18.Size = new System.Drawing.Size(122, 17);
             this.label18.TabIndex = 39;
             this.label18.Text = "Transaction Mode";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(329, 31);
+            this.label19.Location = new System.Drawing.Point(439, 38);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(90, 13);
+            this.label19.Size = new System.Drawing.Size(119, 17);
             this.label19.TabIndex = 38;
             this.label19.Text = "Transaction Type";
             // 
@@ -1067,9 +1200,10 @@
             // 
             this.SearchNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchNameComboBox.FormattingEnabled = true;
-            this.SearchNameComboBox.Location = new System.Drawing.Point(122, 65);
+            this.SearchNameComboBox.Location = new System.Drawing.Point(163, 80);
+            this.SearchNameComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.SearchNameComboBox.Name = "SearchNameComboBox";
-            this.SearchNameComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchNameComboBox.Size = new System.Drawing.Size(160, 24);
             this.SearchNameComboBox.TabIndex = 35;
             this.SearchNameComboBox.SelectedIndexChanged += new System.EventHandler(this.SearchNameComboBox_SelectedIndexChanged);
             // 
@@ -1077,9 +1211,10 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(162, 51);
+            this.label14.Location = new System.Drawing.Point(216, 63);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(25, 12);
+            this.label14.Size = new System.Drawing.Size(33, 15);
             this.label14.TabIndex = 34;
             this.label14.Text = "(OR)";
             // 
@@ -1087,44 +1222,49 @@
             // 
             this.SearchCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchCategoryComboBox.FormattingEnabled = true;
-            this.SearchCategoryComboBox.Location = new System.Drawing.Point(122, 100);
+            this.SearchCategoryComboBox.Location = new System.Drawing.Point(163, 123);
+            this.SearchCategoryComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.SearchCategoryComboBox.Name = "SearchCategoryComboBox";
-            this.SearchCategoryComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchCategoryComboBox.Size = new System.Drawing.Size(160, 24);
             this.SearchCategoryComboBox.TabIndex = 33;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(23, 103);
+            this.label16.Location = new System.Drawing.Point(31, 127);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(49, 13);
+            this.label16.Size = new System.Drawing.Size(65, 17);
             this.label16.TabIndex = 32;
             this.label16.Text = "Category";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(23, 28);
+            this.label17.Location = new System.Drawing.Point(31, 34);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 13);
+            this.label17.Size = new System.Drawing.Size(45, 17);
             this.label17.TabIndex = 31;
             this.label17.Text = "Name";
             // 
             // SearchNameTextBox
             // 
-            this.SearchNameTextBox.Location = new System.Drawing.Point(122, 28);
+            this.SearchNameTextBox.Location = new System.Drawing.Point(163, 34);
+            this.SearchNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.SearchNameTextBox.Name = "SearchNameTextBox";
-            this.SearchNameTextBox.Size = new System.Drawing.Size(121, 20);
+            this.SearchNameTextBox.Size = new System.Drawing.Size(160, 22);
             this.SearchNameTextBox.TabIndex = 30;
             this.SearchNameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchNameTextBox_KeyUp);
             // 
             // MiscellaneousTab
             // 
             this.MiscellaneousTab.Controls.Add(this.tableLayoutPanel2);
-            this.MiscellaneousTab.Location = new System.Drawing.Point(4, 22);
+            this.MiscellaneousTab.Location = new System.Drawing.Point(4, 25);
+            this.MiscellaneousTab.Margin = new System.Windows.Forms.Padding(4);
             this.MiscellaneousTab.Name = "MiscellaneousTab";
-            this.MiscellaneousTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MiscellaneousTab.Size = new System.Drawing.Size(1094, 628);
+            this.MiscellaneousTab.Padding = new System.Windows.Forms.Padding(4);
+            this.MiscellaneousTab.Size = new System.Drawing.Size(1461, 776);
             this.MiscellaneousTab.TabIndex = 2;
             this.MiscellaneousTab.Text = "Miscellaneous";
             this.MiscellaneousTab.UseVisualStyleBackColor = true;
@@ -1136,11 +1276,12 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.0625F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(18, 24);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(24, 30);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.90283F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 321);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1280, 395);
             this.tableLayoutPanel2.TabIndex = 9;
             // 
             // tableLayoutPanel4
@@ -1148,11 +1289,12 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.groupBox5, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(425, 315);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(567, 387);
             this.tableLayoutPanel4.TabIndex = 9;
             // 
             // groupBox5
@@ -1160,18 +1302,21 @@
             this.groupBox5.Controls.Add(this.DeleteNames);
             this.groupBox5.Controls.Add(this.NameGridView);
             this.groupBox5.Controls.Add(this.UpdateNamesTableButton);
-            this.groupBox5.Location = new System.Drawing.Point(3, 3);
+            this.groupBox5.Location = new System.Drawing.Point(4, 4);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(419, 309);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox5.Size = new System.Drawing.Size(559, 379);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Names";
             // 
             // DeleteNames
             // 
-            this.DeleteNames.Location = new System.Drawing.Point(220, 270);
+            this.DeleteNames.Location = new System.Drawing.Point(293, 332);
+            this.DeleteNames.Margin = new System.Windows.Forms.Padding(4);
             this.DeleteNames.Name = "DeleteNames";
-            this.DeleteNames.Size = new System.Drawing.Size(193, 23);
+            this.DeleteNames.Size = new System.Drawing.Size(257, 28);
             this.DeleteNames.TabIndex = 12;
             this.DeleteNames.Text = "Delete Selected Names";
             this.DeleteNames.UseVisualStyleBackColor = true;
@@ -1186,9 +1331,10 @@
             this.ContributorId,
             this.ContributorLastUpdated});
             this.NameGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.NameGridView.Location = new System.Drawing.Point(6, 27);
+            this.NameGridView.Location = new System.Drawing.Point(8, 33);
+            this.NameGridView.Margin = new System.Windows.Forms.Padding(4);
             this.NameGridView.Name = "NameGridView";
-            this.NameGridView.Size = new System.Drawing.Size(407, 224);
+            this.NameGridView.Size = new System.Drawing.Size(543, 276);
             this.NameGridView.TabIndex = 10;
             // 
             // FirstName
@@ -1222,13 +1368,13 @@
             // 
             // UpdateNamesTableButton
             // 
-            this.UpdateNamesTableButton.Location = new System.Drawing.Point(6, 270);
+            this.UpdateNamesTableButton.Location = new System.Drawing.Point(8, 332);
+            this.UpdateNamesTableButton.Margin = new System.Windows.Forms.Padding(4);
             this.UpdateNamesTableButton.Name = "UpdateNamesTableButton";
-            this.UpdateNamesTableButton.Size = new System.Drawing.Size(208, 23);
+            this.UpdateNamesTableButton.Size = new System.Drawing.Size(277, 28);
             this.UpdateNamesTableButton.TabIndex = 11;
             this.UpdateNamesTableButton.Text = "Update Names Table";
             this.UpdateNamesTableButton.UseVisualStyleBackColor = true;
-            this.UpdateNamesTableButton.Click += new System.EventHandler(this.UpdateNamesTableButton_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -1236,29 +1382,33 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(444, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(592, 4);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(315, 315);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(420, 387);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.button3);
-            this.groupBox6.Location = new System.Drawing.Point(3, 160);
+            this.groupBox6.Location = new System.Drawing.Point(4, 197);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(257, 152);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox6.Size = new System.Drawing.Size(343, 186);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Global Refresh";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(17, 71);
+            this.button3.Location = new System.Drawing.Point(23, 87);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(218, 23);
+            this.button3.Size = new System.Drawing.Size(291, 28);
             this.button3.TabIndex = 0;
             this.button3.Text = "Refresh Data";
             this.button3.UseVisualStyleBackColor = true;
@@ -1268,18 +1418,21 @@
             // 
             this.groupBox4.Controls.Add(this.OpeningBalanceAddUpdateButton);
             this.groupBox4.Controls.Add(this.OpeningBalanceTextBox);
-            this.groupBox4.Location = new System.Drawing.Point(3, 3);
+            this.groupBox4.Location = new System.Drawing.Point(4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(257, 150);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Size = new System.Drawing.Size(343, 185);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opening Balance";
             // 
             // OpeningBalanceAddUpdateButton
             // 
-            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(17, 102);
+            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(23, 126);
+            this.OpeningBalanceAddUpdateButton.Margin = new System.Windows.Forms.Padding(4);
             this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
-            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(222, 23);
+            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(296, 28);
             this.OpeningBalanceAddUpdateButton.TabIndex = 1;
             this.OpeningBalanceAddUpdateButton.Text = "Add";
             this.OpeningBalanceAddUpdateButton.UseVisualStyleBackColor = true;
@@ -1287,36 +1440,307 @@
             // 
             // OpeningBalanceTextBox
             // 
-            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(17, 44);
+            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(23, 54);
+            this.OpeningBalanceTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
-            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
+            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(295, 22);
             this.OpeningBalanceTextBox.TabIndex = 0;
             // 
-            // SearchTabOpeningBalanceLabel
+            // loanTab
             // 
-            this.SearchTabOpeningBalanceLabel.AutoSize = true;
-            this.SearchTabOpeningBalanceLabel.Location = new System.Drawing.Point(891, 578);
-            this.SearchTabOpeningBalanceLabel.Name = "SearchTabOpeningBalanceLabel";
-            this.SearchTabOpeningBalanceLabel.Size = new System.Drawing.Size(101, 13);
-            this.SearchTabOpeningBalanceLabel.TabIndex = 19;
-            this.SearchTabOpeningBalanceLabel.Text = "Opening Balance  : ";
+            this.loanTab.Controls.Add(this.groupBox9);
+            this.loanTab.Controls.Add(this.groupBox8);
+            this.loanTab.Controls.Add(this.groupBox7);
+            this.loanTab.Location = new System.Drawing.Point(4, 25);
+            this.loanTab.Margin = new System.Windows.Forms.Padding(4);
+            this.loanTab.Name = "loanTab";
+            this.loanTab.Padding = new System.Windows.Forms.Padding(4);
+            this.loanTab.Size = new System.Drawing.Size(1461, 776);
+            this.loanTab.TabIndex = 3;
+            this.loanTab.Text = "Loan";
+            this.loanTab.UseVisualStyleBackColor = true;
             // 
-            // SearchTabOpeningBalanceValue
+            // groupBox9
             // 
-            this.SearchTabOpeningBalanceValue.AutoSize = true;
-            this.SearchTabOpeningBalanceValue.Location = new System.Drawing.Point(998, 578);
-            this.SearchTabOpeningBalanceValue.Name = "SearchTabOpeningBalanceValue";
-            this.SearchTabOpeningBalanceValue.Size = new System.Drawing.Size(22, 13);
-            this.SearchTabOpeningBalanceValue.TabIndex = 20;
-            this.SearchTabOpeningBalanceValue.Text = "0.0";
+            this.groupBox9.Controls.Add(this.DeleteLoanContrubutorButton);
+            this.groupBox9.Controls.Add(this.AddUpdateLoanContributorButtonGrid);
+            this.groupBox9.Controls.Add(this.loanContributorDataGridView);
+            this.groupBox9.Location = new System.Drawing.Point(505, 42);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox9.Size = new System.Drawing.Size(677, 238);
+            this.groupBox9.TabIndex = 7;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Loan Contributors";
+            // 
+            // DeleteLoanContrubutorButton
+            // 
+            this.DeleteLoanContrubutorButton.Location = new System.Drawing.Point(341, 193);
+            this.DeleteLoanContrubutorButton.Margin = new System.Windows.Forms.Padding(4);
+            this.DeleteLoanContrubutorButton.Name = "DeleteLoanContrubutorButton";
+            this.DeleteLoanContrubutorButton.Size = new System.Drawing.Size(297, 28);
+            this.DeleteLoanContrubutorButton.TabIndex = 2;
+            this.DeleteLoanContrubutorButton.Text = "Delete";
+            this.DeleteLoanContrubutorButton.UseVisualStyleBackColor = true;
+            this.DeleteLoanContrubutorButton.Click += new System.EventHandler(this.DeleteLoanContrubutorButton_Click);
+            // 
+            // AddUpdateLoanContributorButtonGrid
+            // 
+            this.AddUpdateLoanContributorButtonGrid.Location = new System.Drawing.Point(21, 193);
+            this.AddUpdateLoanContributorButtonGrid.Margin = new System.Windows.Forms.Padding(4);
+            this.AddUpdateLoanContributorButtonGrid.Name = "AddUpdateLoanContributorButtonGrid";
+            this.AddUpdateLoanContributorButtonGrid.Size = new System.Drawing.Size(283, 28);
+            this.AddUpdateLoanContributorButtonGrid.TabIndex = 1;
+            this.AddUpdateLoanContributorButtonGrid.Text = "Update";
+            this.AddUpdateLoanContributorButtonGrid.UseVisualStyleBackColor = true;
+            this.AddUpdateLoanContributorButtonGrid.Click += new System.EventHandler(this.AddUpdateLoanContributorButtonGrid_Click);
+            // 
+            // loanContributorDataGridView
+            // 
+            this.loanContributorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.loanContributorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ContributorLoanId,
+            this.ContributorIdNotVisible,
+            this.LoanFirstLastName,
+            this.LoanAmountGrid});
+            this.loanContributorDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.loanContributorDataGridView.Location = new System.Drawing.Point(21, 23);
+            this.loanContributorDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.loanContributorDataGridView.Name = "loanContributorDataGridView";
+            this.loanContributorDataGridView.Size = new System.Drawing.Size(617, 162);
+            this.loanContributorDataGridView.TabIndex = 0;
+            // 
+            // ContributorLoanId
+            // 
+            this.ContributorLoanId.HeaderText = "ID";
+            this.ContributorLoanId.Name = "ContributorLoanId";
+            this.ContributorLoanId.ReadOnly = true;
+            this.ContributorLoanId.Visible = false;
+            // 
+            // ContributorIdNotVisible
+            // 
+            this.ContributorIdNotVisible.HeaderText = "Contributor Id";
+            this.ContributorIdNotVisible.Name = "ContributorIdNotVisible";
+            this.ContributorIdNotVisible.Visible = false;
+            // 
+            // LoanFirstLastName
+            // 
+            this.LoanFirstLastName.HeaderText = "Name";
+            this.LoanFirstLastName.Name = "LoanFirstLastName";
+            this.LoanFirstLastName.ReadOnly = true;
+            this.LoanFirstLastName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // LoanAmountGrid
+            // 
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.LoanAmountGrid.DefaultCellStyle = dataGridViewCellStyle3;
+            this.LoanAmountGrid.HeaderText = "Amount";
+            this.LoanAmountGrid.Name = "LoanAmountGrid";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.RemainingLoanAmountLabel);
+            this.groupBox8.Controls.Add(this.label12);
+            this.groupBox8.Controls.Add(this.LoanTransactionsGridView);
+            this.groupBox8.Controls.Add(this.label11);
+            this.groupBox8.Controls.Add(this.LoanLookupTransComboBox);
+            this.groupBox8.Location = new System.Drawing.Point(39, 311);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Size = new System.Drawing.Size(1292, 340);
+            this.groupBox8.TabIndex = 6;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Loan Lookup Transactions";
+            // 
+            // RemainingLoanAmountLabel
+            // 
+            this.RemainingLoanAmountLabel.AutoSize = true;
+            this.RemainingLoanAmountLabel.Location = new System.Drawing.Point(189, 294);
+            this.RemainingLoanAmountLabel.Name = "RemainingLoanAmountLabel";
+            this.RemainingLoanAmountLabel.Size = new System.Drawing.Size(0, 17);
+            this.RemainingLoanAmountLabel.TabIndex = 4;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(23, 294);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(171, 17);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Remaining Loan Amount :";
+            // 
+            // LoanTransactionsGridView
+            // 
+            this.LoanTransactionsGridView.AllowUserToDeleteRows = false;
+            this.LoanTransactionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.LoanTransactionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LoanTransactionsName,
+            this.LoanTransactionsCategory,
+            this.LoanTransactionsType,
+            this.LoanTransactionsMode,
+            this.LoanTransactionsAmount,
+            this.LoanTransactionsCheckNumber,
+            this.LoanTransactionsTransDt,
+            this.LoanTransactionsNote,
+            this.LoanTransactionsDateAdded});
+            this.LoanTransactionsGridView.Location = new System.Drawing.Point(23, 91);
+            this.LoanTransactionsGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.LoanTransactionsGridView.Name = "LoanTransactionsGridView";
+            this.LoanTransactionsGridView.ReadOnly = true;
+            this.LoanTransactionsGridView.Size = new System.Drawing.Size(1251, 185);
+            this.LoanTransactionsGridView.TabIndex = 2;
+            // 
+            // LoanTransactionsName
+            // 
+            this.LoanTransactionsName.HeaderText = "Name";
+            this.LoanTransactionsName.Name = "LoanTransactionsName";
+            this.LoanTransactionsName.ReadOnly = true;
+            // 
+            // LoanTransactionsCategory
+            // 
+            this.LoanTransactionsCategory.HeaderText = "Category";
+            this.LoanTransactionsCategory.Name = "LoanTransactionsCategory";
+            this.LoanTransactionsCategory.ReadOnly = true;
+            // 
+            // LoanTransactionsType
+            // 
+            this.LoanTransactionsType.HeaderText = "Type";
+            this.LoanTransactionsType.Name = "LoanTransactionsType";
+            this.LoanTransactionsType.ReadOnly = true;
+            // 
+            // LoanTransactionsMode
+            // 
+            this.LoanTransactionsMode.HeaderText = "Mode";
+            this.LoanTransactionsMode.Name = "LoanTransactionsMode";
+            this.LoanTransactionsMode.ReadOnly = true;
+            // 
+            // LoanTransactionsAmount
+            // 
+            this.LoanTransactionsAmount.HeaderText = "Amount";
+            this.LoanTransactionsAmount.Name = "LoanTransactionsAmount";
+            this.LoanTransactionsAmount.ReadOnly = true;
+            // 
+            // LoanTransactionsCheckNumber
+            // 
+            this.LoanTransactionsCheckNumber.HeaderText = "Check #";
+            this.LoanTransactionsCheckNumber.Name = "LoanTransactionsCheckNumber";
+            this.LoanTransactionsCheckNumber.ReadOnly = true;
+            // 
+            // LoanTransactionsTransDt
+            // 
+            this.LoanTransactionsTransDt.HeaderText = "Trans DT";
+            this.LoanTransactionsTransDt.Name = "LoanTransactionsTransDt";
+            this.LoanTransactionsTransDt.ReadOnly = true;
+            // 
+            // LoanTransactionsNote
+            // 
+            this.LoanTransactionsNote.HeaderText = "Note";
+            this.LoanTransactionsNote.Name = "LoanTransactionsNote";
+            this.LoanTransactionsNote.ReadOnly = true;
+            // 
+            // LoanTransactionsDateAdded
+            // 
+            this.LoanTransactionsDateAdded.HeaderText = "Date Added";
+            this.LoanTransactionsDateAdded.Name = "LoanTransactionsDateAdded";
+            this.LoanTransactionsDateAdded.ReadOnly = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(29, 41);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(45, 17);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Name";
+            // 
+            // LoanLookupTransComboBox
+            // 
+            this.LoanLookupTransComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LoanLookupTransComboBox.FormattingEnabled = true;
+            this.LoanLookupTransComboBox.Location = new System.Drawing.Point(121, 37);
+            this.LoanLookupTransComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.LoanLookupTransComboBox.Name = "LoanLookupTransComboBox";
+            this.LoanLookupTransComboBox.Size = new System.Drawing.Size(300, 24);
+            this.LoanLookupTransComboBox.TabIndex = 0;
+            this.LoanLookupTransComboBox.SelectedIndexChanged += new System.EventHandler(this.LoanLookupTransComboBox_SelectedIndexChanged);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.AddLoanButton);
+            this.groupBox7.Controls.Add(this.label10);
+            this.groupBox7.Controls.Add(this.loanAmountTextBox);
+            this.groupBox7.Controls.Add(this.loanComboBox);
+            this.groupBox7.Controls.Add(this.LoanAmount);
+            this.groupBox7.Location = new System.Drawing.Point(39, 42);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Size = new System.Drawing.Size(423, 238);
+            this.groupBox7.TabIndex = 5;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Add Loan";
+            // 
+            // AddLoanButton
+            // 
+            this.AddLoanButton.Location = new System.Drawing.Point(121, 148);
+            this.AddLoanButton.Margin = new System.Windows.Forms.Padding(4);
+            this.AddLoanButton.Name = "AddLoanButton";
+            this.AddLoanButton.Size = new System.Drawing.Size(100, 28);
+            this.AddLoanButton.TabIndex = 4;
+            this.AddLoanButton.Text = "Add";
+            this.AddLoanButton.UseVisualStyleBackColor = true;
+            this.AddLoanButton.Click += new System.EventHandler(this.AddLoanButton_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(29, 63);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(45, 17);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Name";
+            // 
+            // loanAmountTextBox
+            // 
+            this.loanAmountTextBox.Location = new System.Drawing.Point(121, 100);
+            this.loanAmountTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.loanAmountTextBox.Name = "loanAmountTextBox";
+            this.loanAmountTextBox.Size = new System.Drawing.Size(261, 22);
+            this.loanAmountTextBox.TabIndex = 3;
+            // 
+            // loanComboBox
+            // 
+            this.loanComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.loanComboBox.FormattingEnabled = true;
+            this.loanComboBox.Location = new System.Drawing.Point(121, 59);
+            this.loanComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.loanComboBox.Name = "loanComboBox";
+            this.loanComboBox.Size = new System.Drawing.Size(261, 24);
+            this.loanComboBox.TabIndex = 1;
+            // 
+            // LoanAmount
+            // 
+            this.LoanAmount.AutoSize = true;
+            this.LoanAmount.Location = new System.Drawing.Point(19, 103);
+            this.LoanAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LoanAmount.Name = "LoanAmount";
+            this.LoanAmount.Size = new System.Drawing.Size(56, 17);
+            this.LoanAmount.TabIndex = 2;
+            this.LoanAmount.Text = "Amount";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1133, 702);
+            this.ClientSize = new System.Drawing.Size(1511, 864);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "BIPC Accounting Tool";
             this.tabControl1.ResumeLayout(false);
@@ -1345,6 +1769,14 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.loanTab.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.loanContributorDataGridView)).EndInit();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LoanTransactionsGridView)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1471,6 +1903,36 @@
         private System.Windows.Forms.ToolTip SearchBalanceToolTip;
         private System.Windows.Forms.Label SearchTabOpeningBalanceValue;
         private System.Windows.Forms.Label SearchTabOpeningBalanceLabel;
+        private System.Windows.Forms.TabPage loanTab;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button AddLoanButton;
+        private System.Windows.Forms.TextBox loanAmountTextBox;
+        private System.Windows.Forms.Label LoanAmount;
+        private System.Windows.Forms.ComboBox loanComboBox;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.DataGridView loanContributorDataGridView;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox LoanLookupTransComboBox;
+        private System.Windows.Forms.Button AddUpdateLoanContributorButtonGrid;
+        private System.Windows.Forms.DataGridView LoanTransactionsGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsCategory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsMode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsCheckNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsTransDt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsNote;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsDateAdded;
+        private System.Windows.Forms.Button DeleteLoanContrubutorButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContributorLoanId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContributorIdNotVisible;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanFirstLastName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanAmountGrid;
+        private System.Windows.Forms.Label RemainingLoanAmountLabel;
+        private System.Windows.Forms.Label label12;
     }
 }
 
