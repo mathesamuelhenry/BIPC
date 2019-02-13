@@ -17,7 +17,7 @@ namespace BIPCAccounting
         string connString = string.Empty;
         CVD cvd = null;
         Dictionary<string, Contributor> ContributorList = new Dictionary<string, Contributor>();
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -56,8 +56,12 @@ namespace BIPCAccounting
 
             SearchBalanceToolTip.SetToolTip(CurrentSearchBalanceLabel, "Display Opening Balance + Search Balance");
             this.SetToolTipProp(SearchBalanceToolTip);
-        }
 
+            this.LoadLoanContributorDataGridView();
+
+            //this.LoadLoanTransactionsDataGrid();
+        }
+        
         private void LoadContributorNames()
         {
             try
@@ -364,6 +368,24 @@ namespace BIPCAccounting
             return dt;
         }
 
+        private Dictionary<int, string> GetContributorListDictionary()
+        {
+            DataTable dt = new DataTable();
+            Dictionary<int, string> contributorList = new Dictionary<int, string>();
+
+            dt = this.GetContributorIdList();
+
+            if (dt != null & dt.Rows.Count > 0)
+            {
+                foreach (DataRow dRow in dt.Rows)
+                {
+                    contributorList.Add(int.Parse(dRow["contributor_id"].ToString()), dRow["contributor_name"].ToString());
+                }
+            }
+
+            return contributorList;
+        }
+
         private void LoadContributorIdComboBox()
         {
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -383,7 +405,18 @@ namespace BIPCAccounting
                 ContributorIdComboBox.ValueMember = "Id";
                 ContributorIdComboBox.DisplayMember = "Name";
                 ContributorIdComboBox.SelectedValue = "";
-            }catch(Exception)
+
+                loanComboBox.Items.Clear();
+                
+                foreach (DataRow dRow in dt.Rows)
+                {
+                    loanComboBox.Items.Add(new Item(dRow["contributor_name"].ToString(), dRow["contributor_id"].ToString()));
+                }
+
+                loanComboBox.ValueMember = "Id";
+                loanComboBox.DisplayMember = "Name";
+            }
+            catch (Exception)
             {
 
             }
@@ -1825,6 +1858,450 @@ INSERT INTO contributor (
         private void label10_Click(object sender, EventArgs e)
         {
 
+        }
+
+        #region Loan
+
+        private void AddLoanButton_Click(object sender, EventArgs e)
+        {
+            MySqlConnection mySqlConn = null;
+            bool valid = true;
+
+            try
+            {
+                int count = 0;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                string contributorName = string.Empty;
+                
+                // Contributor name
+                if (!string.IsNullOrEmpty(loanComboBox.Text))
+                {
+                    Item SelectedCategory = (Item)loanComboBox.SelectedItem;
+                    contributorName = SelectedCategory.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Name cannot be empty");
+                    valid = false;
+                }
+
+                // Amount
+                string amount = loanAmountTextBox.Text;
+                if (string.IsNullOrEmpty(amount))
+                {
+                    MessageBox.Show("Amount cannot be empty.");
+                    valid = false;
+                }
+                else
+                {
+                    float amt;
+
+                    if (!float.TryParse(amount, out amt))
+                    {
+                        MessageBox.Show(string.Format("{0} is not a valid amount.", amount), "Not Valid");
+                        valid = false;
+                    }
+                }
+
+                if (valid)
+                {
+                    string sql = $@"INSERT INTO contributor_loan(
+   contributor_loan_id
+  ,contributor_id
+  ,loan_amount
+  ,date_added
+) VALUES (
+   fn_get_nextid('BIPC', 'contributor_loan') -- contributor_loan_id - IN int(11)
+  ,'{contributorName}' -- contributor_id - IN int(11)
+  ,{amount} -- loan_amount - IN decimal(11,2)
+  ,now()  -- date_added - IN datetime
+);";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                    count = cmd.ExecuteNonQuery();
+
+                    if (count > 0)
+                    {
+                        MessageBox.Show($"{count} loan records added");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Failure");
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                {
+                    this.LoadTable();
+                    mySqlConn.Close();
+                }
+            }
+        }
+
+        private void LoadLoanContributorNames()
+        {
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT c.contributor_id,
+       c.first_name,
+       c.last_name,
+       cl.loan_amount,
+       cl.date_added,
+       cl.date_changed
+FROM contributor_loan cl
+     JOIN contributor c
+        ON c.contributor_id = cl.contributor_id AND c.status = 1
+WHERE cl.status = 1;", mySqlConn);
+            
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        ContributorList.Add(dRow["contributor_id"].ToString(), new Contributor(dRow));
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+        
+        public List<ContributorLoan> LoadLoanContributorList()
+        {
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            List<ContributorLoan> contributorLoanList = new List<ContributorLoan>();
+
+            try
+            {
+                MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT cl.contributor_loan_id,
+    c.contributor_id,
+    c.first_name,
+    c.last_name,
+    cl.loan_amount,
+    cl.date_added,
+    cl.date_changed
+FROM contributor_loan cl
+    JOIN contributor c
+    ON c.contributor_id = cl.contributor_id AND c.status = 1
+WHERE cl.status = 1;", mySqlConn);
+
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        contributorLoanList.Add(new ContributorLoan
+                        {
+                            ContributorLoanId = dRow["contributor_loan_id"].ToString(),
+                            ContributorId = dRow["contributor_id"].ToString(),
+                            FirstName = dRow["first_name"].ToString(),
+                            LastName = dRow["last_name"].ToString(),
+                            LoanAmount = decimal.Parse(dRow["loan_amount"].ToString())
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+
+            return contributorLoanList;
+        }
+
+        public void LoadLoanContributorDataGridView()
+        {
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+
+            try
+            {
+                MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT cl.contributor_loan_id,
+       c.contributor_id,
+       c.first_name,
+       c.last_name,
+       cl.loan_amount,
+       cl.date_added,
+       cl.date_changed
+FROM contributor_loan cl
+     JOIN contributor c
+        ON c.contributor_id = cl.contributor_id AND c.status = 1
+WHERE cl.status = 1;", mySqlConn);
+
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                loanContributorDataGridView.Rows.Clear();
+                loanContributorDataGridView.Refresh();
+
+                LoanLookupTransComboBox.Items.Clear();
+                
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        int n = loanContributorDataGridView.Rows.Add();
+                        loanContributorDataGridView.Rows[n].Cells["ContributorLoanId"].Value = dRow["contributor_loan_id"];
+                        loanContributorDataGridView.Rows[n].Cells["ContributorIdNotVisible"].Value = dRow["Contributor_id"];
+                        loanContributorDataGridView.Rows[n].Cells["LoanFirstLastName"].Value = $"{dRow["last_name"].ToString()}, {dRow["first_name"].ToString()}";
+                        loanContributorDataGridView.Rows[n].Cells["LoanAmountGrid"].Value = dRow["loan_amount"];
+                        
+                        LoanLookupTransComboBox.Items.Add(new Item($"{dRow["last_name"].ToString()}, {dRow["first_name"].ToString()}", dRow["contributor_id"].ToString()));
+
+                        LoanLookupTransComboBox.ValueMember = "Id";
+                        LoanLookupTransComboBox.DisplayMember = "Name";
+                        LoanLookupTransComboBox.SelectedIndex = 0;
+                    }
+                }
+
+                loanContributorDataGridView.AutoResizeRows();
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        public void LoadLoanTransactionsDataGrid()
+        {
+            string contributorId = string.Empty;
+
+            // Contributor name
+            if (!string.IsNullOrEmpty(LoanLookupTransComboBox.Text))
+            {
+                Item SelectedCategory = (Item)LoanLookupTransComboBox.SelectedItem;
+                contributorId = SelectedCategory.Id;
+                
+                string searchSQL = $@"SELECT 
+       cn.contribution_id as 'Contribution Id',
+       CASE
+          WHEN IFNULL(cn.contribution_name, '') = ''
+          THEN
+             CONCAT(con.first_name, ' ', con.last_name)
+          ELSE
+             cn.contribution_name
+       END
+          AS 'Name',
+       cvd.description AS Category,
+       cvd_transtype.description AS Type,
+       cvd_transmode.description AS Mode,
+       cn.amount AS Amount,
+       cn.check_number AS 'Check #',
+       cn.transaction_date AS 'Trans DT',
+       cn.note AS 'Note',
+       cn.date_added AS 'Date Added'
+  FROM contribution cn
+       LEFT JOIN contributor con
+          ON con.contributor_id = cn.contributor_id AND con.status = 1
+       LEFT JOIN table_column tc
+          ON     tc.table_name = 'contribution'
+             AND tc.column_name = 'category'
+             AND tc.status = 1
+       LEFT JOIN column_value_desc cvd
+          ON     cvd.table_column_id = tc.table_column_id
+             AND cvd.value = cn.category
+             AND cvd.status = 1
+       LEFT JOIN table_column tc_transtype
+          ON     tc_transtype.table_name = 'contribution'
+             AND tc_transtype.column_name = 'transaction_type'
+             AND tc_transtype.status = 1
+       LEFT JOIN column_value_desc cvd_transtype
+          ON     cvd_transtype.table_column_id = tc_transtype.table_column_id
+             AND cvd_transtype.value = cn.transaction_type
+             AND cvd_transtype.status = 1
+       LEFT JOIN table_column tc_transmode
+          ON     tc_transmode.table_name = 'contribution'
+             AND tc_transmode.column_name = 'transaction_mode'
+             AND tc_transmode.status = 1
+       LEFT JOIN column_value_desc cvd_transmode
+          ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
+             AND cvd_transmode.value = cn.transaction_mode
+             AND cvd_transmode.status = 1
+       where cn.contributor_id = {contributorId}
+         AND cvd.description = 'LOAN'
+         AND cvd_transtype.description = 'Credit'";
+
+                MySqlConnection mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+
+                try
+                {
+                    decimal totalLoanPayment = 0.0m;
+                    System.Data.DataTable dt = new System.Data.DataTable();
+
+                    dt = Utils.GetDataTable(mySqlConn, searchSQL);
+
+                    LoanTransactionsGridView.Rows.Clear();
+                    LoanTransactionsGridView.Refresh();
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dRow in dt.Rows)
+                        {
+                            int n = LoanTransactionsGridView.Rows.Add();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsName"].Value = dRow["Name"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsCategory"].Value = dRow["Category"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsType"].Value = dRow["Type"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsMode"].Value = dRow["Mode"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsCheckNumber"].Value = dRow["Check #"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsAmount"].Value = dRow["Amount"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsTransDt"].Value = dRow["Trans DT"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsNote"].Value = dRow["Note"].ToString();
+                            LoanTransactionsGridView.Rows[n].Cells["LoanTransactionsDateAdded"].Value = dRow["Date Added"].ToString();
+
+                            if (dRow["Type"].ToString() == "Credit")
+                                totalLoanPayment = totalLoanPayment + decimal.Parse(dRow["Amount"].ToString());
+                            else
+                                totalLoanPayment = totalLoanPayment - decimal.Parse(dRow["Amount"].ToString());
+                        }
+
+                        LoanTransactionsGridView.Rows[0].Selected = true;
+                    }
+
+                    LoanTransactionsGridView.AutoResizeRows();
+
+                    List<ContributorLoan> contributorLoanList = LoadLoanContributorList();
+                    decimal loanAmount = contributorLoanList.Where(x => x.ContributorId == contributorId)
+                        .Select(x => x.LoanAmount)
+                        .ToList()
+                        .FirstOrDefault();
+
+                    RemainingLoanAmountLabel.Text = (loanAmount - totalLoanPayment).ToString();
+
+                }
+                finally
+                {
+                    if (mySqlConn != null)
+                        mySqlConn.Close();
+                }
+            }
+        }
+        
+        #endregion
+
+        private void DeleteLoanContrubutorButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddUpdateLoanContributorButtonGrid_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                DialogResult result = MessageBox.Show("Are you sure to Add/Update this record set?", "Confirm", MessageBoxButtons.YesNo);
+
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+
+                    mySqlConn = new MySqlConnection(connString);
+                    mySqlConn.Open();
+
+                    foreach (DataGridViewRow NGVRow in loanContributorDataGridView.Rows)
+                    {
+                        if (NGVRow.Cells["ContributorLoanId"].Value != null)
+                        {
+                            if (string.IsNullOrEmpty(NGVRow.Cells["ContributorLoanId"].Value.ToString()))
+                            {
+                                if (string.IsNullOrEmpty(NGVRow.Cells["LoanFirstName"].Value.ToString()) &&
+                                    (string.IsNullOrEmpty(NGVRow.Cells["LoanLastName"].Value.ToString())) &&
+                                    string.IsNullOrEmpty(NGVRow.Cells["LoanAmountGrid"].Value.ToString()))
+                                {
+                                }
+                                else
+                                {
+                                    string FirstName = NGVRow.Cells["LoanFirstName"].Value.ToString();
+                                    string LastName = NGVRow.Cells["LoanFirstName"].Value.ToString();
+                                    Decimal AmountGrid = Decimal.Parse(NGVRow.Cells["LoanAmountGrid"].Value.ToString());
+
+                                    if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName))
+                                    {
+                                        MessageBox.Show("First Name / Last Name cannot be empty");
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        string sql = string.Format(@"
+INSERT INTO contributor_loan (
+   contributor_loan_id
+  ,first_name
+  ,last_name
+  ,date_added
+) VALUES (
+  fn_get_nextid('BIPC', 'contributor')
+  ,'{0}' -- first_name - IN varchar(50)
+  ,'{1}'  -- last_name - IN varchar(50)
+  ,now()  -- date_added - IN datetime
+)", FirstName, LastName);
+
+                                        MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                        count = cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Contributor c = (Contributor)this.ContributorList.Where(s => s.Key == NGVRow.Cells["ContributorIdNotVisible"].Value.ToString()).FirstOrDefault().Value;
+
+                                string loanAmount = NGVRow.Cells["LoanAmountGrid"].Value.ToString();
+
+                                decimal tLoanAmount;
+                                if (!decimal.TryParse(loanAmount, out tLoanAmount))
+                                {
+                                    MessageBox.Show("Loan amount is not a valid decimal");
+                                    break;
+                                }
+
+                                Decimal loanAmountGrid = Decimal.Parse(NGVRow.Cells["LoanAmountGrid"].Value.ToString());
+
+                                string sql = string.Format(@"Update contributor_loan 
+                                            set loan_amount = {0},
+                                                date_changed = now()
+                                            where contributor_id = {1}", Utils.FormatDBText(loanAmountGrid.ToString())
+                                                                            , NGVRow.Cells["ContributorIdNotVisible"].Value.ToString());
+
+                                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                count = cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Failure");
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void LoanLookupTransComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.LoadLoanTransactionsDataGrid();
         }
     }
 }

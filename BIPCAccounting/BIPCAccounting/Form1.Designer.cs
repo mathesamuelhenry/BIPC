@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
@@ -146,9 +147,38 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.OpeningBalanceAddUpdateButton = new System.Windows.Forms.Button();
             this.OpeningBalanceTextBox = new System.Windows.Forms.TextBox();
+            this.loanTab = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.DeleteLoanContrubutorButton = new System.Windows.Forms.Button();
+            this.AddUpdateLoanContributorButtonGrid = new System.Windows.Forms.Button();
+            this.loanContributorDataGridView = new System.Windows.Forms.DataGridView();
+            this.ContributorLoanId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorIdNotVisible = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanFirstLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanAmountGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.RemainingLoanAmountLabel = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.LoanTransactionsGridView = new System.Windows.Forms.DataGridView();
+            this.LoanTransactionsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsCheckNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsTransDt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsNote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoanTransactionsDateAdded = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label11 = new System.Windows.Forms.Label();
+            this.LoanLookupTransComboBox = new System.Windows.Forms.ComboBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.AddLoanButton = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.loanAmountTextBox = new System.Windows.Forms.TextBox();
+            this.loanComboBox = new System.Windows.Forms.ComboBox();
+            this.LoanAmount = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -171,6 +201,12 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.loanTab.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loanContributorDataGridView)).BeginInit();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LoanTransactionsGridView)).BeginInit();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -178,6 +214,7 @@
             this.tabControl1.Controls.Add(this.AddUpdateExpenditureTab);
             this.tabControl1.Controls.Add(this.SearchExpendituresTab);
             this.tabControl1.Controls.Add(this.MiscellaneousTab);
+            this.tabControl1.Controls.Add(this.loanTab);
             this.tabControl1.Location = new System.Drawing.Point(16, 27);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
@@ -1338,7 +1375,6 @@
             this.UpdateNamesTableButton.TabIndex = 11;
             this.UpdateNamesTableButton.Text = "Update Names Table";
             this.UpdateNamesTableButton.UseVisualStyleBackColor = true;
-            this.UpdateNamesTableButton.Click += new System.EventHandler(this.UpdateNamesTableButton_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -1380,7 +1416,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.OpeningBalanceAddUpdateButton);
             this.groupBox4.Controls.Add(this.OpeningBalanceTextBox);
             this.groupBox4.Location = new System.Drawing.Point(4, 4);
@@ -1392,19 +1427,9 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opening Balance";
             // 
-            // label10
-            // 
-            this.label10.ForeColor = System.Drawing.Color.Red;
-            this.label10.Location = new System.Drawing.Point(19, 144);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(295, 37);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "* Opening balance amount is disabled and cannot be changed. ";
-            // 
             // OpeningBalanceAddUpdateButton
             // 
-            this.OpeningBalanceAddUpdateButton.Enabled = false;
-            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(22, 97);
+            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(23, 126);
             this.OpeningBalanceAddUpdateButton.Margin = new System.Windows.Forms.Padding(4);
             this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
             this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(296, 28);
@@ -1415,13 +1440,298 @@
             // 
             // OpeningBalanceTextBox
             // 
-            this.OpeningBalanceTextBox.Enabled = false;
             this.OpeningBalanceTextBox.Location = new System.Drawing.Point(23, 54);
             this.OpeningBalanceTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
-            this.OpeningBalanceTextBox.ReadOnly = true;
             this.OpeningBalanceTextBox.Size = new System.Drawing.Size(295, 22);
             this.OpeningBalanceTextBox.TabIndex = 0;
+            // 
+            // loanTab
+            // 
+            this.loanTab.Controls.Add(this.groupBox9);
+            this.loanTab.Controls.Add(this.groupBox8);
+            this.loanTab.Controls.Add(this.groupBox7);
+            this.loanTab.Location = new System.Drawing.Point(4, 25);
+            this.loanTab.Margin = new System.Windows.Forms.Padding(4);
+            this.loanTab.Name = "loanTab";
+            this.loanTab.Padding = new System.Windows.Forms.Padding(4);
+            this.loanTab.Size = new System.Drawing.Size(1461, 776);
+            this.loanTab.TabIndex = 3;
+            this.loanTab.Text = "Loan";
+            this.loanTab.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.DeleteLoanContrubutorButton);
+            this.groupBox9.Controls.Add(this.AddUpdateLoanContributorButtonGrid);
+            this.groupBox9.Controls.Add(this.loanContributorDataGridView);
+            this.groupBox9.Location = new System.Drawing.Point(505, 42);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox9.Size = new System.Drawing.Size(677, 238);
+            this.groupBox9.TabIndex = 7;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Loan Contributors";
+            // 
+            // DeleteLoanContrubutorButton
+            // 
+            this.DeleteLoanContrubutorButton.Location = new System.Drawing.Point(341, 193);
+            this.DeleteLoanContrubutorButton.Margin = new System.Windows.Forms.Padding(4);
+            this.DeleteLoanContrubutorButton.Name = "DeleteLoanContrubutorButton";
+            this.DeleteLoanContrubutorButton.Size = new System.Drawing.Size(297, 28);
+            this.DeleteLoanContrubutorButton.TabIndex = 2;
+            this.DeleteLoanContrubutorButton.Text = "Delete";
+            this.DeleteLoanContrubutorButton.UseVisualStyleBackColor = true;
+            this.DeleteLoanContrubutorButton.Click += new System.EventHandler(this.DeleteLoanContrubutorButton_Click);
+            // 
+            // AddUpdateLoanContributorButtonGrid
+            // 
+            this.AddUpdateLoanContributorButtonGrid.Location = new System.Drawing.Point(21, 193);
+            this.AddUpdateLoanContributorButtonGrid.Margin = new System.Windows.Forms.Padding(4);
+            this.AddUpdateLoanContributorButtonGrid.Name = "AddUpdateLoanContributorButtonGrid";
+            this.AddUpdateLoanContributorButtonGrid.Size = new System.Drawing.Size(283, 28);
+            this.AddUpdateLoanContributorButtonGrid.TabIndex = 1;
+            this.AddUpdateLoanContributorButtonGrid.Text = "Update";
+            this.AddUpdateLoanContributorButtonGrid.UseVisualStyleBackColor = true;
+            this.AddUpdateLoanContributorButtonGrid.Click += new System.EventHandler(this.AddUpdateLoanContributorButtonGrid_Click);
+            // 
+            // loanContributorDataGridView
+            // 
+            this.loanContributorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.loanContributorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ContributorLoanId,
+            this.ContributorIdNotVisible,
+            this.LoanFirstLastName,
+            this.LoanAmountGrid});
+            this.loanContributorDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.loanContributorDataGridView.Location = new System.Drawing.Point(21, 23);
+            this.loanContributorDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.loanContributorDataGridView.Name = "loanContributorDataGridView";
+            this.loanContributorDataGridView.Size = new System.Drawing.Size(617, 162);
+            this.loanContributorDataGridView.TabIndex = 0;
+            // 
+            // ContributorLoanId
+            // 
+            this.ContributorLoanId.HeaderText = "ID";
+            this.ContributorLoanId.Name = "ContributorLoanId";
+            this.ContributorLoanId.ReadOnly = true;
+            this.ContributorLoanId.Visible = false;
+            // 
+            // ContributorIdNotVisible
+            // 
+            this.ContributorIdNotVisible.HeaderText = "Contributor Id";
+            this.ContributorIdNotVisible.Name = "ContributorIdNotVisible";
+            this.ContributorIdNotVisible.Visible = false;
+            // 
+            // LoanFirstLastName
+            // 
+            this.LoanFirstLastName.HeaderText = "Name";
+            this.LoanFirstLastName.Name = "LoanFirstLastName";
+            this.LoanFirstLastName.ReadOnly = true;
+            this.LoanFirstLastName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // LoanAmountGrid
+            // 
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.LoanAmountGrid.DefaultCellStyle = dataGridViewCellStyle3;
+            this.LoanAmountGrid.HeaderText = "Amount";
+            this.LoanAmountGrid.Name = "LoanAmountGrid";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.RemainingLoanAmountLabel);
+            this.groupBox8.Controls.Add(this.label12);
+            this.groupBox8.Controls.Add(this.LoanTransactionsGridView);
+            this.groupBox8.Controls.Add(this.label11);
+            this.groupBox8.Controls.Add(this.LoanLookupTransComboBox);
+            this.groupBox8.Location = new System.Drawing.Point(39, 311);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Size = new System.Drawing.Size(1292, 340);
+            this.groupBox8.TabIndex = 6;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Loan Lookup Transactions";
+            // 
+            // RemainingLoanAmountLabel
+            // 
+            this.RemainingLoanAmountLabel.AutoSize = true;
+            this.RemainingLoanAmountLabel.Location = new System.Drawing.Point(189, 294);
+            this.RemainingLoanAmountLabel.Name = "RemainingLoanAmountLabel";
+            this.RemainingLoanAmountLabel.Size = new System.Drawing.Size(0, 17);
+            this.RemainingLoanAmountLabel.TabIndex = 4;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(23, 294);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(171, 17);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Remaining Loan Amount :";
+            // 
+            // LoanTransactionsGridView
+            // 
+            this.LoanTransactionsGridView.AllowUserToDeleteRows = false;
+            this.LoanTransactionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.LoanTransactionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LoanTransactionsName,
+            this.LoanTransactionsCategory,
+            this.LoanTransactionsType,
+            this.LoanTransactionsMode,
+            this.LoanTransactionsAmount,
+            this.LoanTransactionsCheckNumber,
+            this.LoanTransactionsTransDt,
+            this.LoanTransactionsNote,
+            this.LoanTransactionsDateAdded});
+            this.LoanTransactionsGridView.Location = new System.Drawing.Point(23, 91);
+            this.LoanTransactionsGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.LoanTransactionsGridView.Name = "LoanTransactionsGridView";
+            this.LoanTransactionsGridView.ReadOnly = true;
+            this.LoanTransactionsGridView.Size = new System.Drawing.Size(1251, 185);
+            this.LoanTransactionsGridView.TabIndex = 2;
+            // 
+            // LoanTransactionsName
+            // 
+            this.LoanTransactionsName.HeaderText = "Name";
+            this.LoanTransactionsName.Name = "LoanTransactionsName";
+            this.LoanTransactionsName.ReadOnly = true;
+            // 
+            // LoanTransactionsCategory
+            // 
+            this.LoanTransactionsCategory.HeaderText = "Category";
+            this.LoanTransactionsCategory.Name = "LoanTransactionsCategory";
+            this.LoanTransactionsCategory.ReadOnly = true;
+            // 
+            // LoanTransactionsType
+            // 
+            this.LoanTransactionsType.HeaderText = "Type";
+            this.LoanTransactionsType.Name = "LoanTransactionsType";
+            this.LoanTransactionsType.ReadOnly = true;
+            // 
+            // LoanTransactionsMode
+            // 
+            this.LoanTransactionsMode.HeaderText = "Mode";
+            this.LoanTransactionsMode.Name = "LoanTransactionsMode";
+            this.LoanTransactionsMode.ReadOnly = true;
+            // 
+            // LoanTransactionsAmount
+            // 
+            this.LoanTransactionsAmount.HeaderText = "Amount";
+            this.LoanTransactionsAmount.Name = "LoanTransactionsAmount";
+            this.LoanTransactionsAmount.ReadOnly = true;
+            // 
+            // LoanTransactionsCheckNumber
+            // 
+            this.LoanTransactionsCheckNumber.HeaderText = "Check #";
+            this.LoanTransactionsCheckNumber.Name = "LoanTransactionsCheckNumber";
+            this.LoanTransactionsCheckNumber.ReadOnly = true;
+            // 
+            // LoanTransactionsTransDt
+            // 
+            this.LoanTransactionsTransDt.HeaderText = "Trans DT";
+            this.LoanTransactionsTransDt.Name = "LoanTransactionsTransDt";
+            this.LoanTransactionsTransDt.ReadOnly = true;
+            // 
+            // LoanTransactionsNote
+            // 
+            this.LoanTransactionsNote.HeaderText = "Note";
+            this.LoanTransactionsNote.Name = "LoanTransactionsNote";
+            this.LoanTransactionsNote.ReadOnly = true;
+            // 
+            // LoanTransactionsDateAdded
+            // 
+            this.LoanTransactionsDateAdded.HeaderText = "Date Added";
+            this.LoanTransactionsDateAdded.Name = "LoanTransactionsDateAdded";
+            this.LoanTransactionsDateAdded.ReadOnly = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(29, 41);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(45, 17);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Name";
+            // 
+            // LoanLookupTransComboBox
+            // 
+            this.LoanLookupTransComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LoanLookupTransComboBox.FormattingEnabled = true;
+            this.LoanLookupTransComboBox.Location = new System.Drawing.Point(121, 37);
+            this.LoanLookupTransComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.LoanLookupTransComboBox.Name = "LoanLookupTransComboBox";
+            this.LoanLookupTransComboBox.Size = new System.Drawing.Size(300, 24);
+            this.LoanLookupTransComboBox.TabIndex = 0;
+            this.LoanLookupTransComboBox.SelectedIndexChanged += new System.EventHandler(this.LoanLookupTransComboBox_SelectedIndexChanged);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.AddLoanButton);
+            this.groupBox7.Controls.Add(this.label10);
+            this.groupBox7.Controls.Add(this.loanAmountTextBox);
+            this.groupBox7.Controls.Add(this.loanComboBox);
+            this.groupBox7.Controls.Add(this.LoanAmount);
+            this.groupBox7.Location = new System.Drawing.Point(39, 42);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Size = new System.Drawing.Size(423, 238);
+            this.groupBox7.TabIndex = 5;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Add Loan";
+            // 
+            // AddLoanButton
+            // 
+            this.AddLoanButton.Location = new System.Drawing.Point(121, 148);
+            this.AddLoanButton.Margin = new System.Windows.Forms.Padding(4);
+            this.AddLoanButton.Name = "AddLoanButton";
+            this.AddLoanButton.Size = new System.Drawing.Size(100, 28);
+            this.AddLoanButton.TabIndex = 4;
+            this.AddLoanButton.Text = "Add";
+            this.AddLoanButton.UseVisualStyleBackColor = true;
+            this.AddLoanButton.Click += new System.EventHandler(this.AddLoanButton_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(29, 63);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(45, 17);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Name";
+            // 
+            // loanAmountTextBox
+            // 
+            this.loanAmountTextBox.Location = new System.Drawing.Point(121, 100);
+            this.loanAmountTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.loanAmountTextBox.Name = "loanAmountTextBox";
+            this.loanAmountTextBox.Size = new System.Drawing.Size(261, 22);
+            this.loanAmountTextBox.TabIndex = 3;
+            // 
+            // loanComboBox
+            // 
+            this.loanComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.loanComboBox.FormattingEnabled = true;
+            this.loanComboBox.Location = new System.Drawing.Point(121, 59);
+            this.loanComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.loanComboBox.Name = "loanComboBox";
+            this.loanComboBox.Size = new System.Drawing.Size(261, 24);
+            this.loanComboBox.TabIndex = 1;
+            // 
+            // LoanAmount
+            // 
+            this.LoanAmount.AutoSize = true;
+            this.LoanAmount.Location = new System.Drawing.Point(19, 103);
+            this.LoanAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LoanAmount.Name = "LoanAmount";
+            this.LoanAmount.Size = new System.Drawing.Size(56, 17);
+            this.LoanAmount.TabIndex = 2;
+            this.LoanAmount.Text = "Amount";
             // 
             // Form1
             // 
@@ -1459,6 +1769,14 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.loanTab.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.loanContributorDataGridView)).EndInit();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LoanTransactionsGridView)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1585,7 +1903,35 @@
         private System.Windows.Forms.ToolTip SearchBalanceToolTip;
         private System.Windows.Forms.Label SearchTabOpeningBalanceValue;
         private System.Windows.Forms.Label SearchTabOpeningBalanceLabel;
+        private System.Windows.Forms.TabPage loanTab;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button AddLoanButton;
+        private System.Windows.Forms.TextBox loanAmountTextBox;
+        private System.Windows.Forms.Label LoanAmount;
+        private System.Windows.Forms.ComboBox loanComboBox;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.DataGridView loanContributorDataGridView;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox LoanLookupTransComboBox;
+        private System.Windows.Forms.Button AddUpdateLoanContributorButtonGrid;
+        private System.Windows.Forms.DataGridView LoanTransactionsGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsCategory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsMode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsCheckNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsTransDt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsNote;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanTransactionsDateAdded;
+        private System.Windows.Forms.Button DeleteLoanContrubutorButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContributorLoanId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContributorIdNotVisible;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanFirstLastName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LoanAmountGrid;
+        private System.Windows.Forms.Label RemainingLoanAmountLabel;
+        private System.Windows.Forms.Label label12;
     }
 }
-
