@@ -21,10 +21,8 @@ namespace BIPCAccounting
         public Form1()
         {
             InitializeComponent();
-
-            //connString = "DataSource=samcorp-org.crgokfekv3qi.us-east-1.rds.amazonaws.com;Port=3306;UID=samuelhenry;PWD=GodIsGreat1234;Database=BIPC;";
+            
             connString = "DataSource=bipc-samuel-aws.cn8rfjml1v4e.us-east-1.rds.amazonaws.com;Port=3306;UID=samuel;PWD=bipc2019;Database=bipc;";
-            //connString = "DataSource=sql9.freemysqlhosting.net;Port=3306;UID=sql9261837;PWD=rRetgfxbTi;Database=sql9261837;";
 
             this.LoadFormData();
         }

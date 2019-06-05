@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIPCAccounting", "BIPCAccounting\BIPCAccounting.csproj", "{6F1AB104-F2FC-4885-81FB-A9B88C46F740}"
 EndProject
@@ -24,12 +24,14 @@ Global
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{6F1AB104-F2FC-4885-81FB-A9B88C46F740}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.CD_ROM|Any CPU.ActiveCfg = Release
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Debug|Any CPU.ActiveCfg = Debug
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.DVD-5|Any CPU.ActiveCfg = Debug
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Release|Any CPU.ActiveCfg = Release
+		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Release|Any CPU.Build.0 = Release
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.SingleImage|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
