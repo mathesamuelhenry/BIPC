@@ -29,7 +29,7 @@ CREATE TABLE contributor
 CREATE TABLE contribution
 (
    contribution_id     int(11) NOT NULL PRIMARY KEY,
-   account_id          int(11) DEFAULT NULL,
+   account_id          int(11) NOT NULL,
    contributor_id      int DEFAULT NULL,
    contribution_name   varchar(60) DEFAULT NULL,
    category            varchar(50) DEFAULT NULL,
@@ -42,7 +42,8 @@ CREATE TABLE contribution
    status              tinyint(4) DEFAULT 1,
    date_added          datetime,
    date_changed        datetime,
-   FOREIGN KEY(contributor_id) REFERENCES contributor(contributor_id)
+   FOREIGN KEY(contributor_id) REFERENCES contributor(contributor_id),
+   FOREIGN KEY(account_id) REFERENCES account(account_id)
 );
 
 CREATE TABLE table_column
