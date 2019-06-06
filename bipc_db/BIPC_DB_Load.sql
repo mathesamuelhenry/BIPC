@@ -7,6 +7,7 @@ INSERT INTO seq_control VALUES ('column_value_desc', 1);
 INSERT INTO seq_control VALUES ('contribution', 1);
 INSERT INTO seq_control VALUES ('table_column', 1);
 INSERT INTO seq_control VALUES ('contributor_loan', 1);
+INSERT INTO seq_control VALUES ('account', 1);
 
 insert into table_column (
   table_column_id

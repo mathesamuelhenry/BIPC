@@ -6,7 +6,6 @@ CREATE TABLE account
    account_number         varchar(50) DEFAULT NULL,
    account_name           varchar(100) DEFAULT NULL,
    bank_name              varchar(50) DEFAULT NULL,
-   account_created_date   datetime NOT NULL,
    account_end_date       datetime DEFAULT NULL,
    initial_balance        decimal(11, 2) NOT NULL,
    status                 tinyint(4) DEFAULT '1',
