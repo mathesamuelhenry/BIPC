@@ -515,7 +515,7 @@ namespace BIPCAccounting
 
                 if (this.ContributionList != null && currentContributionList.Count > 0)
                 {
-                    foreach (KeyValuePair<string, Contribution> contribution in this.ContributionList)
+                    foreach (KeyValuePair<string, Contribution> contribution in currentContributionList)
                     {
                         int n = DashboardContributionsDataGridView.Rows.Add();
                         DashboardContributionsDataGridView.Rows[n].Cells["ID"].Value = contribution.Value.ContributionId;
@@ -690,7 +690,7 @@ namespace BIPCAccounting
                     Item SelectedAccountName = (Item)AccountNameComboBox.SelectedItem;
                     accountId = SelectedAccountName.Id;
                 }
-                
+    
                 this.LoadCVD();
                 this.LoadSearchCategoryDropDown();
 
@@ -737,7 +737,14 @@ namespace BIPCAccounting
                         valid = false;
                     }
                 }
-               
+
+                Account acc = this.AccountList.Where(x => x.Key == accountId)
+                    .FirstOrDefault()
+                    .Value;
+
+                if (acc.IsClosed)
+                    throw new Exception($"Account [{acc.AccountName}] is closed. Transactions cannot be added/updated on this account. Please re-open the account to make any changes to the account");
+
                 if (valid)
                 {
                     if (EditModeHidden.Text == "EDIT")
