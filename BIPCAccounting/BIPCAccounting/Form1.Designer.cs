@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
@@ -144,6 +144,10 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.DeleteNames = new System.Windows.Forms.Button();
             this.ContributorNameGridView = new System.Windows.Forms.DataGridView();
+            this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContributorLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpdateNamesTableButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -195,10 +199,6 @@
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SearchBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContributorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContributorLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.MainAcountNamePanel.SuspendLayout();
@@ -238,7 +238,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 22);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1347, 657);
+            this.tabControl1.Size = new System.Drawing.Size(1205, 657);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
@@ -259,7 +259,7 @@
             this.AddUpdateExpenditureTab.Location = new System.Drawing.Point(4, 22);
             this.AddUpdateExpenditureTab.Name = "AddUpdateExpenditureTab";
             this.AddUpdateExpenditureTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AddUpdateExpenditureTab.Size = new System.Drawing.Size(1339, 631);
+            this.AddUpdateExpenditureTab.Size = new System.Drawing.Size(1197, 631);
             this.AddUpdateExpenditureTab.TabIndex = 0;
             this.AddUpdateExpenditureTab.Text = "Add Expenditure";
             this.AddUpdateExpenditureTab.UseVisualStyleBackColor = true;
@@ -305,7 +305,7 @@
             // 
             // DeSelectAllOnAddUpdatePage
             // 
-            this.DeSelectAllOnAddUpdatePage.Location = new System.Drawing.Point(1022, 521);
+            this.DeSelectAllOnAddUpdatePage.Location = new System.Drawing.Point(892, 522);
             this.DeSelectAllOnAddUpdatePage.Name = "DeSelectAllOnAddUpdatePage";
             this.DeSelectAllOnAddUpdatePage.Size = new System.Drawing.Size(75, 23);
             this.DeSelectAllOnAddUpdatePage.TabIndex = 44;
@@ -315,7 +315,7 @@
             // 
             // SelectAllOnAddUpdatePage
             // 
-            this.SelectAllOnAddUpdatePage.Location = new System.Drawing.Point(911, 521);
+            this.SelectAllOnAddUpdatePage.Location = new System.Drawing.Point(781, 522);
             this.SelectAllOnAddUpdatePage.Name = "SelectAllOnAddUpdatePage";
             this.SelectAllOnAddUpdatePage.Size = new System.Drawing.Size(75, 23);
             this.SelectAllOnAddUpdatePage.TabIndex = 43;
@@ -325,7 +325,7 @@
             // 
             // DeleteInAddUpdatePage
             // 
-            this.DeleteInAddUpdatePage.Location = new System.Drawing.Point(1132, 521);
+            this.DeleteInAddUpdatePage.Location = new System.Drawing.Point(1002, 522);
             this.DeleteInAddUpdatePage.Name = "DeleteInAddUpdatePage";
             this.DeleteInAddUpdatePage.Size = new System.Drawing.Size(75, 23);
             this.DeleteInAddUpdatePage.TabIndex = 42;
@@ -335,7 +335,7 @@
             // 
             // EditInAddUpdatePage
             // 
-            this.EditInAddUpdatePage.Location = new System.Drawing.Point(1237, 521);
+            this.EditInAddUpdatePage.Location = new System.Drawing.Point(1107, 522);
             this.EditInAddUpdatePage.Name = "EditInAddUpdatePage";
             this.EditInAddUpdatePage.Size = new System.Drawing.Size(75, 23);
             this.EditInAddUpdatePage.TabIndex = 41;
@@ -347,8 +347,8 @@
             // 
             this.tableLayoutPanel5.ColumnCount = 6;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 161F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 330F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 174F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 183F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
@@ -361,13 +361,13 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(946, 39);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(816, 39);
             this.tableLayoutPanel5.TabIndex = 40;
             // 
             // OpeningBalanceValue
             // 
             this.OpeningBalanceValue.AutoSize = true;
-            this.OpeningBalanceValue.Location = new System.Drawing.Point(106, 0);
+            this.OpeningBalanceValue.Location = new System.Drawing.Point(110, 0);
             this.OpeningBalanceValue.Name = "OpeningBalanceValue";
             this.OpeningBalanceValue.Size = new System.Drawing.Size(0, 13);
             this.OpeningBalanceValue.TabIndex = 34;
@@ -384,7 +384,7 @@
             // TotalBalanceLabel
             // 
             this.TotalBalanceLabel.AutoSize = true;
-            this.TotalBalanceLabel.Location = new System.Drawing.Point(861, 0);
+            this.TotalBalanceLabel.Location = new System.Drawing.Point(731, 0);
             this.TotalBalanceLabel.Name = "TotalBalanceLabel";
             this.TotalBalanceLabel.Size = new System.Drawing.Size(0, 13);
             this.TotalBalanceLabel.TabIndex = 38;
@@ -392,7 +392,7 @@
             // TotalBalanceByOpeningLabel
             // 
             this.TotalBalanceByOpeningLabel.AutoSize = true;
-            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(735, 0);
+            this.TotalBalanceByOpeningLabel.Location = new System.Drawing.Point(605, 0);
             this.TotalBalanceByOpeningLabel.Name = "TotalBalanceByOpeningLabel";
             this.TotalBalanceByOpeningLabel.Size = new System.Drawing.Size(116, 13);
             this.TotalBalanceByOpeningLabel.TabIndex = 36;
@@ -401,7 +401,7 @@
             // TotalLabel
             // 
             this.TotalLabel.AutoSize = true;
-            this.TotalLabel.Location = new System.Drawing.Point(597, 0);
+            this.TotalLabel.Location = new System.Drawing.Point(467, 0);
             this.TotalLabel.Name = "TotalLabel";
             this.TotalLabel.Size = new System.Drawing.Size(0, 13);
             this.TotalLabel.TabIndex = 37;
@@ -739,7 +739,7 @@
             this.DashboardContributionsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.DashboardContributionsDataGridView.Location = new System.Drawing.Point(366, 54);
             this.DashboardContributionsDataGridView.Name = "DashboardContributionsDataGridView";
-            this.DashboardContributionsDataGridView.Size = new System.Drawing.Size(946, 449);
+            this.DashboardContributionsDataGridView.Size = new System.Drawing.Size(816, 449);
             this.DashboardContributionsDataGridView.TabIndex = 24;
             this.DashboardContributionsDataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
             // 
@@ -831,7 +831,7 @@
             this.SearchExpendituresTab.Location = new System.Drawing.Point(4, 22);
             this.SearchExpendituresTab.Name = "SearchExpendituresTab";
             this.SearchExpendituresTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SearchExpendituresTab.Size = new System.Drawing.Size(1339, 631);
+            this.SearchExpendituresTab.Size = new System.Drawing.Size(1197, 631);
             this.SearchExpendituresTab.TabIndex = 1;
             this.SearchExpendituresTab.Tag = "";
             this.SearchExpendituresTab.Text = "Search Expenditures";
@@ -840,7 +840,7 @@
             // SearchTabOpeningBalanceValue
             // 
             this.SearchTabOpeningBalanceValue.AutoSize = true;
-            this.SearchTabOpeningBalanceValue.Location = new System.Drawing.Point(998, 578);
+            this.SearchTabOpeningBalanceValue.Location = new System.Drawing.Point(1120, 578);
             this.SearchTabOpeningBalanceValue.Name = "SearchTabOpeningBalanceValue";
             this.SearchTabOpeningBalanceValue.Size = new System.Drawing.Size(22, 13);
             this.SearchTabOpeningBalanceValue.TabIndex = 20;
@@ -849,7 +849,7 @@
             // SearchTabOpeningBalanceLabel
             // 
             this.SearchTabOpeningBalanceLabel.AutoSize = true;
-            this.SearchTabOpeningBalanceLabel.Location = new System.Drawing.Point(891, 578);
+            this.SearchTabOpeningBalanceLabel.Location = new System.Drawing.Point(1013, 578);
             this.SearchTabOpeningBalanceLabel.Name = "SearchTabOpeningBalanceLabel";
             this.SearchTabOpeningBalanceLabel.Size = new System.Drawing.Size(101, 13);
             this.SearchTabOpeningBalanceLabel.TabIndex = 19;
@@ -858,7 +858,7 @@
             // CurrentSearchBalance
             // 
             this.CurrentSearchBalance.AutoSize = true;
-            this.CurrentSearchBalance.Location = new System.Drawing.Point(564, 578);
+            this.CurrentSearchBalance.Location = new System.Drawing.Point(611, 578);
             this.CurrentSearchBalance.Name = "CurrentSearchBalance";
             this.CurrentSearchBalance.Size = new System.Drawing.Size(22, 13);
             this.CurrentSearchBalance.TabIndex = 18;
@@ -867,7 +867,7 @@
             // CurrentSearchBalanceLabel
             // 
             this.CurrentSearchBalanceLabel.AutoSize = true;
-            this.CurrentSearchBalanceLabel.Location = new System.Drawing.Point(426, 578);
+            this.CurrentSearchBalanceLabel.Location = new System.Drawing.Point(473, 578);
             this.CurrentSearchBalanceLabel.Name = "CurrentSearchBalanceLabel";
             this.CurrentSearchBalanceLabel.Size = new System.Drawing.Size(132, 13);
             this.CurrentSearchBalanceLabel.TabIndex = 17;
@@ -894,7 +894,7 @@
             // 
             // DeselectAll
             // 
-            this.DeselectAll.Location = new System.Drawing.Point(926, 203);
+            this.DeselectAll.Location = new System.Drawing.Point(783, 203);
             this.DeselectAll.Name = "DeselectAll";
             this.DeselectAll.Size = new System.Drawing.Size(75, 23);
             this.DeselectAll.TabIndex = 14;
@@ -904,7 +904,7 @@
             // 
             // SelectAll
             // 
-            this.SelectAll.Location = new System.Drawing.Point(815, 203);
+            this.SelectAll.Location = new System.Drawing.Point(672, 203);
             this.SelectAll.Name = "SelectAll";
             this.SelectAll.Size = new System.Drawing.Size(75, 23);
             this.SelectAll.TabIndex = 13;
@@ -914,7 +914,7 @@
             // 
             // DeleteSearchRow
             // 
-            this.DeleteSearchRow.Location = new System.Drawing.Point(1036, 203);
+            this.DeleteSearchRow.Location = new System.Drawing.Point(893, 203);
             this.DeleteSearchRow.Name = "DeleteSearchRow";
             this.DeleteSearchRow.Size = new System.Drawing.Size(75, 23);
             this.DeleteSearchRow.TabIndex = 12;
@@ -924,7 +924,7 @@
             // 
             // EditSearchRow
             // 
-            this.EditSearchRow.Location = new System.Drawing.Point(1141, 203);
+            this.EditSearchRow.Location = new System.Drawing.Point(998, 203);
             this.EditSearchRow.Name = "EditSearchRow";
             this.EditSearchRow.Size = new System.Drawing.Size(75, 23);
             this.EditSearchRow.TabIndex = 11;
@@ -934,7 +934,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1244, 203);
+            this.button2.Location = new System.Drawing.Point(1101, 203);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -973,7 +973,7 @@
             this.SearchResultsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.SearchResultsDataGridView.Location = new System.Drawing.Point(17, 246);
             this.SearchResultsDataGridView.Name = "SearchResultsDataGridView";
-            this.SearchResultsDataGridView.Size = new System.Drawing.Size(1302, 308);
+            this.SearchResultsDataGridView.Size = new System.Drawing.Size(1159, 308);
             this.SearchResultsDataGridView.TabIndex = 1;
             // 
             // AccountNameSearch
@@ -1068,7 +1068,7 @@
             this.groupBox3.Controls.Add(this.SearchNameTextBox);
             this.groupBox3.Location = new System.Drawing.Point(17, 19);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1302, 158);
+            this.groupBox3.Size = new System.Drawing.Size(1159, 158);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -1077,7 +1077,7 @@
             this.SearchAccountNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchAccountNameComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.SearchAccountNameComboBox.FormattingEnabled = true;
-            this.SearchAccountNameComboBox.Location = new System.Drawing.Point(122, 31);
+            this.SearchAccountNameComboBox.Location = new System.Drawing.Point(26, 56);
             this.SearchAccountNameComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.SearchAccountNameComboBox.Name = "SearchAccountNameComboBox";
             this.SearchAccountNameComboBox.Size = new System.Drawing.Size(138, 21);
@@ -1095,7 +1095,7 @@
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(1112, 103);
+            this.ResetButton.Location = new System.Drawing.Point(974, 105);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(151, 23);
             this.ResetButton.TabIndex = 49;
@@ -1105,7 +1105,7 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(938, 104);
+            this.SearchButton.Location = new System.Drawing.Point(800, 106);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(151, 23);
             this.SearchButton.TabIndex = 48;
@@ -1115,7 +1115,7 @@
             // 
             // SearchToDateTimePicker
             // 
-            this.SearchToDateTimePicker.Location = new System.Drawing.Point(1077, 68);
+            this.SearchToDateTimePicker.Location = new System.Drawing.Point(939, 70);
             this.SearchToDateTimePicker.Name = "SearchToDateTimePicker";
             this.SearchToDateTimePicker.Size = new System.Drawing.Size(186, 20);
             this.SearchToDateTimePicker.TabIndex = 47;
@@ -1123,7 +1123,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(960, 71);
+            this.label21.Location = new System.Drawing.Point(822, 73);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(111, 13);
             this.label21.TabIndex = 46;
@@ -1131,7 +1131,7 @@
             // 
             // SearchFromDateTimePicker
             // 
-            this.SearchFromDateTimePicker.Location = new System.Drawing.Point(1077, 28);
+            this.SearchFromDateTimePicker.Location = new System.Drawing.Point(939, 30);
             this.SearchFromDateTimePicker.Name = "SearchFromDateTimePicker";
             this.SearchFromDateTimePicker.Size = new System.Drawing.Size(186, 20);
             this.SearchFromDateTimePicker.TabIndex = 45;
@@ -1139,7 +1139,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(949, 31);
+            this.label20.Location = new System.Drawing.Point(811, 33);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(121, 13);
             this.label20.TabIndex = 44;
@@ -1147,15 +1147,15 @@
             // 
             // SearchCheckTextBox
             // 
-            this.SearchCheckTextBox.Location = new System.Drawing.Point(732, 106);
+            this.SearchCheckTextBox.Location = new System.Drawing.Point(597, 109);
             this.SearchCheckTextBox.Name = "SearchCheckTextBox";
-            this.SearchCheckTextBox.Size = new System.Drawing.Size(121, 20);
+            this.SearchCheckTextBox.Size = new System.Drawing.Size(129, 20);
             this.SearchCheckTextBox.TabIndex = 43;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(614, 109);
+            this.label9.Location = new System.Drawing.Point(479, 112);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(78, 13);
             this.label9.TabIndex = 42;
@@ -1165,24 +1165,24 @@
             // 
             this.SearchTransModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchTransModeComboBox.FormattingEnabled = true;
-            this.SearchTransModeComboBox.Location = new System.Drawing.Point(732, 68);
+            this.SearchTransModeComboBox.Location = new System.Drawing.Point(597, 71);
             this.SearchTransModeComboBox.Name = "SearchTransModeComboBox";
-            this.SearchTransModeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchTransModeComboBox.Size = new System.Drawing.Size(129, 21);
             this.SearchTransModeComboBox.TabIndex = 41;
             // 
             // SearchTransTypeComboBox
             // 
             this.SearchTransTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchTransTypeComboBox.FormattingEnabled = true;
-            this.SearchTransTypeComboBox.Location = new System.Drawing.Point(732, 28);
+            this.SearchTransTypeComboBox.Location = new System.Drawing.Point(597, 31);
             this.SearchTransTypeComboBox.Name = "SearchTransTypeComboBox";
-            this.SearchTransTypeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchTransTypeComboBox.Size = new System.Drawing.Size(129, 21);
             this.SearchTransTypeComboBox.TabIndex = 40;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(611, 70);
+            this.label18.Location = new System.Drawing.Point(476, 73);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(93, 13);
             this.label18.TabIndex = 39;
@@ -1191,7 +1191,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(614, 31);
+            this.label19.Location = new System.Drawing.Point(479, 34);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(90, 13);
             this.label19.TabIndex = 38;
@@ -1201,9 +1201,9 @@
             // 
             this.SearchNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchNameComboBox.FormattingEnabled = true;
-            this.SearchNameComboBox.Location = new System.Drawing.Point(412, 70);
+            this.SearchNameComboBox.Location = new System.Drawing.Point(288, 69);
             this.SearchNameComboBox.Name = "SearchNameComboBox";
-            this.SearchNameComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchNameComboBox.Size = new System.Drawing.Size(130, 21);
             this.SearchNameComboBox.TabIndex = 35;
             this.SearchNameComboBox.SelectedIndexChanged += new System.EventHandler(this.SearchNameComboBox_SelectedIndexChanged);
             // 
@@ -1211,7 +1211,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(452, 56);
+            this.label14.Location = new System.Drawing.Point(328, 55);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(25, 12);
             this.label14.TabIndex = 34;
@@ -1221,15 +1221,15 @@
             // 
             this.SearchCategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SearchCategoryComboBox.FormattingEnabled = true;
-            this.SearchCategoryComboBox.Location = new System.Drawing.Point(412, 105);
+            this.SearchCategoryComboBox.Location = new System.Drawing.Point(288, 104);
             this.SearchCategoryComboBox.Name = "SearchCategoryComboBox";
-            this.SearchCategoryComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SearchCategoryComboBox.Size = new System.Drawing.Size(130, 21);
             this.SearchCategoryComboBox.TabIndex = 33;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(339, 107);
+            this.label16.Location = new System.Drawing.Point(215, 106);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(49, 13);
             this.label16.TabIndex = 32;
@@ -1238,7 +1238,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(346, 33);
+            this.label17.Location = new System.Drawing.Point(222, 32);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(35, 13);
             this.label17.TabIndex = 31;
@@ -1246,9 +1246,9 @@
             // 
             // SearchNameTextBox
             // 
-            this.SearchNameTextBox.Location = new System.Drawing.Point(412, 33);
+            this.SearchNameTextBox.Location = new System.Drawing.Point(288, 32);
             this.SearchNameTextBox.Name = "SearchNameTextBox";
-            this.SearchNameTextBox.Size = new System.Drawing.Size(121, 20);
+            this.SearchNameTextBox.Size = new System.Drawing.Size(130, 20);
             this.SearchNameTextBox.TabIndex = 30;
             this.SearchNameTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchNameTextBox_KeyUp);
             // 
@@ -1325,6 +1325,33 @@
             this.ContributorNameGridView.Name = "ContributorNameGridView";
             this.ContributorNameGridView.Size = new System.Drawing.Size(407, 224);
             this.ContributorNameGridView.TabIndex = 10;
+            // 
+            // FirstName
+            // 
+            this.FirstName.HeaderText = "First Name";
+            this.FirstName.Name = "FirstName";
+            // 
+            // LastName
+            // 
+            this.LastName.HeaderText = "Last Name";
+            this.LastName.Name = "LastName";
+            // 
+            // ContributorId
+            // 
+            this.ContributorId.HeaderText = "Contributor ID";
+            this.ContributorId.Name = "ContributorId";
+            this.ContributorId.Visible = false;
+            // 
+            // ContributorLastUpdated
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ContributorLastUpdated.HeaderText = "Last Updated Date";
+            this.ContributorLastUpdated.Name = "ContributorLastUpdated";
+            this.ContributorLastUpdated.ReadOnly = true;
+            this.ContributorLastUpdated.ToolTipText = "Last Updated Date is Read Only";
             // 
             // UpdateNamesTableButton
             // 
@@ -1753,38 +1780,11 @@
             this.IsClosedDataGridColumn.Name = "IsClosedDataGridColumn";
             this.IsClosedDataGridColumn.ToolTipText = "Mark as CLOSED when account is closed or no more transactions on the account.";
             // 
-            // FirstName
-            // 
-            this.FirstName.HeaderText = "First Name";
-            this.FirstName.Name = "FirstName";
-            // 
-            // LastName
-            // 
-            this.LastName.HeaderText = "Last Name";
-            this.LastName.Name = "LastName";
-            // 
-            // ContributorId
-            // 
-            this.ContributorId.HeaderText = "Contributor ID";
-            this.ContributorId.Name = "ContributorId";
-            this.ContributorId.Visible = false;
-            // 
-            // ContributorLastUpdated
-            // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.ContributorLastUpdated.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ContributorLastUpdated.HeaderText = "Last Updated Date";
-            this.ContributorLastUpdated.Name = "ContributorLastUpdated";
-            this.ContributorLastUpdated.ReadOnly = true;
-            this.ContributorLastUpdated.ToolTipText = "Last Updated Date is Read Only";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1371, 701);
+            this.ClientSize = new System.Drawing.Size(1223, 701);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";

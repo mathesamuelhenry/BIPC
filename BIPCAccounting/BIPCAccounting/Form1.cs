@@ -1648,6 +1648,13 @@ INSERT INTO column_value_desc(column_value_desc_id,
                     {
                         foreach (DataGridViewRow row in SearchResultsDataGridView.SelectedRows)
                         {
+                            Account acc = this.AccountList.Where(x => x.Value.AccountName == row.Cells["AccountNameSearch"].Value.ToString())
+                                           .FirstOrDefault()
+                                           .Value;
+
+                            if (acc.IsClosed)
+                                throw new Exception($"Account [{acc.AccountName}] is closed. Transactions cannot be deleted on this account. Please re-open the account to make any changes to the account");
+                            
                             contributionIdList.Add(row.Cells["IDSearch"].Value.ToString());
                         }
 
@@ -1670,6 +1677,10 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 {
                     MessageBox.Show("No rows were selected");
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
             finally
             {
@@ -1760,6 +1771,13 @@ INSERT INTO column_value_desc(column_value_desc_id,
                     {
                         foreach (DataGridViewRow row in DashboardContributionsDataGridView.SelectedRows)
                         {
+                            Account acc = this.AccountList.Where(x => x.Value.AccountName == row.Cells["CDataGridAccountName"].Value.ToString())
+                                        .FirstOrDefault()
+                                        .Value;
+
+                            if (acc.IsClosed)
+                                throw new Exception($"Account [{acc.AccountName}] is closed. Transactions cannot be deleted on this account. Please re-open the account to make any changes to the account");
+
                             contributionIdList.Add(row.Cells["ID"].Value.ToString());
                         }
 
@@ -1782,6 +1800,10 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 {
                     MessageBox.Show("No rows were selected");
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
             finally
             {
