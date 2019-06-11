@@ -15,14 +15,14 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2054DF15BFAC440B982DCBB3B14936C0"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_0761D06F8947174B1441E4D51A0EAD4E"
+        "OwnerKey" = "8:_2054DF15BFAC440B982DCBB3B14936C0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_ABB0821A7CAD88838FEE8277E7ADD2A5"
-        "OwnerKey" = "8:_2054DF15BFAC440B982DCBB3B14936C0"
+        "MsmKey" = "8:_2054DF15BFAC440B982DCBB3B14936C0"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -40,12 +40,44 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ABB0821A7CAD88838FEE8277E7ADD2A5"
+        "OwnerKey" = "8:_0761D06F8947174B1441E4D51A0EAD4E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
     "Configurations"
     {
+        "CustomRelease"
+        {
+        "DisplayName" = "8:CustomRelease"
+        "IsDebugOnly" = "11:FALSE"
+        "IsReleaseOnly" = "11:FALSE"
+        "OutputFilename" = "8:CustomRelease\\BIPCAccountingSetup.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:2"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
+            }
+        }
         "Debug"
         {
         "DisplayName" = "8:Debug"
@@ -100,6 +132,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -130,14 +170,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ABB0821A7CAD88838FEE8277E7ADD2A5"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0761D06F8947174B1441E4D51A0EAD4E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_ABB0821A7CAD88838FEE8277E7ADD2A5"
+                    "_0761D06F8947174B1441E4D51A0EAD4E"
                     {
                     "Name" = "8:MySql.Data.dll"
                     "Attributes" = "3:512"
@@ -238,7 +278,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:BIPC Accounting Tool"
         "ProductCode" = "8:{7130DA4E-C5B1-43F8-B976-22BD085AF61E}"
-        "PackageCode" = "8:{5F1A396B-D3AF-4A5E-9062-37D072740929}"
+        "PackageCode" = "8:{C108A0A2-C6EB-4756-BF1A-EE5862D0C11C}"
         "UpgradeCode" = "8:{96589774-1278-4325-B526-70B5DA9AB388}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -787,7 +827,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2054DF15BFAC440B982DCBB3B14936C0"
             {
-            "SourcePath" = "8:..\\BIPCAccounting\\obj\\Debug\\BIPCAccounting.exe"
+            "SourcePath" = "8:..\\BIPCAccounting\\obj\\Release\\BIPCAccounting.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_9632B30E203F4985B0A90B6DE9FDF078"
