@@ -1,5 +1,19 @@
 USE BIPC;
 
+CREATE TABLE account
+(
+   account_id             int(11) NOT NULL,
+   account_number         varchar(50) DEFAULT NULL,
+   account_name           varchar(100) DEFAULT NULL,
+   bank_name              varchar(50) DEFAULT NULL,
+   account_end_date       datetime DEFAULT NULL,
+   initial_balance        decimal(11, 2) NOT NULL,
+   status                 tinyint(4) DEFAULT '1',
+   date_added             datetime DEFAULT NULL,
+   date_changed           datetime DEFAULT NULL,
+   PRIMARY KEY(account_id)
+);
+
 CREATE TABLE contributor
 (
    contributor_id    int NOT NULL PRIMARY KEY,
@@ -13,20 +27,22 @@ CREATE TABLE contributor
 
 CREATE TABLE contribution
 (
-   contribution_id      int NOT NULL PRIMARY KEY,
-   contributor_id       int DEFAULT NULL,
-   contribution_name    varchar(60) DEFAULT NULL,
-   category             varchar(50) DEFAULT NULL,
-   transaction_type     int DEFAULT 1 COMMENT '1 - credit, 2 - debit',
-   transaction_mode     int NOT NULL COMMENT 'CASH/CHECK',
-   amount               decimal(11, 2) NOT NULL,
-   check_number         varchar(50) DEFAULT NULL,
-   transaction_date     datetime DEFAULT NULL,
-   note                 text DEFAULT NULL,
-   status               tinyint(4) DEFAULT 1,
-   date_added datetime,
-   date_changed datetime,
-   FOREIGN KEY(contributor_id) REFERENCES contributor(contributor_id)
+   contribution_id     int(11) NOT NULL PRIMARY KEY,
+   account_id          int(11) NOT NULL,
+   contributor_id      int DEFAULT NULL,
+   contribution_name   varchar(60) DEFAULT NULL,
+   category            varchar(50) DEFAULT NULL,
+   transaction_type    int DEFAULT 1 COMMENT '1 - credit, 2 - debit',
+   transaction_mode    int NOT NULL COMMENT 'CASH/CHECK',
+   amount              decimal(11, 2) NOT NULL,
+   check_number        varchar(50) DEFAULT NULL,
+   transaction_date    datetime DEFAULT NULL,
+   note                text DEFAULT NULL,
+   status              tinyint(4) DEFAULT 1,
+   date_added          datetime,
+   date_changed        datetime,
+   FOREIGN KEY(contributor_id) REFERENCES contributor(contributor_id),
+   FOREIGN KEY(account_id) REFERENCES account(account_id)
 );
 
 CREATE TABLE table_column
