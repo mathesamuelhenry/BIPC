@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.IO;
+using BIPCAccounting.Entity;
+using System.Configuration;
 
 namespace BIPCAccounting
 {
@@ -17,12 +19,14 @@ namespace BIPCAccounting
         string connString = string.Empty;
         CVD cvd = null;
         Dictionary<string, Contributor> ContributorList = new Dictionary<string, Contributor>();
-        
+        Dictionary<string, Account> AccountList = new Dictionary<string, Account>();
+        Dictionary<string, Contribution> ContributionList = new Dictionary<string, Contribution>();
+
         public Form1()
         {
             InitializeComponent();
-            
-            connString = "DataSource=bipc-samuel-aws.cn8rfjml1v4e.us-east-1.rds.amazonaws.com;Port=3306;UID=samuel;PWD=bipc2019;Database=bipc;";
+
+            connString = ConfigurationManager.ConnectionStrings["PROD"].ConnectionString;
 
             this.LoadFormData();
         }
@@ -32,20 +36,39 @@ namespace BIPCAccounting
             EditModeHidden.Text = "dasd";
 
             this.LoadCVD();
-            this.LoadCategoryDropDown();
+            this.LoadExpenditureCategoryComboBox();
             this.LoadContributorIdComboBox();
-            this.LoadTable();
+            
+            // Load accounts data grid
+            this.LoadAccountDataGridView();
+
+            this.LoadAccountNameComboBox();
+
+            string selectedAccountId = string.Empty;
+            if (!string.IsNullOrEmpty(AccountNameComboBox.Text))
+            {
+                Item selectedAccountIdItem = (Item)AccountNameComboBox.SelectedItem;
+                selectedAccountId = selectedAccountIdItem.Id;
+            }
+
+            // Load Contributions Data Grid
+            this.LoadContributionsDataGridView();
+
+            // Load Contributor Names Data Grid
+            this.LoadContributorNamesDataGridView();
+
+            // Load loan contributor data grid
+            this.LoadLoanContributorDataGridView();
+            
+            // Load search tab
             this.LoadSearchTabDropDowns();
             this.LoadSearchResultDataGrid();
-
+            
             // Load all names into dictionary
             this.LoadAllContributorNames();
-
-            this.LoadContributorNames();
-
-            this.LoadOpeningBalance();
-            this.LoadBalancesOnExpenditureTab();
-
+            
+            this.LoadBalancesOnExpenditureTab(selectedAccountId);
+            
             OpeningBalanceTooltip.SetToolTip(OpeningBalanceLabel, "Display Opening Balance");
             this.SetToolTipProp(OpeningBalanceTooltip);
 
@@ -54,20 +77,16 @@ namespace BIPCAccounting
 
             SearchBalanceToolTip.SetToolTip(CurrentSearchBalanceLabel, "Display Opening Balance + Search Balance");
             this.SetToolTipProp(SearchBalanceToolTip);
-
-            this.LoadLoanContributorDataGridView();
-
-            //this.LoadLoanTransactionsDataGrid();
         }
         
-        private void LoadContributorNames()
+        private void LoadContributorNamesDataGridView()
         {
             try
             {
                 this.LoadAllContributorNames();
 
-                NameGridView.Rows.Clear();
-                NameGridView.Refresh();
+                ContributorNameGridView.Rows.Clear();
+                ContributorNameGridView.Refresh();
 
                 if (this.ContributorList != null)
                 {
@@ -75,15 +94,15 @@ namespace BIPCAccounting
                     {
                         Contributor contName = namePair.Value;
 
-                        int n = NameGridView.Rows.Add();
-                        NameGridView.Rows[n].Cells["ContributorId"].Value = namePair.Key;
-                        NameGridView.Rows[n].Cells["FirstName"].Value = contName.FirstName;
-                        NameGridView.Rows[n].Cells["LastName"].Value = contName.LastName;
-                        NameGridView.Rows[n].Cells["ContributorLastUpdated"].Value = contName.LastUpdated;
+                        int n = ContributorNameGridView.Rows.Add();
+                        ContributorNameGridView.Rows[n].Cells["ContributorId"].Value = namePair.Key;
+                        ContributorNameGridView.Rows[n].Cells["FirstName"].Value = contName.FirstName;
+                        ContributorNameGridView.Rows[n].Cells["LastName"].Value = contName.LastName;
+                        ContributorNameGridView.Rows[n].Cells["ContributorLastUpdated"].Value = contName.LastUpdated;
                     }
                 }
 
-                NameGridView.AutoResizeRows();
+                ContributorNameGridView.AutoResizeRows();
             }
             finally
             {
@@ -96,114 +115,47 @@ namespace BIPCAccounting
             ttip.IsBalloon = true;
         }
 
-        private void LoadBalancesOnExpenditureTab()
+        private void LoadBalancesOnExpenditureTab(string account_id)
         {
             decimal TotalBalance = 0;
             decimal OpeningBalance = 0;
             decimal CreditAmount = 0;
             decimal DebitAmount = 0;
-            decimal Total = 0;
+            
+            OpeningBalance = Convert.ToDecimal(this.AccountList
+                .Where(acc => acc.Key == account_id.ToString())
+                .FirstOrDefault()
+                .Value
+                .InitialBalance);
 
-            List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
-            OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
-
-            MySqlConnection mySqlConn = new MySqlConnection(connString);
-            mySqlConn.Open();
-
+            var currentContributionList = this.ContributionList
+                .Where(con => con.Value.AccountId == account_id.ToString())
+                .ToList();
             try
             {
-                System.Data.DataTable dt = new System.Data.DataTable();
-
-                string sql = @"SELECT 
-      cn.contribution_id as 'Contribution Id',                          
-      CASE
-          WHEN IFNULL(cn.contribution_name, '') = ''
-          THEN
-             CONCAT(cr.first_name, ' ', cr.last_name)
-          ELSE
-             cn.contribution_name
-       END
-          AS 'Name',
-       cvd.description AS Category,
-       cvd_transtype.description AS Type,
-       cvd_transmode.description AS Mode,
-       cn.amount AS Amount,
-       cn.check_number AS 'Check #',
-       cn.transaction_date AS 'Trans DT',
-       cn.note AS 'Note',
-       cn.date_added AS 'Date Added'
-  FROM contribution cn
-       LEFT JOIN contributor cr ON cr.contributor_id = cn.contributor_id
-       LEFT JOIN table_column tc
-          ON     tc.table_name = 'contribution'
-             AND tc.column_name = 'category'
-             AND tc.status = 1
-       LEFT JOIN column_value_desc cvd
-          ON     cvd.table_column_id = tc.table_column_id
-             AND cvd.value = cn.category
-             AND cvd.status = 1
-       LEFT JOIN table_column tc_transtype
-          ON     tc_transtype.table_name = 'contribution'
-             AND tc_transtype.column_name = 'transaction_type'
-             AND tc_transtype.status = 1
-       LEFT JOIN column_value_desc cvd_transtype
-          ON     cvd_transtype.table_column_id = tc_transtype.table_column_id
-             AND cvd_transtype.value = cn.transaction_type
-             AND cvd_transtype.status = 1
-       LEFT JOIN table_column tc_transmode
-          ON     tc_transmode.table_name = 'contribution'
-             AND tc_transmode.column_name = 'transaction_mode'
-             AND tc_transmode.status = 1
-       LEFT JOIN column_value_desc cvd_transmode
-          ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
-             AND cvd_transmode.value = cn.transaction_mode
-             AND cvd_transmode.status = 1 
- WHERE cn.status = 1
- ORDER BY cn.date_added DESC;";
-
-                dt = Utils.GetDataTable(mySqlConn, sql);
-
-                if (dt != null)
+                foreach (KeyValuePair<string, Contribution> ctbnKvp in currentContributionList)
                 {
-                    foreach (DataRow dRow in dt.Rows)
+                    if (ctbnKvp.Value.TransactionType.Equals("Credit", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (dRow["Type"].ToString().Equals("Credit", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            CreditAmount += decimal.Parse(dRow["Amount"].ToString());
-                        }
-                        else
-                        {
-                            DebitAmount += decimal.Parse(dRow["Amount"].ToString());
-                        }
+                        CreditAmount += decimal.Parse(ctbnKvp.Value.Amount);
+                    }
+                    else
+                    {
+                        DebitAmount += decimal.Parse(ctbnKvp.Value.Amount);
                     }
                 }
 
                 TotalBalance = OpeningBalance + CreditAmount - DebitAmount;
-                Total = CreditAmount - DebitAmount;
+                //Total = CreditAmount - DebitAmount;
                 TotalBalanceLabel.Text = TotalBalance.ToString();
                 OpeningBalanceValue.Text = OpeningBalance.ToString();
-                TotalLabel.Text = Total.ToString();
+                //TotalLabel.Text = Total.ToString();
             }
             finally
             {
-                if (mySqlConn != null)
-                    mySqlConn.Close();
             }
         }
     
-        private void LoadOpeningBalance()
-        {
-            decimal OpeningBalance = 0M;
-            List<CVD> openingBalanceList = this.cvd.GetCVD("TEMP", "opening_balance");
-            OpeningBalance = openingBalanceList.Count > 0 ? decimal.Parse(openingBalanceList[0].Value) : OpeningBalance;
-            OpeningBalanceTextBox.Text = OpeningBalance.Equals(0M) ? string.Empty : OpeningBalance.ToString();
-
-            if (OpeningBalance != 0M)
-                OpeningBalanceAddUpdateButton.Text = "Update";
-            else
-                OpeningBalanceAddUpdateButton.Text = "Add";
-        }
-
         private void LoadSearchTabDropDowns()
         {
             this.LoadSearchTransModeDropDown();
@@ -303,6 +255,33 @@ namespace BIPCAccounting
             {
                 if (mySqlConn != null)
                     mySqlConn.Close();
+            }
+        }
+
+        /// <summary>
+        /// Load "Add Expenditure" Category Combo Box
+        /// </summary>
+        private void LoadExpenditureCategoryComboBox()
+        {
+            if (cvd == null)
+            {
+                this.LoadCVD();
+            }
+            else
+            {
+                var categoryCVDList = this.cvd.GetCVD("contribution", "category");
+
+                CategoryCombo.Items.Clear();
+
+                CategoryCombo.ValueMember = "Id";
+                CategoryCombo.DisplayMember = "Name";
+
+                CategoryCombo.Items.Add(new Item("", ""));
+
+                foreach (CVD categoryCVD in categoryCVDList)
+                {
+                    CategoryCombo.Items.Add(new Item(categoryCVD.Description, categoryCVD.Value));
+                }
             }
         }
 
@@ -420,26 +399,133 @@ namespace BIPCAccounting
             }
         }
         
-        private void label8_Click(object sender, EventArgs e)
+        public void LoadAllContributions()
         {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-
-        }
-
-        private void LoadTable()
-        {
-            //string connString = "DataSource=dbdprsql-bct.risk.regn.net;Port=3306;UID=mbs_ws;PWD=mbs_ws123;Database=sales_assignment;";
+            this.ContributionList.Clear();
 
             MySqlConnection mySqlConn = new MySqlConnection(connString);
+            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT cn.contribution_id AS 'Contribution Id',
+       acc.account_name,
+       cn.account_id as 'AccountId',
+       CASE
+          WHEN IFNULL(cn.contribution_name, '') = ''
+          THEN
+             CONCAT(cr.first_name, ' ', cr.last_name)
+          ELSE
+             cn.contribution_name
+       END
+          AS 'Name',
+       cvd.description AS Category,
+       cvd_transtype.description AS Type,
+       cvd_transmode.description AS Mode,
+       cn.amount AS Amount,
+       cn.check_number AS 'Check #',
+       cn.transaction_date AS 'Trans DT',
+       cn.note AS 'Note',
+       cn.date_added AS 'Date Added'
+  FROM contribution cn
+       LEFT JOIN account acc
+          ON acc.account_id = cn.account_id AND acc.status = 1
+       LEFT JOIN contributor cr ON cr.contributor_id = cn.contributor_id
+       LEFT JOIN table_column tc
+          ON     tc.table_name = 'contribution'
+             AND tc.column_name = 'category'
+             AND tc.status = 1
+       LEFT JOIN column_value_desc cvd
+          ON     cvd.table_column_id = tc.table_column_id
+             AND cvd.value = cn.category
+             AND cvd.status = 1
+       LEFT JOIN table_column tc_transtype
+          ON     tc_transtype.table_name = 'contribution'
+             AND tc_transtype.column_name = 'transaction_type'
+             AND tc_transtype.status = 1
+       LEFT JOIN column_value_desc cvd_transtype
+          ON     cvd_transtype.table_column_id = tc_transtype.table_column_id
+             AND cvd_transtype.value = cn.transaction_type
+             AND cvd_transtype.status = 1
+       LEFT JOIN table_column tc_transmode
+          ON     tc_transmode.table_name = 'contribution'
+             AND tc_transmode.column_name = 'transaction_mode'
+             AND tc_transmode.status = 1
+       LEFT JOIN column_value_desc cvd_transmode
+          ON     cvd_transmode.table_column_id = tc_transmode.table_column_id
+             AND cvd_transmode.value = cn.transaction_mode
+             AND cvd_transmode.status = 1 
+ WHERE cn.status = 1
+ ORDER BY cn.date_added DESC;", mySqlConn);
+
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        this.ContributionList.Add(dRow["Contribution Id"].ToString(), new Contribution(dRow));
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void LoadContributionsDataGridView()
+        {
+            string selectedAccountId = string.Empty;
+
+            try
+            {
+                // Load all contributions
+                this.LoadAllContributions();
+                
+                if (!string.IsNullOrEmpty(AccountNameComboBox.Text))
+                {
+                    Item selectedAccountIdItem = (Item)AccountNameComboBox.SelectedItem;
+                    selectedAccountId = selectedAccountIdItem.Id;
+                }
+
+                var currentContributionList = this.ContributionList
+                    .Where(con => con.Value.AccountId == selectedAccountId)
+                    .ToList();
+
+                DashboardContributionsDataGridView.Rows.Clear();
+                DashboardContributionsDataGridView.Refresh();
+
+                if (this.ContributionList != null && currentContributionList.Count > 0)
+                {
+                    foreach (KeyValuePair<string, Contribution> contribution in currentContributionList)
+                    {
+                        int n = DashboardContributionsDataGridView.Rows.Add();
+                        DashboardContributionsDataGridView.Rows[n].Cells["ID"].Value = contribution.Value.ContributionId;
+                        DashboardContributionsDataGridView.Rows[n].Cells["CDataGridAccountName"].Value = contribution.Value.AccountName;
+                        DashboardContributionsDataGridView.Rows[n].Cells["CName"].Value = contribution.Value.ContributorName;
+                        DashboardContributionsDataGridView.Rows[n].Cells["Category"].Value = contribution.Value.Category;
+                        DashboardContributionsDataGridView.Rows[n].Cells["Type"].Value = contribution.Value.TransactionType;
+                        DashboardContributionsDataGridView.Rows[n].Cells["Mode"].Value = contribution.Value.TransactionMode;
+                        DashboardContributionsDataGridView.Rows[n].Cells["Checkno"].Value = contribution.Value.CheckNumber;
+                        DashboardContributionsDataGridView.Rows[n].Cells["Amount"].Value = contribution.Value.Amount;
+                        DashboardContributionsDataGridView.Rows[n].Cells["TransDt"].Value = contribution.Value.TransactionDate;
+                        DashboardContributionsDataGridView.Rows[n].Cells["Note"].Value = contribution.Value.Note;
+                        DashboardContributionsDataGridView.Rows[n].Cells["DateAdded"].Value = contribution.Value.DateAdded;
+                    }
+
+                    DashboardContributionsDataGridView.Rows[0].Selected = true;
+                }
+
+                DashboardContributionsDataGridView.AutoResizeRows();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            /*MySqlConnection mySqlConn = new MySqlConnection(connString);
             MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT 
       cn.contribution_id as 'Contribution Id',                          
       CASE
@@ -524,8 +610,9 @@ namespace BIPCAccounting
                 if (mySqlConn != null)
                     mySqlConn.Close();
             }
+            */
 
-            this.LoadBalancesOnExpenditureTab();
+            this.LoadBalancesOnExpenditureTab(selectedAccountId);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -542,6 +629,7 @@ namespace BIPCAccounting
                 string transactionType = string.Empty;
                 string Category = string.Empty;
                 string ContributorId = string.Empty;
+                string accountId = string.Empty;
 
                 bool isChecked = CreditRadioButton.Checked;
                 if (isChecked)
@@ -581,10 +669,29 @@ namespace BIPCAccounting
                 if (!string.IsNullOrEmpty(newCategory))
                     this.AddNewCategory(newCategory, out Category);
 
+                // Read account name combo box
+                if (!string.IsNullOrEmpty(AccountNameComboBox.Text))
+                {
+                    Item SelectedAccountName = (Item)AccountNameComboBox.SelectedItem;
+                    accountId = SelectedAccountName.Id;
+                }
+    
                 this.LoadCVD();
                 this.LoadSearchCategoryDropDown();
 
                 DateTime TransactionDate = TransactionDateTimePicker.Value;
+                
+                /*
+                 * Validation
+                 */
+                
+                // Account Name
+                if (string.IsNullOrEmpty(accountId))
+                {
+                    MessageBox.Show("Account Name cannot be empty");
+                    valid = false;
+                }
+
                 //NAme
                 if (string.IsNullOrEmpty(NameTextBox.Text) && string.IsNullOrEmpty(ContributorIdComboBox.Text))
                 {
@@ -615,12 +722,19 @@ namespace BIPCAccounting
                         valid = false;
                     }
                 }
-               
+
+                Account acc = this.AccountList.Where(x => x.Key == accountId)
+                    .FirstOrDefault()
+                    .Value;
+
+                if (acc.IsClosed)
+                    throw new Exception($"Account [{acc.AccountName}] is closed. Transactions cannot be added/updated on this account. Please re-open the account to make any changes to the account");
+
                 if (valid)
                 {
                     if (EditModeHidden.Text == "EDIT")
                     {
-                        count = this.UpdateRecord(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+                        count = this.UpdateRecord(ContributorId, accountId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
 
                         if (count > 0)
                             MessageBox.Show("Record updated");
@@ -631,15 +745,15 @@ namespace BIPCAccounting
                     }
                     else
                     {
-                        count = this.Insert(ContributorId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
+                        count = this.Insert(ContributorId, accountId, NameTextBox.Text, Category, transactionType, transactionMode, CheckTextBox.Text, AmountTextBox.Text, TransactionDate, NoteTextBox.Text);
 
                         if (count > 0)
                             MessageBox.Show("Record added");
                         else
                             MessageBox.Show("Record not added");
                     }
-
-                    this.LoadTable();
+                    
+                    this.LoadContributionsDataGridView();
                     this.LoadSearchResultDataGrid();
                 }
             }
@@ -651,7 +765,6 @@ namespace BIPCAccounting
             {
                 if (mySqlConn != null)
                 {
-                    this.LoadTable();
                     mySqlConn.Close();
                 }
             }
@@ -718,7 +831,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
                         throw new Exception("New Category Add Failed");
                     }
 
-                    this.LoadCategoryDropDown();
+                    this.LoadExpenditureCategoryComboBox();
                 }
 
                 string GetCategoryValueSql = string.Format(@"SELECT cvd.value
@@ -745,7 +858,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
             return status;
         }
 
-        private int Insert(string contributor_id, string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
+        private int Insert(string contributor_id, string account_id, string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
         {
             int count = 0;
             MySqlConnection mySqlConn = null;
@@ -757,6 +870,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 string sql = string.Format(@" 
 INSERT INTO contribution (contribution_id
   ,contributor_id
+  ,account_id
   ,contribution_name
   ,category
   ,transaction_type
@@ -769,17 +883,19 @@ INSERT INTO contribution (contribution_id
   ,date_added
 ) VALUES (fn_get_nextid('BIPC', 'contribution')
   ,{0}   -- contributor_id - IN int(11)
-  ,{1}  -- contribution_name - IN varchar(60)
-  ,{2}  -- category - IN varchar(50)
-  ,{3}   -- transaction_type - IN int(11)
-  ,{4} -- transaction_mode - IN int(11)
-  ,{5} -- amount - IN decimal(11,2)
-  ,{6}  -- check_number - IN varchar(50)
-  ,{7}  -- transaction_date - IN datetime
-  ,{8}  -- note 
+  ,{1}   -- account_id - IN int(11)
+  ,{2}  -- contribution_name - IN varchar(60)
+  ,{3}  -- category - IN varchar(50)
+  ,{4}   -- transaction_type - IN int(11)
+  ,{5} -- transaction_mode - IN int(11)
+  ,{6} -- amount - IN decimal(11,2)
+  ,{7}  -- check_number - IN varchar(50)
+  ,{8}  -- transaction_date - IN datetime
+  ,{9}  -- note 
   ,1   -- status - IN tinyint(4)
   ,now()  -- date_added - IN datetime
 )", Utils.FormatDBIntegers(contributor_id)
+  , Utils.FormatDBIntegers(account_id)
   , Utils.FormatDBText(name)
   , Utils.FormatDBText(category)
   , Utils.FormatDBIntegers(trans_type)
@@ -905,6 +1021,7 @@ INSERT INTO contribution (contribution_id
                     {
                         int n = SearchResultsDataGridView.Rows.Add();
                         SearchResultsDataGridView.Rows[n].Cells["IDSearch"].Value = dRow["Contribution Id"].ToString();
+                        SearchResultsDataGridView.Rows[n].Cells["AccountNameSearch"].Value = dRow["Account Name"].ToString();
                         SearchResultsDataGridView.Rows[n].Cells["CNameSearch"].Value = dRow["Name"].ToString();
                         SearchResultsDataGridView.Rows[n].Cells["CategorySearch"].Value = dRow["Category"].ToString();
                         SearchResultsDataGridView.Rows[n].Cells["TypeSearch"].Value = dRow["Type"].ToString();
@@ -948,6 +1065,7 @@ INSERT INTO contribution (contribution_id
 
             string searchSQL = string.Format(@"SELECT 
        cn.contribution_id as 'Contribution Id',
+       acc.account_name as 'Account Name',
        CASE
           WHEN IFNULL(cn.contribution_name, '') = ''
           THEN
@@ -965,6 +1083,8 @@ INSERT INTO contribution (contribution_id
        cn.note AS 'Note',
        cn.date_added AS 'Date Added'
   FROM contribution cn
+       JOIN account acc on acc.account_id = cn.account_id
+          AND acc.status = 1
        LEFT JOIN contributor con
           ON con.contributor_id = cn.contributor_id AND con.status = 1
        LEFT JOIN table_column tc
@@ -1009,6 +1129,16 @@ INSERT INTO contribution (contribution_id
                 Item nameItem = (Item)SearchNameComboBox.SelectedItem;
 
                 where += string.Format("con.contributor_id = '{0}'", nameItem.Id);
+            }
+
+            if (!string.IsNullOrEmpty(SearchAccountNameComboBox.Text))
+            {
+                if (!string.IsNullOrEmpty(where))
+                    where += " and ";
+
+                Item accountNameItem = (Item)SearchAccountNameComboBox.SelectedItem;
+
+                where += string.Format("cn.account_id = {0}", accountNameItem.Id);
             }
 
             if (!string.IsNullOrEmpty(SearchCategoryComboBox.Text))
@@ -1154,122 +1284,7 @@ INSERT INTO contribution (contribution_id
                 MessageBox.Show("No records returned to be exported.");
             }
         }
-
-        private void OpeningBalanceAddUpdateButton_Click(object sender, EventArgs e)
-        {
-            MySqlConnection mySqlConn = null;
-
-            try
-            {
-                int count = 0;
-                decimal ob = 0M;
-                mySqlConn = new MySqlConnection(connString);
-                mySqlConn.Open();
-
-                DialogResult result = MessageBox.Show("Please confirm?", "Confirm", MessageBoxButtons.YesNo);
-
-                if (result == System.Windows.Forms.DialogResult.Yes)
-                {
-                    if (!string.IsNullOrEmpty(OpeningBalanceTextBox.Text))
-                    {
-                        if (decimal.TryParse(OpeningBalanceTextBox.Text, out ob))
-                        {
-                            if (!decimal.Equals(decimal.Parse(OpeningBalanceTextBox.Text), 0M))
-                            {
-                                if (this.cvd.GetCVD("TEMP", "opening_balance").Count > 0)
-                                {
-                                    int column_value_desc_id = this.cvd.GetCVD("TEMP", "opening_balance")[0].ColumnValueDescID;
-                                    string updateSql = string.Format(@"UPDATE column_value_desc cvd
-   SET value = '{0}',
-       description = '{0}',
-       date_changed = now()
- WHERE column_value_desc_id = {1};", OpeningBalanceTextBox.Text
-                                               , column_value_desc_id);
-
-                                    MySqlCommand cmd = new MySqlCommand(updateSql, mySqlConn);
-                                    count = cmd.ExecuteNonQuery();
-
-                                    MessageBox.Show("Opening Balance Updated.");
-                                }
-                                else
-                                {
-                                    string addSql = string.Format(@"
-DROP TABLE IF EXISTS t_OB;
-CREATE TEMPORARY TABLE t_OB(table_name varchar(30), column_name varchar(30));
-
-INSERT INTO t_OB
-VALUES ('TEMP', 'opening_balance');
-
-INSERT INTO table_column(table_column_id,
-                         table_name,
-                         column_name,
-                         status,
-                         date_added)
-   SELECT fn_get_nextid('BIPC', 'table_column'),
-          t.table_name,
-          t.column_name,
-          1,
-          now()
-     FROM t_OB t
-          LEFT JOIN table_column tc
-             ON     tc.table_name = t.table_name
-                AND tc.column_name = t.column_name
-    WHERE tc.table_column_id IS NULL;
-
-INSERT INTO column_value_desc(column_value_desc_id,
-                              table_column_id,
-                              value,
-                              description,
-                              date_added)
-   VALUES (  fn_get_nextid('BIPC', 'column_value_desc'),
-             (SELECT table_column_id
-                FROM table_column
-               WHERE table_name = 'TEMP' AND column_name = 'opening_balance' and status = 1),
-             '{0}',
-             '{0}',
-             now());", OpeningBalanceTextBox.Text);
-
-                                    MySqlCommand cmd = new MySqlCommand(addSql, mySqlConn);
-                                    count = cmd.ExecuteNonQuery();
-
-                                    MessageBox.Show("Opening Balance Added.");
-
-                                    OpeningBalanceAddUpdateButton.Text = "Update";
-                                }
-
-                                this.LoadCVD();
-                                this.LoadOpeningBalance();
-                                this.LoadSearchResultDataGrid();
-                                this.LoadBalancesOnExpenditureTab();
-
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Invalid decimal value");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Opening balance entered is either invalid or 0");
-                    }
-                }
-                else
-                {
-                    this.LoadOpeningBalance();
-                }
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(string.Format("Error Adding/Updating Opening balance : {0}", ex.Message));
-            }
-            finally
-            {
-                if (mySqlConn != null)
-                    mySqlConn.Close();
-            }
-        }
-
+        
         private void button3_Click_1(object sender, EventArgs e)
         {
             this.LoadFormData();
@@ -1309,13 +1324,13 @@ INSERT INTO column_value_desc(column_value_desc_id,
 
                         ContributionIdHidden.Text = SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString();
 
-                        foreach(DataGridViewRow row in dataGridView1.Rows)
+                        foreach(DataGridViewRow row in DashboardContributionsDataGridView.Rows)
                         {
                             string ID = row.Cells["ID"].Value.ToString();
                             if (ID.Equals(SearchResultsDataGridView.SelectedRows[0].Cells["IDSearch"].Value.ToString()))
                             {
-                                dataGridView1.ClearSelection();
-                                dataGridView1.Rows[row.Index].Selected = true;
+                                DashboardContributionsDataGridView.ClearSelection();
+                                DashboardContributionsDataGridView.Rows[row.Index].Selected = true;
                             }
                         }
 
@@ -1343,6 +1358,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 string sql = string.Format(@"SELECT cn.contribution_id,
            cn.contribution_name,
            cn.contributor_id,
+           cn.account_id,
            cn.category,
            cn.transaction_type,
            cn.transaction_mode,
@@ -1361,7 +1377,20 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 {
                     foreach(DataRow dRow in dt.Rows)
                     {
+                        // Load account name
+                        foreach(Item accountNameItem in AccountNameComboBox.Items)
+                        {
+                            if(accountNameItem.Id == dRow["account_id"].ToString())
+                            {
+                                AccountNameComboBox.SelectedItem = accountNameItem;
+                                break;
+                            }
+                        }
+
+                        // Load Contributor name
                         NameTextBox.Text = dRow["contribution_name"].ToString();
+
+                        // Load Contributor Id/Name combo box
                         foreach (Item d in ContributorIdComboBox.Items)
                         {
                             if (d.Id == dRow["contributor_id"].ToString())
@@ -1421,7 +1450,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
             }
         }
 
-        private int UpdateRecord(string contributor_id, string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
+        private int UpdateRecord(string contributor_id, string account_id, string name, string category, string trans_type, string trans_mode, string checque_number, string amount, DateTime transaction_date, string note)
         {
             int count = 0;
             MySqlConnection mySqlConn = null;
@@ -1432,16 +1461,18 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 mySqlConn.Open();
                 string updateSql = string.Format(@"UPDATE contribution
    SET contributor_id = {0},
-       contribution_name = {1},
-       category = {2},
-       transaction_type = {3},
-       transaction_mode = {4},
-       amount = {5},
-       check_number = {6},
-       transaction_date = {7},
-       note = {8},
+       account_id = {1},
+       contribution_name = {2},
+       category = {3},
+       transaction_type = {4},
+       transaction_mode = {5},
+       amount = {6},
+       check_number = {7},
+       transaction_date = {8},
+       note = {9},
        date_changed = now()
- WHERE contribution_id = {9}", Utils.FormatDBIntegers(contributor_id)
+ WHERE contribution_id = {10}", Utils.FormatDBIntegers(contributor_id)
+  , Utils.FormatDBIntegers(account_id)
   , Utils.FormatDBText(name)
   , Utils.FormatDBText(category)
   , Utils.FormatDBIntegers(trans_type)
@@ -1488,6 +1519,13 @@ INSERT INTO column_value_desc(column_value_desc_id,
                     {
                         foreach (DataGridViewRow row in SearchResultsDataGridView.SelectedRows)
                         {
+                            Account acc = this.AccountList.Where(x => x.Value.AccountName == row.Cells["AccountNameSearch"].Value.ToString())
+                                           .FirstOrDefault()
+                                           .Value;
+
+                            if (acc.IsClosed)
+                                throw new Exception($"Account [{acc.AccountName}] is closed. Transactions cannot be deleted on this account. Please re-open the account to make any changes to the account");
+                            
                             contributionIdList.Add(row.Cells["IDSearch"].Value.ToString());
                         }
 
@@ -1501,8 +1539,8 @@ INSERT INTO column_value_desc(column_value_desc_id,
                         count = cmd.ExecuteNonQuery();
 
                         MessageBox.Show(string.Format("{0} expenditure records deleted.", contributionIdList.Count));
-
-                        this.LoadTable();
+                        
+                        this.LoadContributionsDataGridView();
                         this.LoadSearchResultDataGrid();
                     }
                 }
@@ -1510,6 +1548,10 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 {
                     MessageBox.Show("No rows were selected");
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
             finally
             {
@@ -1536,8 +1578,8 @@ INSERT INTO column_value_desc(column_value_desc_id,
 
             Utils.ResetAllControls(GroupControl);
 
-            dataGridView1.ClearSelection();
-            dataGridView1.Rows[0].Selected = true;
+            DashboardContributionsDataGridView.ClearSelection();
+            DashboardContributionsDataGridView.Rows[0].Selected = true;
 
             AddUpdateFormGroup.BackColor = Color.Transparent;
 
@@ -1592,14 +1634,21 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 List<string> contributionIdList = new List<string>();
                 string contributionIds = string.Empty;
 
-                if (dataGridView1.SelectedRows.Count > 0)
+                if (DashboardContributionsDataGridView.SelectedRows.Count > 0)
                 {
                     DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
 
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
-                        foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                        foreach (DataGridViewRow row in DashboardContributionsDataGridView.SelectedRows)
                         {
+                            Account acc = this.AccountList.Where(x => x.Value.AccountName == row.Cells["CDataGridAccountName"].Value.ToString())
+                                        .FirstOrDefault()
+                                        .Value;
+
+                            if (acc.IsClosed)
+                                throw new Exception($"Account [{acc.AccountName}] is closed. Transactions cannot be deleted on this account. Please re-open the account to make any changes to the account");
+
                             contributionIdList.Add(row.Cells["ID"].Value.ToString());
                         }
 
@@ -1613,8 +1662,8 @@ INSERT INTO column_value_desc(column_value_desc_id,
                         count = cmd.ExecuteNonQuery();
 
                         MessageBox.Show(string.Format("{0} expenditure records deleted.", contributionIdList.Count));
-
-                        this.LoadTable();
+                        
+                        this.LoadContributionsDataGridView();
                         this.LoadSearchResultDataGrid();
                     }
                 }
@@ -1622,6 +1671,10 @@ INSERT INTO column_value_desc(column_value_desc_id,
                 {
                     MessageBox.Show("No rows were selected");
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
             finally
             {
@@ -1632,27 +1685,27 @@ INSERT INTO column_value_desc(column_value_desc_id,
 
         private void EditInAddUpdatePage_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (DashboardContributionsDataGridView.SelectedRows.Count > 0)
             {
-                if (dataGridView1.SelectedRows.Count > 1)
+                if (DashboardContributionsDataGridView.SelectedRows.Count > 1)
                     MessageBox.Show("Multiple records cannot be selected to EDIT. Please select only one.");
                 else
                 {
-                        EditModeLabel.ForeColor = Color.DarkGoldenrod;
-                        EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString());
+                    EditModeLabel.ForeColor = Color.DarkGoldenrod;
+                    EditModeLabel.Text = string.Format("EDIT MODE, PREPOPULATED WITH VALUES FROM EXPENDITURE ID {0}", DashboardContributionsDataGridView.SelectedRows[0].Cells["ID"].Value.ToString());
 
-                        EditModelink.ActiveLinkColor = Color.DarkGoldenrod;
-                        EditModelink.Text = "CANCEL EDIT MODE";
+                    EditModelink.ActiveLinkColor = Color.DarkGoldenrod;
+                    EditModelink.Text = "CANCEL EDIT MODE";
 
-                        AddUpdateFormGroup.BackColor = Color.DarkGoldenrod;
+                    AddUpdateFormGroup.BackColor = Color.DarkGoldenrod;
 
-                        AddUpdateButton.Text = "Update";
+                    AddUpdateButton.Text = "Update";
 
-                        ContributionIdHidden.Text = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
+                    ContributionIdHidden.Text = DashboardContributionsDataGridView.SelectedRows[0].Cells["ID"].Value.ToString();
 
-                        this.PreloadEditModeFormWithValues(dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString());
+                    this.PreloadEditModeFormWithValues(DashboardContributionsDataGridView.SelectedRows[0].Cells["ID"].Value.ToString());
 
-                        EditModeHidden.Text = "EDIT";
+                    EditModeHidden.Text = "EDIT";
                 }
             }
             else
@@ -1663,12 +1716,12 @@ INSERT INTO column_value_desc(column_value_desc_id,
 
         private void SelectAllOnAddUpdatePage_Click(object sender, EventArgs e)
         {
-            dataGridView1.SelectAll();
+            DashboardContributionsDataGridView.SelectAll();
         }
 
         private void DeSelectAllOnAddUpdatePage_Click(object sender, EventArgs e)
         {
-            dataGridView1.ClearSelection();
+            DashboardContributionsDataGridView.ClearSelection();
         }
 
         private void LoadAllContributorNames()
@@ -1715,7 +1768,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
                     mySqlConn = new MySqlConnection(connString);
                     mySqlConn.Open();
 
-                    foreach (DataGridViewRow NGVRow in NameGridView.Rows)
+                    foreach (DataGridViewRow NGVRow in ContributorNameGridView.Rows)
                     {
                         if (string.IsNullOrEmpty((string)NGVRow.Cells["ContributorId"].Value))
                         {
@@ -1783,7 +1836,7 @@ INSERT INTO contributor (
                         }
                     }
 
-                    this.LoadContributorNames();
+                    this.LoadContributorNamesDataGridView();
                     this.LoadSearchNameDropDown();
                     this.LoadContributorIdComboBox();
 
@@ -1814,13 +1867,13 @@ INSERT INTO contributor (
                 List<string> contributorIdList = new List<string>();
                 string contributorIds = string.Empty;
 
-                if (NameGridView.SelectedRows.Count > 0)
+                if (ContributorNameGridView.SelectedRows.Count > 0)
                 {
                     DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
 
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
-                        foreach (DataGridViewRow row in NameGridView.SelectedRows)
+                        foreach (DataGridViewRow row in ContributorNameGridView.SelectedRows)
                         {
                             contributorIdList.Add(row.Cells["ContributorId"].Value.ToString());
                         }
@@ -1836,7 +1889,7 @@ INSERT INTO contributor (
 
                         MessageBox.Show(string.Format("{0} name record(s) deleted.", contributorIdList.Count));
 
-                        this.LoadContributorNames();
+                        this.LoadContributorNamesDataGridView();
                         this.LoadSearchNameDropDown();
                         this.LoadContributorIdComboBox();
                     }
@@ -1934,7 +1987,6 @@ INSERT INTO contributor (
             {
                 if (mySqlConn != null)
                 {
-                    this.LoadTable();
                     mySqlConn.Close();
                 }
             }
@@ -2300,6 +2352,333 @@ INSERT INTO contributor_loan (
         private void LoanLookupTransComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.LoadLoanTransactionsDataGrid();
+        }
+        
+        private void UpdateAccountButton_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+            bool validationFlag = true;
+            bool recordsUpdated = false;
+
+            MySqlConnection mySqlConn = null;
+            string errorMsg = string.Empty;
+            
+            try
+            {
+                DialogResult result = MessageBox.Show("Are you sure to Add/Update this record set?", "Confirm", MessageBoxButtons.YesNo);
+
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    mySqlConn = new MySqlConnection(connString);
+                    mySqlConn.Open();
+
+                    string accountNumber = string.Empty;
+                    string accountName = string.Empty;
+                    string bankName = string.Empty;
+                    bool isClosed = false;
+                    string openingBalance = string.Empty;
+                    
+                    foreach (DataGridViewRow NGVRow in AccountDataGrid.Rows)
+                    {
+                        accountNumber = (string)NGVRow.Cells["AccountNumberDataGridColumn"].Value;
+                        accountName = (string)NGVRow.Cells["AccountNameDataGridColumn"].Value;
+                        bankName = (string)NGVRow.Cells["BankNameDataGridColumn"].Value;
+                        if ((NGVRow.Cells["IsClosedDataGridColumn"].Value != null && (bool)NGVRow.Cells["IsClosedDataGridColumn"].Value != false))
+                            isClosed = true;
+                        else
+                            isClosed = false;
+
+                        openingBalance = (string)NGVRow.Cells["OpeningBalanceDataGridColumn"].Value;
+
+                        if (string.IsNullOrEmpty(accountNumber) &&
+                            string.IsNullOrEmpty(accountName) &&
+                            string.IsNullOrEmpty(bankName) &&
+                            string.IsNullOrEmpty(openingBalance))
+                        {
+                        }
+                        else
+                        {
+                            if (string.IsNullOrEmpty((string)NGVRow.Cells["AccountIdDataGridColumn"].Value))
+                            {
+                                // Insert into Account table
+                                string sql = string.Format(@"
+INSERT INTO account(account_id,
+                         account_number,
+                         account_name,
+                         bank_name,
+                         account_end_date,
+                         initial_balance,
+                         date_added)
+VALUES (fn_get_nextid('bipc', 'account'),
+        {0},
+        {1},
+        {2},
+        {3},
+        {4},
+        now());"
+            , Utils.FormatDBText(accountNumber)
+            , Utils.FormatDBText(accountName)
+            , Utils.FormatDBText(bankName)
+            , isClosed ? "now()" : Utils.FormatDBText(string.Empty)
+            , Utils.FormatDBIntegers(openingBalance));
+
+                                MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                count = cmd.ExecuteNonQuery();
+
+                                recordsUpdated = true;
+                            }
+                            else
+                            {
+                                Account c = (Account)this.AccountList.Where(s => s.Key == (string)NGVRow.Cells["AccountIdDataGridColumn"].Value).FirstOrDefault().Value;
+
+                                if (string.IsNullOrEmpty(accountName))
+                                {
+                                    validationFlag = false;
+                                }
+
+                                if (validationFlag)
+                                {
+                                    if (!c.AccountName.Equals(accountName) ||
+                                        !c.AccountNumber.Equals(accountNumber) ||
+                                        !c.BankName.Equals(bankName) ||
+                                        !c.InitialBalance.Equals(openingBalance) ||
+                                        !c.IsClosed.Equals(isClosed))
+                                    {
+                                        string sql = string.Format(@"UPDATE account
+SET account_number = {0} -- varchar(50)
+  ,account_name = {1} -- varchar(100)
+  ,bank_name = {2} -- varchar(50)
+  ,account_end_date = {3} -- datetime
+  ,initial_balance = {4} -- decimal(11,2)
+  ,date_changed = now() -- datetime
+WHERE account_id = {5} -- int(11)", Utils.FormatDBText(accountNumber)
+                                      , Utils.FormatDBText(accountName)
+                                      , Utils.FormatDBText(bankName)
+                                      , isClosed ? "now()" : Utils.FormatDBText(string.Empty)
+                                      , Utils.FormatDBIntegers(openingBalance)
+                                      , (string)NGVRow.Cells["AccountIdDataGridColumn"].Value);
+
+                                        MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                                        count = cmd.ExecuteNonQuery();
+
+                                        recordsUpdated = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!validationFlag)
+                        MessageBox.Show("Some required fields are empty");
+
+                    if (recordsUpdated)
+                        MessageBox.Show("Accounts have been updated", "Success");
+                    else
+                        MessageBox.Show("No records were updated");
+
+                    // Refresh all accounts
+                    this.LoadAccountDataGridView();
+                    this.LoadAccountNameComboBox();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Failure");
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void LoadAccountDataGridView()
+        {
+            try
+            {
+                this.LoadAllAccounts();
+
+                AccountDataGrid.Rows.Clear();
+                AccountDataGrid.Refresh();
+
+                if (this.AccountList != null)
+                {
+                    foreach (KeyValuePair<string, Account> namePair in this.AccountList)
+                    {
+                        Account acc = namePair.Value;
+
+                        int n = AccountDataGrid.Rows.Add();
+                        AccountDataGrid.Rows[n].Cells["AccountIdDataGridColumn"].Value = namePair.Key;
+                        AccountDataGrid.Rows[n].Cells["AccountNumberDataGridColumn"].Value = acc.AccountNumber;
+                        AccountDataGrid.Rows[n].Cells["AccountNameDataGridColumn"].Value = acc.AccountName;
+                        AccountDataGrid.Rows[n].Cells["BankNameDataGridColumn"].Value = acc.BankName;
+                        AccountDataGrid.Rows[n].Cells["IsClosedDataGridColumn"].Value = acc.IsClosed;
+                        AccountDataGrid.Rows[n].Cells["OpeningBalanceDataGridColumn"].Value = acc.InitialBalance;
+                    }
+                }
+
+                AccountDataGrid.AutoResizeRows();
+            }
+            finally
+            {
+
+            }
+        }
+
+        public void LoadAllAccounts()
+        {
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT account_id,
+       account_number,
+       account_name,
+       bank_name,
+       account_end_date,
+       initial_balance,
+       date_added
+  FROM account
+ WHERE status = 1
+ ORDER BY date_added;
+;", mySqlConn);
+
+            AccountList.Clear();
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        AccountList.Add(dRow["account_id"].ToString(), new Account(dRow));
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        private void DeleteAccountButton_Click(object sender, EventArgs e)
+        {
+            MySqlConnection mySqlConn = null;
+
+            try
+            {
+                string errorMsg = string.Empty;
+                int resultCount = 0;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                List<string> accountIdList = new List<string>();
+                string accountIds = string.Empty;
+
+                if (AccountDataGrid.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        foreach (DataGridViewRow row in AccountDataGrid.SelectedRows)
+                        {
+                            var accountId = row.Cells["AccountIdDataGridColumn"].Value.ToString();
+                            var accountName = row.Cells["AccountNameDataGridColumn"].Value.ToString();
+
+                            // Exists Contributions for account
+                            var count = this.ContributionList
+                                .Where(x => x.Value.AccountId == accountId)
+                                .ToList()
+                                .Count;
+
+                            if (count == 0)
+                                accountIdList.Add(row.Cells["AccountIdDataGridColumn"].Value.ToString());
+                            else
+                                errorMsg += $"Account with Account Name [{accountName}] cannot be deleted as there are Contributions existing on the Account. ";
+                        }
+
+                        if (accountIdList.Count > 0)
+                        {
+                            accountIds = string.Join(",", accountIdList);
+
+                            string sql = string.Format(@"UPDATE account
+   SET status = 0, date_changed = now()
+ WHERE account_id IN ({0})", accountIds);
+
+                            MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                            resultCount = cmd.ExecuteNonQuery();
+
+                            MessageBox.Show(string.Format("{0} name record(s) deleted.", accountIdList.Count));
+                        }
+
+                        // Refresh all accounts
+                        this.LoadAccountDataGridView();
+                        this.LoadAccountNameComboBox();
+
+                        if (!string.IsNullOrEmpty(errorMsg))
+                            MessageBox.Show(errorMsg);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No rows were selected");
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+        }
+
+        public void LoadChart()
+        {
+            /*this.chart1.Series["Amount"].Points.AddXY("Food", 2000);
+            this.chart1.Series["Amount"].Points.AddXY("Ministry", 1300);
+            this.chart1.Series["Amount"].Points.AddXY("Condo", 3396);
+            this.chart1.Series["Amount"].Points.AddXY("Rent", 4800);*/
+        }
+
+        /// <summary>
+        /// Load Account Name Combo Box
+        /// </summary>
+        public void LoadAccountNameComboBox()
+        {       
+            AccountNameComboBox.Items.Clear();
+            SearchAccountNameComboBox.Items.Clear();
+                
+            foreach (KeyValuePair<string, Account> accountKvp in this.AccountList)
+            {
+                AccountNameComboBox.Items.Add(new Item(accountKvp.Value.AccountName, accountKvp.Key));
+                SearchAccountNameComboBox.Items.Add(new Item(accountKvp.Value.AccountName, accountKvp.Key));
+            }
+
+            AccountNameComboBox.ValueMember = "Id";
+            AccountNameComboBox.DisplayMember = "Name";
+            SearchAccountNameComboBox.ValueMember = "Id";
+            SearchAccountNameComboBox.DisplayMember = "Name";
+
+            if (this.AccountList.Count > 0)
+                AccountNameComboBox.SelectedIndex = 0;
+            else
+                AccountNameComboBox.SelectedValue = "";
+        }
+
+        private void AccountNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedAccountId = string.Empty;
+            if (!string.IsNullOrEmpty(AccountNameComboBox.Text))
+            {
+                Item selectedAccountIdItem = (Item)AccountNameComboBox.SelectedItem;
+                selectedAccountId = selectedAccountIdItem.Id;
+            }
+
+            this.LoadBalancesOnExpenditureTab(selectedAccountId);
+
+            // Load Contributions Data Grid
+            this.LoadContributionsDataGridView();
         }
     }
 }
