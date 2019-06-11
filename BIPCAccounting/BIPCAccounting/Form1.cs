@@ -122,7 +122,6 @@ namespace BIPCAccounting
             decimal OpeningBalance = 0;
             decimal CreditAmount = 0;
             decimal DebitAmount = 0;
-            decimal Total = 0;
             
             OpeningBalance = Convert.ToDecimal(this.AccountList
                 .Where(acc => acc.Key == account_id.ToString())
