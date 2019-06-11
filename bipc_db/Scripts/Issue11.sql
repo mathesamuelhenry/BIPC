@@ -18,6 +18,16 @@ ALTER TABLE contribution ADD COLUMN account_id int(11) DEFAULT NULL AFTER contri
 
 INSERT INTO seq_control VALUES ('account', 1);
 
+SELECT account_id
+  INTO @account_id
+  FROM account
+ WHERE account_name = 'BOFA_OLD';
+
+SELECT @account_id;
+
+UPDATE contribution
+   SET account_id = @account_id;
+
 /* Run later */
 ALTER TABLE contribution MODIFY COLUMN account_id int(11) NOT NULL;
 
