@@ -152,9 +152,6 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.OpeningBalanceAddUpdateButton = new System.Windows.Forms.Button();
-            this.OpeningBalanceTextBox = new System.Windows.Forms.TextBox();
             this.loanTab = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.DeleteLoanContrubutorButton = new System.Windows.Forms.Button();
@@ -217,7 +214,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ContributorNameGridView)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.loanTab.SuspendLayout();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loanContributorDataGridView)).BeginInit();
@@ -1258,7 +1254,7 @@
             this.MiscellaneousTab.Location = new System.Drawing.Point(4, 22);
             this.MiscellaneousTab.Name = "MiscellaneousTab";
             this.MiscellaneousTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MiscellaneousTab.Size = new System.Drawing.Size(1339, 631);
+            this.MiscellaneousTab.Size = new System.Drawing.Size(1197, 631);
             this.MiscellaneousTab.TabIndex = 2;
             this.MiscellaneousTab.Text = "Miscellaneous";
             this.MiscellaneousTab.UseVisualStyleBackColor = true;
@@ -1367,8 +1363,7 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 0, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(445, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
@@ -1380,7 +1375,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.button3);
-            this.groupBox6.Location = new System.Drawing.Point(3, 160);
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(251, 150);
             this.groupBox6.TabIndex = 7;
@@ -1397,34 +1392,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.OpeningBalanceAddUpdateButton);
-            this.groupBox4.Controls.Add(this.OpeningBalanceTextBox);
-            this.groupBox4.Location = new System.Drawing.Point(3, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(251, 150);
-            this.groupBox4.TabIndex = 5;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Opening Balance";
-            // 
-            // OpeningBalanceAddUpdateButton
-            // 
-            this.OpeningBalanceAddUpdateButton.Location = new System.Drawing.Point(17, 102);
-            this.OpeningBalanceAddUpdateButton.Name = "OpeningBalanceAddUpdateButton";
-            this.OpeningBalanceAddUpdateButton.Size = new System.Drawing.Size(222, 23);
-            this.OpeningBalanceAddUpdateButton.TabIndex = 1;
-            this.OpeningBalanceAddUpdateButton.Text = "Add";
-            this.OpeningBalanceAddUpdateButton.UseVisualStyleBackColor = true;
-            this.OpeningBalanceAddUpdateButton.Click += new System.EventHandler(this.OpeningBalanceAddUpdateButton_Click);
-            // 
-            // OpeningBalanceTextBox
-            // 
-            this.OpeningBalanceTextBox.Location = new System.Drawing.Point(17, 44);
-            this.OpeningBalanceTextBox.Name = "OpeningBalanceTextBox";
-            this.OpeningBalanceTextBox.Size = new System.Drawing.Size(222, 20);
-            this.OpeningBalanceTextBox.TabIndex = 0;
-            // 
             // loanTab
             // 
             this.loanTab.Controls.Add(this.groupBox9);
@@ -1433,7 +1400,7 @@
             this.loanTab.Location = new System.Drawing.Point(4, 22);
             this.loanTab.Name = "loanTab";
             this.loanTab.Padding = new System.Windows.Forms.Padding(3);
-            this.loanTab.Size = new System.Drawing.Size(1339, 631);
+            this.loanTab.Size = new System.Drawing.Size(1197, 631);
             this.loanTab.TabIndex = 3;
             this.loanTab.Text = "Loan";
             this.loanTab.UseVisualStyleBackColor = true;
@@ -1706,7 +1673,7 @@
             this.AccountTab.Location = new System.Drawing.Point(4, 22);
             this.AccountTab.Name = "AccountTab";
             this.AccountTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AccountTab.Size = new System.Drawing.Size(1339, 631);
+            this.AccountTab.Size = new System.Drawing.Size(1197, 631);
             this.AccountTab.TabIndex = 4;
             this.AccountTab.Text = "Account";
             this.AccountTab.UseVisualStyleBackColor = true;
@@ -1815,8 +1782,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ContributorNameGridView)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.loanTab.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.loanContributorDataGridView)).EndInit();
@@ -1887,9 +1852,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button OpeningBalanceAddUpdateButton;
-        private System.Windows.Forms.TextBox OpeningBalanceTextBox;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
