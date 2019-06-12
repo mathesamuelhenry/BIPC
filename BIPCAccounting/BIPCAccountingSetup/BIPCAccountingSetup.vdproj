@@ -278,11 +278,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:BIPC Accounting Tool"
         "ProductCode" = "8:{7130DA4E-C5B1-43F8-B976-22BD085AF61E}"
-        "PackageCode" = "8:{C108A0A2-C6EB-4756-BF1A-EE5862D0C11C}"
+        "PackageCode" = "8:{E450D6C3-5DE7-43B0-9548-0F12CE6586E0}"
         "UpgradeCode" = "8:{96589774-1278-4325-B526-70B5DA9AB388}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
@@ -827,7 +827,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2054DF15BFAC440B982DCBB3B14936C0"
             {
-            "SourcePath" = "8:..\\BIPCAccounting\\obj\\Release\\BIPCAccounting.exe"
+            "SourcePath" = "8:..\\BIPCAccounting\\obj\\CustomRelease\\BIPCAccounting.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_9632B30E203F4985B0A90B6DE9FDF078"
