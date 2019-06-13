@@ -807,7 +807,7 @@ INSERT INTO column_value_desc(column_value_desc_id,
                               description,
                               date_added)
    VALUES (
-             fn_get_nextid('BIPC', 'column_value_desc'),
+             fn_get_nextid('column_value_desc'),
              (SELECT table_column_id
                 FROM table_column
                WHERE     table_name = 'contribution'
@@ -881,7 +881,7 @@ INSERT INTO contribution (contribution_id
   ,note
   ,status
   ,date_added
-) VALUES (fn_get_nextid('BIPC', 'contribution')
+) VALUES (fn_get_nextid('contribution')
   ,{0}   -- contributor_id - IN int(11)
   ,{1}   -- account_id - IN int(11)
   ,{2}  -- contribution_name - IN varchar(60)
@@ -1794,7 +1794,7 @@ INSERT INTO contributor (
   ,last_name
   ,date_added
 ) VALUES (
-  fn_get_nextid('BIPC', 'contributor')
+  fn_get_nextid('contributor')
   ,'{0}' -- first_name - IN varchar(50)
   ,'{1}'  -- last_name - IN varchar(50)
   ,now()  -- date_added - IN datetime
@@ -1964,7 +1964,7 @@ INSERT INTO contributor (
   ,loan_amount
   ,date_added
 ) VALUES (
-   fn_get_nextid('BIPC', 'contributor_loan') -- contributor_loan_id - IN int(11)
+   fn_get_nextid('contributor_loan') -- contributor_loan_id - IN int(11)
   ,'{contributorName}' -- contributor_id - IN int(11)
   ,{amount} -- loan_amount - IN decimal(11,2)
   ,now()  -- date_added - IN datetime
@@ -2299,7 +2299,7 @@ INSERT INTO contributor_loan (
   ,last_name
   ,date_added
 ) VALUES (
-  fn_get_nextid('BIPC', 'contributor')
+  fn_get_nextid('contributor')
   ,'{0}' -- first_name - IN varchar(50)
   ,'{1}'  -- last_name - IN varchar(50)
   ,now()  -- date_added - IN datetime
@@ -2409,7 +2409,7 @@ INSERT INTO account(account_id,
                          account_end_date,
                          initial_balance,
                          date_added)
-VALUES (fn_get_nextid('bipc', 'account'),
+VALUES (fn_get_nextid('account'),
         {0},
         {1},
         {2},

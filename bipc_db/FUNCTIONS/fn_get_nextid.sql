@@ -1,5 +1,5 @@
 DROP FUNCTION IF EXISTS fn_get_nextid;
-CREATE FUNCTION `fn_get_nextid`(i_db_name VARCHAR(30),i_table_name VARCHAR(64)) RETURNS int(11)
+CREATE FUNCTION `fn_get_nextid`(i_table_name VARCHAR(64)) RETURNS int(11)
     READS SQL DATA
     DETERMINISTIC
 BEGIN
