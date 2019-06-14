@@ -26,7 +26,7 @@ namespace BIPCAccounting
         {
             InitializeComponent();
 
-            connString = ConfigurationManager.ConnectionStrings["DEV"].ConnectionString;
+            connString = ConfigurationManager.ConnectionStrings["PROD"].ConnectionString;
 
             this.LoadFormData();
         }
