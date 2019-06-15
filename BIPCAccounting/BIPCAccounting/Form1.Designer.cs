@@ -1415,7 +1415,7 @@
             this.groupBox9.Size = new System.Drawing.Size(508, 193);
             this.groupBox9.TabIndex = 7;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Loan Contributors";
+            this.groupBox9.Text = "Loan Borrowers";
             // 
             // DeleteLoanContrubutorButton
             // 
@@ -1619,7 +1619,7 @@
             this.groupBox7.Size = new System.Drawing.Size(317, 193);
             this.groupBox7.TabIndex = 5;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Add Loan";
+            this.groupBox7.Text = "Add Borrower";
             // 
             // AddLoanButton
             // 

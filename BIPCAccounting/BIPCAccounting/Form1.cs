@@ -1976,6 +1976,9 @@ INSERT INTO contributor (
                     if (count > 0)
                     {
                         MessageBox.Show($"{count} loan records added");
+
+                        // Refresh Loan contributors
+                        this.LoadLoanContributorDataGridView();
                     }
                 }
             }
