@@ -1,0 +1,159 @@
+USE bipc_audit;
+
+# ********************************************************************************************************************************
+# TABLE audit_account
+# ********************************************************************************************************************************
+
+DROP TABLE IF EXISTS bipc_audit.audit_account;
+
+CREATE TABLE bipc_audit.audit_account (
+  audit_record_id INT(11) NOT NULL,
+  db_user VARCHAR(30) NOT NULL,
+  end_user VARCHAR(30) NOT NULL,
+  action_name VARCHAR(10) NOT NULL,
+  action_timestamp DATETIME NOT NULL,
+  client_ip_address VARCHAR(64) NOT NULL,
+  account_id INT(11) NOT NULL,
+  column_name VARCHAR(50) NOT NULL,
+  old_value VARCHAR(255) NOT NULL,
+  new_value VARCHAR(255) NOT NULL,
+  PRIMARY KEY (audit_record_id)
+ ,KEY ix_account_id (account_id)
+ ,KEY ix_action_timestamp (action_timestamp));
+ 
+REPLACE INTO seq_control VALUES ('audit_account', 1);
+
+# ********************************************************************************************************************************
+# AUDIT STORED PROCEDURE - bipc.account_insert_audit
+# ********************************************************************************************************************************
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS bipc_audit.sp_account_insert_audit;
+$$
+
+CREATE PROCEDURE bipc_audit.sp_account_insert_audit(
+   end_user          VARCHAR(30),
+   action_name       VARCHAR(7),
+   account_id    INT,
+   column_name       VARCHAR(50),
+   old_value         VARCHAR(255),
+   new_value         VARCHAR(255))
+   BEGIN
+      DECLARE v_client_ip   VARCHAR(64);
+
+      SELECT SUBSTRING_INDEX(USER(), '@', -1)
+        INTO v_client_ip;
+
+      IF    action_name <> 'update'
+         OR old_value <> new_value
+         OR (old_value IS NULL AND new_value IS NOT NULL)
+      THEN
+         INSERT INTO bipc_audit.audit_account(audit_record_id,
+                                                  db_user,
+                                                  end_user,
+                                                  action_name,
+                                                  action_timestamp,
+                                                  client_ip_address,
+                                                  account_id,
+                                                  column_name,
+                                                  old_value,
+                                                  new_value)
+         VALUES (bipc_audit.fn_get_nextid('audit_account'),
+                 SUBSTRING_INDEX(USER(), '@', 1),
+                 IF(end_user IS NULL, '', end_user),
+                 action_name,
+                 NOW(),
+                 v_client_ip,
+                 account_id,
+                 column_name,
+                 CAST(IF(old_value IS NULL, '', old_value) AS CHAR),
+                 CAST(IF(new_value IS NULL, '', new_value) AS CHAR));
+      END IF;
+   END
+$$
+
+DELIMITER ;
+
+# ********************************************************************************************************************************
+# AUDIT TRIGGER - AFTER INSERT ON "bipc.account"
+# ********************************************************************************************************************************
+DELIMITER $$
+DROP TRIGGER IF EXISTS bipc.account_insert_audit_trigger
+$$
+CREATE TRIGGER bipc.account_insert_audit_trigger AFTER INSERT ON bipc.account
+FOR EACH ROW
+BEGIN
+
+
+IF new.account_id IS NOT NULL THEN
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'account_id', '', new.account_id);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'account_number', '', new.account_number);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'account_name', '', new.account_name);
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'bank_name', '', new.bank_name);
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'account_end_date', '', new.account_end_date);
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'initial_balance', '', new.initial_balance);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'status', '', new.status);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'date_added', '', new.date_added);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'insert', new.account_id, 'date_changed', '', new.date_changed);
+END IF;
+
+END 
+$$
+
+DELIMITER ;
+# ********************************************************************************************************************************
+# AUDIT TRIGGER - AFTER UPDATE ON "bipc.account"
+# ********************************************************************************************************************************
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS bipc.account_update_audit_trigger
+$$
+CREATE TRIGGER bipc.account_update_audit_trigger AFTER UPDATE ON bipc.account
+FOR EACH ROW
+BEGIN
+
+
+IF new.account_id IS NOT NULL THEN
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'account_id', old.account_id , new.account_id);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'account_number', old.account_number, new.account_number);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'account_name', old.account_name, new.account_name);
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'bank_name', old.bank_name, new.bank_name);
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'account_end_date', old.account_end_date, new.account_end_date);
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'initial_balance', old.initial_balance, new.initial_balance);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'status', old.status, new.status);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'date_added', old.date_added, new.date_added);
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'update', new.account_id, 'date_changed', old.date_changed, new.date_changed);
+END IF;
+
+END 
+$$
+
+DELIMITER ;
+
+
+# ********************************************************************************************************************************
+# AUDIT TRIGGER - AFTER DELETE ON "bipc.account"
+# ********************************************************************************************************************************
+DELIMITER $$
+DROP TRIGGER IF EXISTS bipc.account_delete_audit_trigger
+$$
+CREATE TRIGGER bipc.account_delete_audit_trigger AFTER DELETE ON bipc.account
+FOR EACH ROW
+BEGIN
+
+IF old.account_id  IS NOT NULL THEN
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'account_id', old.account_id , '');
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'account_number', old.account_number, '');
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'account_name', old.account_name, '');
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'bank_name', old.bank_name, '');
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'account_end_date', old.account_end_date, '');
+  CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'initial_balance', old.initial_balance, '');
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'status', old.status, '');
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'date_added', old.date_added, '');
+	CALL bipc_audit.sp_account_insert_audit('SamuelMathe', 'delete', old.account_id, 'date_changed', old.date_changed, '');
+END IF;
+
+END 
+$$
+
+DELIMITER ;
