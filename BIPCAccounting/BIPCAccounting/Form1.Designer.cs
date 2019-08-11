@@ -32,6 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.AddUpdateExpenditureTab = new System.Windows.Forms.TabPage();
@@ -192,10 +195,20 @@
             this.BankNameDataGridColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OpeningBalanceDataGridColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsClosedDataGridColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.AnalyticsTab = new System.Windows.Forms.TabPage();
+            this.ContributionChartByYear = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.AnalyticsYearComboBox = new System.Windows.Forms.ComboBox();
+            this.AnalyticsYearLabel = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OpeningBalanceTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.TotalBalanceFromOpeningBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SearchBalanceToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.AnalyticsTransactionTypeLabel = new System.Windows.Forms.Label();
+            this.AnalyticsTransTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.AnalyticsContributionsDataGridView = new System.Windows.Forms.DataGridView();
+            this.AnalyticsDataGridViewContributionCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AnalyticsDataGridViewAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.AddUpdateExpenditureTab.SuspendLayout();
             this.MainAcountNamePanel.SuspendLayout();
@@ -222,6 +235,10 @@
             this.groupBox7.SuspendLayout();
             this.AccountTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AccountDataGrid)).BeginInit();
+            this.AnalyticsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ContributionChartByYear)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AnalyticsContributionsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -231,6 +248,7 @@
             this.tabControl1.Controls.Add(this.MiscellaneousTab);
             this.tabControl1.Controls.Add(this.loanTab);
             this.tabControl1.Controls.Add(this.AccountTab);
+            this.tabControl1.Controls.Add(this.AnalyticsTab);
             this.tabControl1.Location = new System.Drawing.Point(12, 22);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1747,6 +1765,109 @@
             this.IsClosedDataGridColumn.Name = "IsClosedDataGridColumn";
             this.IsClosedDataGridColumn.ToolTipText = "Mark as CLOSED when account is closed or no more transactions on the account.";
             // 
+            // AnalyticsTab
+            // 
+            this.AnalyticsTab.Controls.Add(this.AnalyticsContributionsDataGridView);
+            this.AnalyticsTab.Controls.Add(this.ContributionChartByYear);
+            this.AnalyticsTab.Controls.Add(this.panel1);
+            this.AnalyticsTab.Location = new System.Drawing.Point(4, 22);
+            this.AnalyticsTab.Name = "AnalyticsTab";
+            this.AnalyticsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.AnalyticsTab.Size = new System.Drawing.Size(1197, 631);
+            this.AnalyticsTab.TabIndex = 5;
+            this.AnalyticsTab.Text = "Analytics";
+            this.AnalyticsTab.UseVisualStyleBackColor = true;
+            // 
+            // ContributionChartByYear
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.ContributionChartByYear.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ContributionChartByYear.Legends.Add(legend1);
+            this.ContributionChartByYear.Location = new System.Drawing.Point(384, 19);
+            this.ContributionChartByYear.Name = "ContributionChartByYear";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Amount";
+            this.ContributionChartByYear.Series.Add(series1);
+            this.ContributionChartByYear.Size = new System.Drawing.Size(794, 586);
+            this.ContributionChartByYear.TabIndex = 3;
+            this.ContributionChartByYear.Text = "chart1";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.AnalyticsTransTypeComboBox);
+            this.panel1.Controls.Add(this.AnalyticsTransactionTypeLabel);
+            this.panel1.Controls.Add(this.AnalyticsYearComboBox);
+            this.panel1.Controls.Add(this.AnalyticsYearLabel);
+            this.panel1.Location = new System.Drawing.Point(23, 19);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(355, 120);
+            this.panel1.TabIndex = 2;
+            // 
+            // AnalyticsYearComboBox
+            // 
+            this.AnalyticsYearComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AnalyticsYearComboBox.FormattingEnabled = true;
+            this.AnalyticsYearComboBox.Location = new System.Drawing.Point(135, 14);
+            this.AnalyticsYearComboBox.Name = "AnalyticsYearComboBox";
+            this.AnalyticsYearComboBox.Size = new System.Drawing.Size(155, 21);
+            this.AnalyticsYearComboBox.TabIndex = 1;
+            this.AnalyticsYearComboBox.SelectedIndexChanged += new System.EventHandler(this.AnalyticsYearComboBox_SelectedIndexChanged);
+            // 
+            // AnalyticsYearLabel
+            // 
+            this.AnalyticsYearLabel.AutoSize = true;
+            this.AnalyticsYearLabel.Location = new System.Drawing.Point(19, 17);
+            this.AnalyticsYearLabel.Name = "AnalyticsYearLabel";
+            this.AnalyticsYearLabel.Size = new System.Drawing.Size(29, 13);
+            this.AnalyticsYearLabel.TabIndex = 0;
+            this.AnalyticsYearLabel.Text = "Year";
+            // 
+            // AnalyticsTransactionTypeLabel
+            // 
+            this.AnalyticsTransactionTypeLabel.AutoSize = true;
+            this.AnalyticsTransactionTypeLabel.Location = new System.Drawing.Point(22, 61);
+            this.AnalyticsTransactionTypeLabel.Name = "AnalyticsTransactionTypeLabel";
+            this.AnalyticsTransactionTypeLabel.Size = new System.Drawing.Size(90, 13);
+            this.AnalyticsTransactionTypeLabel.TabIndex = 2;
+            this.AnalyticsTransactionTypeLabel.Text = "Transaction Type";
+            // 
+            // AnalyticsTransTypeComboBox
+            // 
+            this.AnalyticsTransTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AnalyticsTransTypeComboBox.FormattingEnabled = true;
+            this.AnalyticsTransTypeComboBox.Location = new System.Drawing.Point(135, 58);
+            this.AnalyticsTransTypeComboBox.Name = "AnalyticsTransTypeComboBox";
+            this.AnalyticsTransTypeComboBox.Size = new System.Drawing.Size(155, 21);
+            this.AnalyticsTransTypeComboBox.TabIndex = 3;
+            this.AnalyticsTransTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.AnalyticsTransTypeComboBox_SelectedIndexChanged);
+            // 
+            // AnalyticsContributionsDataGridView
+            // 
+            this.AnalyticsContributionsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.AnalyticsContributionsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AnalyticsContributionsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.AnalyticsDataGridViewContributionCategory,
+            this.AnalyticsDataGridViewAmount});
+            this.AnalyticsContributionsDataGridView.Location = new System.Drawing.Point(23, 157);
+            this.AnalyticsContributionsDataGridView.Name = "AnalyticsContributionsDataGridView";
+            this.AnalyticsContributionsDataGridView.Size = new System.Drawing.Size(355, 448);
+            this.AnalyticsContributionsDataGridView.TabIndex = 4;
+            // 
+            // AnalyticsDataGridViewContributionCategory
+            // 
+            this.AnalyticsDataGridViewContributionCategory.HeaderText = "Category";
+            this.AnalyticsDataGridViewContributionCategory.Name = "AnalyticsDataGridViewContributionCategory";
+            this.AnalyticsDataGridViewContributionCategory.ReadOnly = true;
+            // 
+            // AnalyticsDataGridViewAmount
+            // 
+            this.AnalyticsDataGridViewAmount.HeaderText = "Amount";
+            this.AnalyticsDataGridViewAmount.Name = "AnalyticsDataGridViewAmount";
+            this.AnalyticsDataGridViewAmount.ReadOnly = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1792,6 +1913,11 @@
             this.groupBox7.PerformLayout();
             this.AccountTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AccountDataGrid)).EndInit();
+            this.AnalyticsTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ContributionChartByYear)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AnalyticsContributionsDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1961,5 +2087,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LastName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContributorId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContributorLastUpdated;
+        private System.Windows.Forms.TabPage AnalyticsTab;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ContributionChartByYear;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox AnalyticsYearComboBox;
+        private System.Windows.Forms.Label AnalyticsYearLabel;
+        private System.Windows.Forms.ComboBox AnalyticsTransTypeComboBox;
+        private System.Windows.Forms.Label AnalyticsTransactionTypeLabel;
+        private System.Windows.Forms.DataGridView AnalyticsContributionsDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AnalyticsDataGridViewContributionCategory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AnalyticsDataGridViewAmount;
     }
 }

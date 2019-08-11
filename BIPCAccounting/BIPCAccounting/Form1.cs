@@ -11,6 +11,7 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using BIPCAccounting.Entity;
 using System.Configuration;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BIPCAccounting
 {
@@ -77,6 +78,15 @@ namespace BIPCAccounting
 
             SearchBalanceToolTip.SetToolTip(CurrentSearchBalanceLabel, "Display Opening Balance + Search Balance");
             this.SetToolTipProp(SearchBalanceToolTip);
+
+            #region Year Charts
+
+            this.LoadAnalyticsYearsComboBox();
+            this.LoadAnalyticsTransactionTypeComboBox();
+            AnalyticsTransTypeComboBox.SelectedIndex = 0;
+            AnalyticsYearComboBox.SelectedIndex = 0;
+
+            #endregion
         }
         
         private void LoadContributorNamesDataGridView()
@@ -2249,11 +2259,58 @@ WHERE cl.status = 1;", mySqlConn);
             }
         }
         
-        #endregion
-
         private void DeleteLoanContrubutorButton_Click(object sender, EventArgs e)
         {
+            MySqlConnection mySqlConn = null;
 
+            try
+            {
+                int count = 0;
+                mySqlConn = new MySqlConnection(connString);
+                mySqlConn.Open();
+                List<string> contributorLoanIdList = new List<string>();
+                string contributorLoanIds = string.Empty;
+
+                if (loanContributorDataGridView.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Are you sure to delete these records?", "Confirm", MessageBoxButtons.YesNo);
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        foreach (DataGridViewRow row in loanContributorDataGridView.SelectedRows)
+                        {   
+                            contributorLoanIdList.Add(row.Cells["ContributorLoanId"].Value.ToString());
+                        }
+
+                        contributorLoanIds = string.Join(",", contributorLoanIdList);
+
+                        string sql = string.Format(@"UPDATE contributor_loan
+   SET status = 0, date_changed = now()
+ WHERE contributor_loan_id IN ({0}) and status = 1", contributorLoanIds);
+
+                        MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
+                        count = cmd.ExecuteNonQuery();
+
+                        MessageBox.Show(string.Format("{0} loan borrowers deleted.", contributorLoanIdList.Count));
+
+                        // Refresh Loan contributors
+                        this.LoadLoanContributorDataGridView();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No rows were selected");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
         }
 
         private void AddUpdateLoanContributorButtonGrid_Click(object sender, EventArgs e)
@@ -2310,6 +2367,9 @@ INSERT INTO contributor_loan (
 
                                         MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
                                         count = cmd.ExecuteNonQuery();
+
+                                        // Refresh Loan contributors
+                                        this.LoadLoanContributorDataGridView();
                                     }
                                 }
                             }
@@ -2336,6 +2396,9 @@ INSERT INTO contributor_loan (
 
                                 MySqlCommand cmd = new MySqlCommand(sql, mySqlConn);
                                 count = cmd.ExecuteNonQuery();
+
+                                // Refresh Loan contributors
+                                this.LoadLoanContributorDataGridView();
                             }
                         }
                     }
@@ -2495,6 +2558,8 @@ WHERE account_id = {5} -- int(11)", Utils.FormatDBText(accountNumber)
             }
         }
 
+        #endregion
+
         private void LoadAccountDataGridView()
         {
             try
@@ -2635,15 +2700,7 @@ WHERE account_id = {5} -- int(11)", Utils.FormatDBText(accountNumber)
                     mySqlConn.Close();
             }
         }
-
-        public void LoadChart()
-        {
-            /*this.chart1.Series["Amount"].Points.AddXY("Food", 2000);
-            this.chart1.Series["Amount"].Points.AddXY("Ministry", 1300);
-            this.chart1.Series["Amount"].Points.AddXY("Condo", 3396);
-            this.chart1.Series["Amount"].Points.AddXY("Rent", 4800);*/
-        }
-
+        
         /// <summary>
         /// Load Account Name Combo Box
         /// </summary>
@@ -2683,5 +2740,182 @@ WHERE account_id = {5} -- int(11)", Utils.FormatDBText(accountNumber)
             // Load Contributions Data Grid
             this.LoadContributionsDataGridView();
         }
+
+        #region Analytics tab
+
+        private List<string> LoadAllAccountingYears()
+        {
+            List<string> accountingYearList = new List<string>();
+
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+            MySqlCommand cmdDataBase = new MySqlCommand(@"SELECT DISTINCT DATE_FORMAT(transaction_date, '%Y') AS year
+  FROM contribution
+ WHERE status = 1;", mySqlConn);
+
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        accountingYearList.Add(dRow["year"].ToString());
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+
+            return accountingYearList;
+        }
+
+        private void LoadAnalyticsYearsComboBox()
+        {
+            List<string> accountingYearsList = this.LoadAllAccountingYears();
+
+            AnalyticsYearComboBox.Items.Clear();
+
+            foreach (string year in accountingYearsList)
+            {
+                AnalyticsYearComboBox.Items.Add(new Item(year, year));
+            }
+
+            AnalyticsYearComboBox.ValueMember = "Id";
+            AnalyticsYearComboBox.DisplayMember = "Name";
+        }
+
+        private void LoadAnalyticsTransactionTypeComboBox()
+        {
+            List<CVD> TransTypeCVDList = this.cvd.GetCVD("contribution", "transaction_type");
+
+            AnalyticsTransTypeComboBox.Items.Clear();
+
+            foreach (CVD cvd in TransTypeCVDList)
+            {
+                AnalyticsTransTypeComboBox.Items.Add(new Item(cvd.Description, cvd.Value));
+            }
+
+            AnalyticsTransTypeComboBox.ValueMember = "Id";
+            AnalyticsTransTypeComboBox.DisplayMember = "Name";
+        }
+
+        private void AnalyticsYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.LoadContributionAnalyticsChart();
+        }
+
+        private void AnalyticsTransTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.LoadContributionAnalyticsChart();
+        }
+
+        public void LoadContributionAnalyticsChart()
+        {
+            string selectedYear = string.Empty;
+            if (!string.IsNullOrEmpty(AnalyticsYearComboBox.Text))
+            {
+                Item selectedYearItem = (Item)AnalyticsYearComboBox.SelectedItem;
+                selectedYear = selectedYearItem.Id;
+            }
+
+            string selectedTransType = string.Empty;
+            if (!string.IsNullOrEmpty(AnalyticsTransTypeComboBox.Text))
+            {
+                Item selectedTransTypeItem = (Item)AnalyticsTransTypeComboBox.SelectedItem;
+                selectedTransType = selectedTransTypeItem.Id;
+            }
+
+            var contributionAnalyticsData = this.LoadContributionAnalyticsData(selectedYear, int.Parse(selectedTransType));
+
+            this.ContributionChartByYear.Series["Amount"].Points.Clear();
+            
+            if (contributionAnalyticsData != null)
+            {
+                AnalyticsContributionsDataGridView.Rows.Clear();
+                AnalyticsContributionsDataGridView.Refresh();
+
+                foreach (KeyValuePair<string, decimal> data in contributionAnalyticsData)
+                {
+                    DataPoint dp = new DataPoint();
+                    dp.LabelToolTip = $"{data.Key} ({data.Value})";
+                    dp.SetValueXY(data.Key, data.Value);
+                    dp.Label = $"{data.Key} ({data.Value})";
+                    dp.LegendText = data.Key;
+
+                    this.ContributionChartByYear.Series["Amount"].Points.Add(dp);
+
+                    int n = AnalyticsContributionsDataGridView.Rows.Add();
+                    AnalyticsContributionsDataGridView.Rows[n].Cells["AnalyticsDataGridViewContributionCategory"].Value = data.Key;
+                    AnalyticsContributionsDataGridView.Rows[n].Cells["AnalyticsDataGridViewAmount"].Value = data.Value;
+                }
+
+                AccountDataGrid.AutoResizeRows();
+            }
+        }
+
+        public Dictionary<string, decimal> LoadContributionAnalyticsData(string year, int transactionType)
+        {
+            Dictionary<string, decimal> contributionAnalyticsDataList = new Dictionary<string, decimal>();
+
+            MySqlConnection mySqlConn = new MySqlConnection(connString);
+
+            string sql = $@"SELECT cvd_category.description AS description, SUM(cn.amount) AS amount
+  FROM contribution cn
+       LEFT JOIN contributor con
+          ON con.contributor_id = cn.contributor_id AND con.status = 1
+       LEFT JOIN table_column tc_category
+          ON     tc_category.table_name = 'contribution'
+             AND tc_category.column_name = 'category'
+       LEFT JOIN column_value_desc cvd_category
+          ON     cvd_category.table_column_id = tc_category.table_column_id
+             AND cvd_category.status = 1
+             AND cvd_category.value = cn.category
+       LEFT JOIN table_column tc_trans_type
+          ON     tc_trans_type.table_name = 'contribution'
+             AND tc_trans_type.column_name = 'transaction_type'
+       LEFT JOIN column_value_desc cvd_trans_type
+          ON     cvd_trans_type.table_column_id =
+                    tc_trans_type.table_column_id
+             AND cvd_trans_type.status = 1
+             AND cvd_trans_type.value = cn.transaction_type
+ WHERE     DATE_FORMAT(cn.transaction_date, '%Y') = '{year}'
+       AND cn.status = 1
+       AND cn.transaction_type = {transactionType}
+GROUP BY cn.category;";
+
+            MySqlCommand cmdDataBase = new MySqlCommand(sql, mySqlConn);
+
+            try
+            {
+                MySqlDataAdapter sda = new MySqlDataAdapter();
+                sda.SelectCommand = cmdDataBase;
+                System.Data.DataTable dt = new System.Data.DataTable();
+                sda.Fill(dt);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dRow in dt.Rows)
+                    {
+                        contributionAnalyticsDataList.Add(dRow["description"].ToString(), Convert.ToDecimal(dRow["amount"].ToString()));
+                    }
+                }
+            }
+            finally
+            {
+                if (mySqlConn != null)
+                    mySqlConn.Close();
+            }
+
+            return contributionAnalyticsDataList;
+        }
+
+        #endregion
     }
 }
