@@ -508,7 +508,7 @@ namespace BIPCAccounting
                 DashboardContributionsDataGridView.Rows.Clear();
                 DashboardContributionsDataGridView.Refresh();
 
-                if (this.ContributionList != null && currentContributionList.Count > 0)
+                if (currentContributionList != null && currentContributionList.Count > 0)
                 {
                     foreach (KeyValuePair<string, Contribution> contribution in currentContributionList)
                     {
@@ -526,7 +526,13 @@ namespace BIPCAccounting
                         DashboardContributionsDataGridView.Rows[n].Cells["DateAdded"].Value = contribution.Value.DateAdded;
                     }
 
+                    TotalTransactionsCount.Text = currentContributionList.Count.ToString();
+
                     DashboardContributionsDataGridView.Rows[0].Selected = true;
+                }
+                else
+                {
+                    TotalTransactionsCount.Text = "0";
                 }
 
                 DashboardContributionsDataGridView.AutoResizeRows();
@@ -2201,7 +2207,8 @@ WHERE cl.status = 1;", mySqlConn);
              AND cvd_transmode.status = 1
        where cn.contributor_id = {contributorId}
          AND cvd.description = 'LOAN'
-         AND cvd_transtype.description = 'Credit'";
+         AND cvd_transtype.description = 'Credit'
+         AND cn.status = 1;";
 
                 MySqlConnection mySqlConn = new MySqlConnection(connString);
                 mySqlConn.Open();
@@ -2708,7 +2715,9 @@ WHERE account_id = {5} -- int(11)", Utils.FormatDBText(accountNumber)
         {       
             AccountNameComboBox.Items.Clear();
             SearchAccountNameComboBox.Items.Clear();
-                
+
+            SearchAccountNameComboBox.Items.Add(new Item(string.Empty, string.Empty));
+
             foreach (KeyValuePair<string, Account> accountKvp in this.AccountList)
             {
                 AccountNameComboBox.Items.Add(new Item(accountKvp.Value.AccountName, accountKvp.Key));
