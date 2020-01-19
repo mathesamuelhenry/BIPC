@@ -4,9 +4,9 @@ USE bipc_audit;
 # TABLE audit_contributor_loan
 # ********************************************************************************************************************************
 
-DROP TABLE IF EXISTS bipc_audit.audit_contributor_loan;
+DROP TABLE IF EXISTS audit_contributor_loan;
 
-CREATE TABLE bipc_audit.audit_contributor_loan (
+CREATE TABLE audit_contributor_loan (
   audit_record_id INT(11) NOT NULL,
   db_user VARCHAR(30) NOT NULL,
   end_user VARCHAR(30) NOT NULL,

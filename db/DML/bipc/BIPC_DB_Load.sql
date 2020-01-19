@@ -8,6 +8,14 @@ INSERT INTO seq_control VALUES ('contribution', 1);
 INSERT INTO seq_control VALUES ('table_column', 1);
 INSERT INTO seq_control VALUES ('contributor_loan', 1);
 INSERT INTO seq_control VALUES ('account', 1);
+INSERT INTO seq_control VALUES ('organization', 1);
+INSERT INTO seq_control VALUES ('users', 1);
+INSERT INTO seq_control VALUES ('user_organization', 1);
+INSERT INTO seq_control VALUES ('kvp', 1);
+INSERT INTO seq_control VALUES ('security_question', 1);
+INSERT INTO seq_control VALUES ('user_security_question', 1);
+INSERT INTO seq_control VALUES ('role', 1);
+INSERT INTO seq_control VALUES ('user_role', 1);
 
 insert into table_column (
   table_column_id
@@ -210,3 +218,106 @@ insert into table_column (
   ,now()  -- date_added - IN datetime
 );
 
+INSERT INTO kvp (
+   kvp_id
+  ,kvp_name
+  ,kvp_key
+  ,kvp_value
+  ,user_added
+  ,date_added
+) VALUES (
+   fn_get_nextid('kvp') -- kvp_id - IN int(11)
+  ,'user_status' -- kvp_name - IN varchar(50)
+  ,'A' -- kvp_key - IN varchar(50)
+  ,'Active' -- kvp_value - IN varchar(100)
+  ,'msamuehenry@gmail.com' -- user_added - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO kvp (
+   kvp_id
+  ,kvp_name
+  ,kvp_key
+  ,kvp_value
+  ,user_added
+  ,date_added
+) VALUES (
+   fn_get_nextid('kvp') -- kvp_id - IN int(11)
+  ,'user_status' -- kvp_name - IN varchar(50)
+  ,'I' -- kvp_key - IN varchar(50)
+  ,'Inactive' -- kvp_value - IN varchar(100)
+  ,'msamuehenry@gmail.com' -- user_added - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO kvp (
+   kvp_id
+  ,kvp_name
+  ,kvp_key
+  ,kvp_value
+  ,user_added
+  ,date_added
+) VALUES (
+   fn_get_nextid('kvp') -- kvp_id - IN int(11)
+  ,'user_status' -- kvp_name - IN varchar(50)
+  ,'P' -- kvp_key - IN varchar(50)
+  ,'Pending' -- kvp_value - IN varchar(100)
+  ,'msamuehenry@gmail.com' -- user_added - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO role (
+   role_id
+  ,role_name
+  ,user_added
+  ,date_added
+) VALUES (
+   fn_get_nextid('role') -- role_id - IN int(11)
+  ,'SystemAdmin' -- role_name - IN varchar(40)
+  ,'msamuelhenry' -- user_added - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO role (
+   role_id
+  ,role_name
+  ,user_added
+  ,date_added
+) VALUES (
+   fn_get_nextid('role') -- role_id - IN int(11)
+  ,'OrgAdmin' -- role_name - IN varchar(40)
+  ,'msamuelhenry' -- user_added - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO role (
+   role_id
+  ,role_name
+  ,user_added
+  ,date_added
+) VALUES (
+   fn_get_nextid('role') -- role_id - IN int(11)
+  ,'OrgUser' -- role_name - IN varchar(40)
+  ,'msamuelhenry' -- user_added - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO security_question (
+   security_question_id
+  ,question
+  ,date_added
+) VALUES (
+   fn_get_nextid('security_question') -- security_question_id - IN int(11)
+  ,'What was the make of your first car?' -- question - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
+
+INSERT INTO security_question (
+   security_question_id
+  ,question
+  ,date_added
+) VALUES (
+   fn_get_nextid('security_question') -- security_question_id - IN int(11)
+  ,'What is your favorite team?' -- question - IN varchar(255)
+  ,now() -- date_added - IN datetime
+);
