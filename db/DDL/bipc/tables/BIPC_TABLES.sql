@@ -194,3 +194,15 @@ CREATE TABLE user_role
    CONSTRAINT user_id_urfk_1 FOREIGN KEY(user_id) REFERENCES users(user_id),
    CONSTRAINT role_id_urfk_1 FOREIGN KEY(role_id) REFERENCES role(role_id)
 );
+
+CREATE TABLE organization_category(
+organization_category_id int(11) NOT NULL PRIMARY KEY,
+organization_id int(11) NOT NULL,
+category_name varchar(40) NOT NULL,
+is_active tinyint(4) DEFAULT 1,
+user_added varchar(255) NOT NULL,
+date_added datetime NOT NULL,
+user_changed varchar(255) DEFAULT NULL,
+date_changed datetime DEFAULT NULL,
+CONSTRAINT org_category_ocfk_1 FOREIGN KEY (organization_id) REFERENCES organization (organization_id))
+ENGINE=InnoDB DEFAULT CHARSET=latin1;

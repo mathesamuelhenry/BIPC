@@ -1,12 +1,13 @@
 # ********************************************************************************************************************************
 # AUDIT STORED PROCEDURE - bipc.contributor_insert_audit
 # ********************************************************************************************************************************
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS bipc.sp_contributor_insert_audit;
+DROP PROCEDURE IF EXISTS sp_contributor_insert_audit;
 $$
 
-CREATE PROCEDURE bipc.sp_contributor_insert_audit(
+CREATE PROCEDURE sp_contributor_insert_audit(
    end_user          VARCHAR(30),
    action_name       VARCHAR(7),
    contributor_id    INT,
