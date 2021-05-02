@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIPCAccounting", "BIPCAccounting\BIPCAccounting.csproj", "{6F1AB104-F2FC-4885-81FB-A9B88C46F740}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BIPCAccountingSetup", "BIPCAccountingSetup\BIPCAccountingSetup.vdproj", "{30B8BF29-8803-4DEE-8B64-D474948E58EE}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AccountingSetup", "AccountingSetup\AccountingSetup.vdproj", "{E5EE365D-7035-45E3-8B6E-6731FF22F983}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,8 +34,16 @@ Global
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Release|Any CPU.ActiveCfg = Release
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.Release|Any CPU.Build.0 = Release
 		{30B8BF29-8803-4DEE-8B64-D474948E58EE}.SingleImage|Any CPU.ActiveCfg = Release
+		{E5EE365D-7035-45E3-8B6E-6731FF22F983}.CD_ROM|Any CPU.ActiveCfg = Release
+		{E5EE365D-7035-45E3-8B6E-6731FF22F983}.Debug|Any CPU.ActiveCfg = Debug
+		{E5EE365D-7035-45E3-8B6E-6731FF22F983}.DVD-5|Any CPU.ActiveCfg = Debug
+		{E5EE365D-7035-45E3-8B6E-6731FF22F983}.Release|Any CPU.ActiveCfg = Release
+		{E5EE365D-7035-45E3-8B6E-6731FF22F983}.SingleImage|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51DA6CDD-51FA-4DBD-AD24-B76138FAAB17}
 	EndGlobalSection
 EndGlobal

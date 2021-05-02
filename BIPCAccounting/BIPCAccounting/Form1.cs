@@ -27,7 +27,7 @@ namespace BIPCAccounting
         {
             InitializeComponent();
 
-            connString = ConfigurationManager.ConnectionStrings["DEV"].ConnectionString;
+            connString = ConfigurationManager.ConnectionStrings["PROD"].ConnectionString;
 
             this.LoadFormData();
         }
@@ -2830,6 +2830,10 @@ WHERE account_id = {5} -- int(11)", Utils.FormatDBText(accountNumber)
             string selectedYear = string.Empty;
             if (!string.IsNullOrEmpty(AnalyticsYearComboBox.Text))
             {
+                if (AnalyticsYearComboBox.SelectedItem == null)
+                {
+                    AnalyticsYearComboBox.SelectedIndex = 0;
+                }
                 Item selectedYearItem = (Item)AnalyticsYearComboBox.SelectedItem;
                 selectedYear = selectedYearItem.Id;
             }
